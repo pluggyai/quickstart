@@ -1,0 +1,76 @@
+body, #root {
+  height: 100vh;
+}
+
+.App {
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  background-color: var(--background);
+  color: var(--title-text);
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  font-size: calc(8px + 2vmin);
+}
+
+.App-content {
+  flex:2 ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.App-content label {
+  margin-bottom: 1rem;
+}
+
+.button {
+  cursor: pointer;
+  display: inline-block;
+  min-height: 1em;
+  outline: 0;
+  border: none;
+  vertical-align: baseline;
+  margin: 0 .25em 0 0;
+  text-decoration: none;
+  user-select: none;
+  overflow: visible;
+
+  padding: 13px 32px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 18px;
+  min-width: 128px;
+  font-style: normal;
+  font-stretch: expanded;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  font-family: var(--font-family);
+  text-align: center;
+  font-weight: 600;
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.button:hover {
+  background-color: var(--primary-hover);
+  color: var(--text-on-primary);
+  text-shadow: none;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.06);
+}
+
+.button.pluggy-connect {
+  background-color: var(--primary);
+  color: var(--text-on-primary);
+}
+
