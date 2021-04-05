@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <title>Pluggy Quickstart Example</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-   </head>
-   <body>
-      <main class="main">
-      </main>
-      <script src="https://cdn.pluggy.ai/pluggy-connect/v0.1.0/pluggy-connect.js"></script>
-      <script>
-        // Use your own connect token API endpoint, this one only list sandbox connectors
-        // Reference: https://github.com/pluggyai/pluggy-connect-vercel
-        fetch('https://pluggy-connect.vercel.app/api/token')
-          .then(response => response.json())
-          .then(({accessToken}) => {
-            const pluggyConnect = new PluggyConnect({
-              connectToken: accessToken,
-              includeSandbox: true,
-              onSuccess: (itemData) => {
-                console.log('Yay! Pluggy connect success!', itemData);
-              },
-              onError: (error) => {
-                console.error('Whoops! Pluggy Connect error... ', error);
-              },
-            });
-            pluggyConnect.init();
-         })
-      </script>
-   </body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pluggy Quickstart Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <main class="main"></main>
+    <script src="https://cdn.pluggy.ai/pluggy-connect/v0.1.0/pluggy-connect.js"></script>
+    <script>
+      // Use your own connect token API endpoint, this one only list sandbox connectors
+      // Reference: https://github.com/pluggyai/pluggy-connect-vercel
+      fetch('https://pluggy-connect.vercel.app/api/token')
+        .then((response) => response.json())
+        .then(({ accessToken }) => {
+          const pluggyConnect = new PluggyConnect({
+            connectToken: accessToken,
+            includeSandbox: true,
+            onSuccess: (itemData) => {
+              console.log('Yay! Pluggy connect success!', itemData);
+            },
+            onError: (error) => {
+              console.error('Whoops! Pluggy Connect error... ', error);
+            },
+          });
+          pluggyConnect.init();
+        });
+    </script>
+  </body>
 </html>
