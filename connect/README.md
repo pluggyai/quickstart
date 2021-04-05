@@ -17,9 +17,9 @@ To create this token you can either add a new endpoint in your server that uses 
 ### HTML
 
 You can directly import `pluggy-connect.js` from our CDN to a <script> tag, specifying the library version:
-  
+
 ```html
-<script src="https://cdn.pluggy.ai/pluggy-connect/v0.0.7-alpha.0/pluggy-connect.js"></script>
+<script src="https://cdn.pluggy.ai/pluggy-connect/v0.1.0/pluggy-connect.js"></script>
 ```
 
 After that, the `PluggyConnect` class is globaly available, you can instantiate it with the following:
