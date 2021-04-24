@@ -74,3 +74,6 @@ body, #root {
   color: var(--text-on-primary);
 }
 
+.error {
+  color: var(--error);
+}

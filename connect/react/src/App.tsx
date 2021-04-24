@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { PluggyConnect } from 'react-pluggy-connect';
 
 import './App.css';
@@ -7,7 +7,13 @@ import './App.css';
  * TODO: replace this URL with your own API returning an { accessToken } object
  * with your Pluggy connect token
  */
-const { REACT_APP_CONNECT_TOKEN_API_URL } = process.env;
+const {
+  REACT_APP_CONNECT_TOKEN_API_URL: connectTokenApiUrl = '',
+} = process.env;
+
+if (!connectTokenApiUrl) {
+  throw new Error('Missing required REACT_APP_CONNECT_TOKEN_API_URL env var');
+}
 
 const App = () => {
   const [token, setToken] = useState<string>();
@@ -18,11 +24,11 @@ const App = () => {
   useEffect(() => {
     async function fetchToken() {
       try {
-        const response = await fetch(REACT_APP_CONNECT_TOKEN_API_URL!);
+        const response = await fetch(connectTokenApiUrl);
         const { accessToken } = await response.json();
         setToken(accessToken);
       } catch (error) {
-        setError(error);
+        setError(error.message);
       }
     }
 
@@ -33,20 +39,28 @@ const App = () => {
     setIsConnectVisible(true);
   };
 
+  const onClosePopup = useCallback(() => {
+    setIsConnectVisible(false);
+  }, []);
+
   if (error) {
     return (
-      <div className="App">
+      <div className="App error">
         <p>There was an error</p>
-        <p>{JSON.stringify(error)}</p>
+        <p>{error}</p>
       </div>
     );
   }
 
-  return !token ? (
-    <>
-      <div className="App">Loading...</div>
-    </>
-  ) : (
+  if (!token) {
+    return (
+      <>
+        <div className="App">Loading...</div>
+      </>
+    );
+  }
+
+  return (
     <div className="App">
       <header className="App-header">
         <p>Pluggy Connect Widget Example</p>
@@ -66,7 +80,11 @@ const App = () => {
         </button>
       </div>
       {isConnectVisible && (
-        <PluggyConnect connectToken={token} includeSandbox={includeSandbox} />
+        <PluggyConnect
+          connectToken={token}
+          includeSandbox={includeSandbox}
+          onClose={onClosePopup}
+        />
       )}
     </div>
   );
