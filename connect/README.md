@@ -33,7 +33,7 @@ with [Vercel](https://vercel.com) and get you're own endpoint for the connect to
 You can directly import `pluggy-connect.js` from our CDN to a `<script>` tag, specifying the library version:
 
 ```html
-<script src="https://cdn.pluggy.ai/pluggy-connect/v0.1.0/pluggy-connect.js"></script>
+<script src="https://cdn.pluggy.ai/pluggy-connect/v0.1.1/pluggy-connect.js"></script>
 ```
 
 After that, the `PluggyConnect` class is globally available. You can instantiate it like so:
@@ -109,3 +109,4 @@ our [documentation](https://docs.pluggy.ai/#pluggy-connect-widget) to find the m
 | `onError`        | Function to execute on a general error loading the widget, or when an Item creation/update status has not been successful (service error, invalid credentials, validation error, etc). | &#128306; | `(error: { message: string; data?: { item: Item } }) => void` | No op            |
 | `onOpen`         | Function to execute when the widget modal has been opened.                                                                                                                             | &#128306; | `() => void`                                                  | No op            |
 | `onClose`        | Function to execute when the widget modal has been closed.                                                                                                                             | &#128306; | `() => void`                                                  | No op            |
+| `onEvent`        | Function to execute to handle custom user interaction events. See the docs for more info.                                                                                     | &#128306; | `(event: string, metadata: { timestamp: number }) => void`    | No op            |
