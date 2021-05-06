@@ -1,7 +1,6 @@
 {
   "name": "react-pluggy-connect-example",
-  "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
