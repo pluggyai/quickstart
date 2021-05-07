@@ -10,7 +10,7 @@ const PluggyConnect = dynamic(
   { ssr: false }
 ) as typeof PluggyConnectType
 
-export default function Home () {
+export default function Home() {
   const [withSandbox, setSandbox] = useState<boolean>(false)
   const [connectToken, setConnectToken] = useState<string>()
   const [connecting, setConnecting] = useState<boolean>(false)
@@ -43,21 +43,29 @@ export default function Home () {
     <div className={styles.container}>
       <Head>
         <title>Pluggy - Next.js Example</title>
-        <link rel='icon' sizes='96x96' href='/favicon-96x96.ico' />
-        <link rel='icon' sizes='32x32' href='/favicon-32x32.ico' />
-        <link rel='icon' sizes='16x16' href='/favicon-16x16.ico' />
+        <link rel="icon" sizes="96x96" href="/favicon-96x96.ico" />
+        <link rel="icon" sizes="32x32" href="/favicon-32x32.ico" />
+        <link rel="icon" sizes="16x16" href="/favicon-16x16.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>Pluggy Connect</h1>
 
         <p className={styles.description}>
-          Quickstart application to run Pluggy Connect with <a href='https://github.com/vercel/next.js' target='_blank' rel='noopener noreferrer'>Next.js</a>
+          Quickstart application to run Pluggy Connect with{' '}
+          <a href="https://github.com/vercel/next.js" target="_blank" rel="noopener noreferrer">
+            Next.js
+          </a>
         </p>
 
-        <div className='sandbox-checkbox'>
-          <input type='checkbox' checked={withSandbox} onChange={handleCheckboxChange} />
-          <label>Include <a href='https://docs.pluggy.ai/#sandbox' target='_blank' rel='noopener noreferrer'>sandbox connectors</a></label>
+        <div className="sandbox-checkbox">
+          <input type="checkbox" checked={withSandbox} onChange={handleCheckboxChange} />
+          <label>
+            Include{' '}
+            <a href="https://docs.pluggy.ai/#sandbox" target="_blank" rel="noopener noreferrer">
+              sandbox connectors
+            </a>
+          </label>
         </div>
 
         <div className={styles.grid}>
@@ -79,16 +87,15 @@ export default function Home () {
             </button>
           )}
         </div>
-
       </main>
 
       <footer className={styles.footer}>
         <a
-          href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Powered by <img src='/logo.png' alt='Pluggy Logo' className={styles.logo} />
+          Powered by <img src="/logo.png" alt="Pluggy Logo" className={styles.logo} />
         </a>
       </footer>
     </div>
