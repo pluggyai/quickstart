@@ -24,7 +24,18 @@ const App = () => {
   useEffect(() => {
     async function fetchToken() {
       try {
-        const response = await fetch(connectTokenApiUrl);
+        const response = await fetch(connectTokenApiUrl, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            options: {
+              clientUserId: "user@example.com"
+            }
+          })
+        });
         const { accessToken } = await response.json();
         setToken(accessToken);
       } catch (error) {

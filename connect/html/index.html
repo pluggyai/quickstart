@@ -11,7 +11,18 @@
     <script>
       // Use your own connect token API endpoint, this one only list sandbox connectors
       // Reference: https://github.com/pluggyai/pluggy-connect-vercel
-      fetch('https://pluggy-connect.vercel.app/api/token')
+      fetch('https://pluggy-connect.vercel.app/api/token', {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          options: {
+            clientUserId: "user@example.com"
+          }
+        })
+      })
         .then((response) => response.json())
         .then(({ accessToken }) => {
           const pluggyConnect = new PluggyConnect({
