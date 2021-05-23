@@ -1,0 +1,12 @@
+{
+  "name": "pluggy-node-mongo-example",
+  "dependencies": {
+    "mongodb": "^3.6.6",
+    "pg": "^8.6.0",
+    "pluggy-sdk": "^0.7.0"
+  },
+  "devDependencies": {
+    "@types/mongodb": "^3.6.12",
+    "@vercel/node": "^1.10.0"
+  }
+}
