@@ -24,3 +24,9 @@ curl -H "Authorization: Bearer my-secured-token" 'http://localhost:3000/api/item
 curl -H "Authorization: Bearer my-secured-token" 'http://localhost:3000/api/items?from=2020-01-01T00:01:00.000Z&skip=100'
 curl -H "Authorization: Bearer my-secured-token" 'http://localhost:3000/api/items?from=2020-01-01T00:01:00.000Z&size=10&skip=5'
 ```
+
+## Deploy
+
+Deploy your own Docusaurus project with Vercel in a matter of minutes by just setting environment variables.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/pluggyai/quickstart/tree/master/examples/node-mongo)
