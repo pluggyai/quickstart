@@ -1,4 +1,4 @@
-# Pluggy Node Mongo Example
+# Vercel Node.js MongoDB Example
 
 This is an example [Vercel](https://vercel.com) application using [Pluggy Node.js SDK](https://github.com/pluggyai/pluggy-node) to save all created items in a MongoDB collection to make them available for querying.
 
@@ -29,4 +29,4 @@ curl -H "Authorization: Bearer my-secured-token" 'http://localhost:3000/api/item
 
 Deploy your own Docusaurus project with Vercel in a matter of minutes by just setting environment variables.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/pluggyai/quickstart/tree/master/examples/node-mongo)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/pluggyai/quickstart/tree/master/examples/vercel-node-mongo)

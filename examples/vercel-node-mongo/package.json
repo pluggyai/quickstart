@@ -1,5 +1,5 @@
 {
-  "name": "pluggy-node-mongo-example",
+  "name": "pluggy-vercel-node-mongo-example",
   "dependencies": {
     "mongodb": "^3.6.6",
     "pg": "^8.6.0",
