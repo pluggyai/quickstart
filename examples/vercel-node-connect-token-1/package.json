@@ -1,0 +1,10 @@
+{
+  "name": "vercel-node-connect-token",
+  "description": "A vercel serverless function example that creates a connect token to pair new accounts",
+  "devDependencies": {
+    "@vercel/node": "^1.8.5"
+  },
+  "dependencies": {
+    "pluggy-sdk": "^0.7.0"
+  }
+}
