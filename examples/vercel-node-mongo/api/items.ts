@@ -1,5 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
-import { getItems } from '../lib/items'
+
+import { getItems, PAGE_MAX_SIZE } from '../lib/items'
 
 export default async (req: VercelRequest, res: VercelResponse) => {
   const { from, skip, size } = req.query
@@ -34,13 +35,15 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   }
 
   const nSize = parseInt(size as string)
-  if (size && isNaN(nSize)) {
-    res.status(400).json({ message: 'size should be an integer number lower than 20' })
+  if ((size && isNaN(nSize)) || nSize > PAGE_MAX_SIZE) {
+    res
+      .status(400)
+      .json({ message: `size should be an integer number lower or equal to ${PAGE_MAX_SIZE}` })
     return
   }
 
   try {
-    const items = await getItems(from, nSkip, nSize)
+    const items = await getItems(from, nSkip || 0, nSize || PAGE_MAX_SIZE)
     res.status(200).json(items)
   } catch (error) {
     const message = 'There was an error while retrieving items.'
