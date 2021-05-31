@@ -1,16 +1,13 @@
 import { Item } from 'pluggy-sdk'
-import { MongoClient } from 'mongodb'
 
-const { MONGO_URI, MONGO_DB_NAME } = process.env
+import { getClient } from './db'
+
+const { MONGO_DB_NAME } = process.env
 
 export const PAGE_MAX_SIZE = 20
 
-const client = new MongoClient(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-
 export async function saveItem(item: Item) {
+  const client = getClient()
   await client.connect()
   const database = client.db(MONGO_DB_NAME)
   const itemsCollection = database.collection('items')
@@ -20,6 +17,7 @@ export async function saveItem(item: Item) {
 }
 
 export async function getItems(fromDate: string, skip: number, size: number) {
+  const client = getClient()
   await client.connect()
   const database = client.db(MONGO_DB_NAME)
   const itemsCollection = database.collection('items')
