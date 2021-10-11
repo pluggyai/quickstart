@@ -1,114 +1,106 @@
+import React, { useCallback, useEffect, useState } from 'react';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { PluggyConnect } from 'react-native-pluggy-connect';
+
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
+ * TODO: replace this URL with your own API, that would return an { accessToken } object
+ *  with your Pluggy connect token
  */
-
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+const MY_CONNECT_TOKEN_API_URL = 'https://pluggy-connect.vercel.app/api/token';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [token, setToken] = useState<string>();
+  const [error, setError] = useState<Record<string, unknown>>();
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  useEffect(() => {
+    async function fetchToken() {
+      try {
+        const response = await fetch(MY_CONNECT_TOKEN_API_URL, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            options: {
+              clientUserId: 'user@example.com',
+            },
+          }),
+        });
 
+        const responseJson = await response.json();
+
+        if (response.ok) {
+          const { accessToken } = responseJson;
+          setToken(accessToken);
+        } else {
+          setError(responseJson);
+        }
+      } catch (error) {
+        setError({ message: error.message });
+      }
+    }
+
+    fetchToken();
+  }, []);
+
+  const handleOnOpen = useCallback(() => {
+    console.log('open');
+  }, []);
+
+  const handleOnSuccess = useCallback(itemData => {
+    console.log('success', itemData);
+  }, []);
+
+  const handleOnError = useCallback(error => {
+    console.log('error', error);
+  }, []);
+
+  const handleOnClose = useCallback(() => {
+    setToken('');
+  }, []);
+
+  if (error) {
+    // error screen
+    return (
+      <View style={styles.container}>
+        <Text>There was an error</Text>
+        <Text>{JSON.stringify(error, null, 2)}</Text>
+        <StatusBar />
+      </View>
+    );
+  }
+
+  if (!token) {
+    // loading screen
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+        <StatusBar />
+      </View>
+    );
+  }
+
+  // authenticated! -> render PluggyConnect screen
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <PluggyConnect
+      connectToken={token}
+      includeSandbox={true}
+      onOpen={handleOnOpen}
+      onClose={handleOnClose}
+      onSuccess={handleOnSuccess}
+      onError={handleOnError}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

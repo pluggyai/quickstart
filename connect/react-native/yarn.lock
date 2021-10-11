@@ -1836,7 +1836,12 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-base64-js@^1.1.2, base64-js@^1.5.1:
+base-64@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-1.0.0.tgz#09d0f2084e32a3fd08c2475b973788eee6ae8f4a"
+  integrity sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==
+
+base64-js@^1.1.2, base64-js@^1.3.1, base64-js@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
@@ -1853,6 +1858,15 @@ base@^0.11.1:
     isobject "^3.0.1"
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
+
+belter@^1.0.123, belter@^1.0.41:
+  version "1.0.177"
+  resolved "https://registry.yarnpkg.com/belter/-/belter-1.0.177.tgz#4d49b6a7797c19a12eed233f408934964b808e49"
+  integrity sha512-oJCyvKkO6Cz+ocjEVdyYe6itIgcgS+AgONrEVexErIfFx6y4Q8Uv5699mvMkTWLY5wR72BXoCYZFkb17xJ/7dA==
+  dependencies:
+    cross-domain-safe-weakmap "^1"
+    cross-domain-utils "^2"
+    zalgo-promise "^1"
 
 big-integer@^1.6.44:
   version "1.6.49"
@@ -1931,6 +1945,14 @@ buffer-from@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"
   integrity sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==
+
+buffer@^5.4.3:
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.7.1.tgz#ba62e7c13133053582197160851a8f648e99eed0"
+  integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
+  dependencies:
+    base64-js "^1.3.1"
+    ieee754 "^1.1.13"
 
 bytes@3.0.0:
   version "3.0.0"
@@ -2245,6 +2267,20 @@ cosmiconfig@^5.0.5, cosmiconfig@^5.1.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
+cross-domain-safe-weakmap@^1, cross-domain-safe-weakmap@^1.0.1:
+  version "1.0.29"
+  resolved "https://registry.yarnpkg.com/cross-domain-safe-weakmap/-/cross-domain-safe-weakmap-1.0.29.tgz#0847975c27d9e1cc840f24c1745311958df98022"
+  integrity sha512-VLoUgf2SXnf3+na8NfeUFV59TRZkIJqCIATaMdbhccgtnTlSnHXkyTRwokngEGYdQXx8JbHT9GDYitgR2sdjuA==
+  dependencies:
+    cross-domain-utils "^2.0.0"
+
+cross-domain-utils@^2, cross-domain-utils@^2.0.0, cross-domain-utils@^2.0.33:
+  version "2.0.36"
+  resolved "https://registry.yarnpkg.com/cross-domain-utils/-/cross-domain-utils-2.0.36.tgz#51b0b4f73ee00a3b42c2fef4523197f382778ac1"
+  integrity sha512-7i7dSDQnzKJ9a7MrUNLzYlrXXJt+R3J0PWRDQbUhSbhuPv7y2fbn0IDV4nm9Zq7ehRIxUq65etQ5xxOkQAyYcA==
+  dependencies:
+    zalgo-promise "^1.0.11"
+
 cross-spawn@^6.0.0:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
@@ -2543,15 +2579,15 @@ escape-html@~1.0.3:
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
+escape-string-regexp@2.0.0, escape-string-regexp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
+  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
+
 escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
-
-escape-string-regexp@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
-  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
 
 escape-string-regexp@^4.0.0:
   version "4.0.0"
@@ -3269,6 +3305,11 @@ iconv-lite@0.4.24:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
+ieee754@^1.1.13:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
+  integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
+
 ignore@^4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
@@ -3335,7 +3376,7 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-invariant@^2.2.4:
+invariant@2.2.4, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -4279,6 +4320,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
@@ -5193,10 +5239,28 @@ plist@^3.0.1, plist@^3.0.2:
     base64-js "^1.5.1"
     xmlbuilder "^9.0.7"
 
+pluggy-connect-sdk@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/pluggy-connect-sdk/-/pluggy-connect-sdk-1.0.1.tgz#10f170c5a3297a6c4817a861090b260712292f3b"
+  integrity sha512-b45OCQmmP3qhHCuRurNnljnjDJqC43Kxq7ehaAN8XPVly1V2CBf4BCYXO1rrxbrPa26pzrygvGLCGmIJ3FTv2Q==
+  dependencies:
+    zoid "9.0.63"
+
 posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
+
+post-robot@^10:
+  version "10.0.44"
+  resolved "https://registry.yarnpkg.com/post-robot/-/post-robot-10.0.44.tgz#98cf63be8a3cf39e73001c69f78f8b74a7f97d8f"
+  integrity sha512-LbA2E7gw/MkntjFtT2EPUrapIPCN/M9orKT3OTQC9A87raT5nmsL0nsHAr1AMZS0UoZxB6Z4K6OlnTxAgxXidw==
+  dependencies:
+    belter "^1.0.41"
+    cross-domain-safe-weakmap "^1.0.1"
+    cross-domain-utils "^2.0.0"
+    universal-serialize "^1.0.4"
+    zalgo-promise "^1.0.3"
 
 prelude-ls@^1.2.1:
   version "1.2.1"
@@ -5313,6 +5377,31 @@ react-native-codegen@^0.0.7:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
+
+react-native-pluggy-connect@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-pluggy-connect/-/react-native-pluggy-connect-0.1.4.tgz#dd24bea7cd68f681a9c3f176c19732abd000d623"
+  integrity sha512-Hw3xSiHcIjBQtZ3dXPrYRw8xuI70ys21FQZ4EGmS6MSGOnS3LSUXTs7V+ywZjQCR/FwIT9WAdoUC1CkaphRE8Q==
+  dependencies:
+    base-64 "^1.0.0"
+    lodash.isequal "^4.5.0"
+    pluggy-connect-sdk "^1.0.1"
+    react-native-url-polyfill "^1.3.0"
+
+react-native-url-polyfill@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-url-polyfill/-/react-native-url-polyfill-1.3.0.tgz#c1763de0f2a8c22cc3e959b654c8790622b6ef6a"
+  integrity sha512-w9JfSkvpqqlix9UjDvJjm1EjSt652zVQ6iwCIj1cVVkwXf4jQhQgTNXY6EVTwuAmUjg6BC6k9RHCBynoLFo3IQ==
+  dependencies:
+    whatwg-url-without-unicode "8.0.0-3"
+
+react-native-webview@^11.14.0:
+  version "11.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.14.0.tgz#01d7669409d7510c859300c058902c8a8490cbbb"
+  integrity sha512-G5pIYL3dU4rWt4K8W8ZoEDHL3nCR+rnNWsrCP/rJcl1gElxZn2xlpHjNml4myopIzn835NgE0/dJJ9VHvdMg3Q==
+  dependencies:
+    escape-string-regexp "2.0.0"
+    invariant "2.2.4"
 
 react-native@0.66.0:
   version "0.66.0"
@@ -6368,6 +6457,11 @@ union-value@^1.0.0:
     is-extendable "^0.1.1"
     set-value "^2.0.1"
 
+universal-serialize@^1.0.4:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/universal-serialize/-/universal-serialize-1.0.10.tgz#3279bb30f47290ea479f45135620f98fa9d3f3a6"
+  integrity sha512-FdouA4xSFa0fudk1+z5vLWtxZCoC0Q9lKYV3uUdFl7DttNfolmiw2ASr5ddY+/Yz6Isr68u3IqC9XMSwMP+Pow==
+
 universalify@^0.1.0, universalify@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
@@ -6521,6 +6615,15 @@ whatwg-mimetype@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/whatwg-mimetype/-/whatwg-mimetype-2.3.0.tgz#3d4b1e0312d2079879f826aff18dbeeca5960fbf"
   integrity sha512-M4yMwr6mAnQz76TbJm914+gPpB/nCwvZbJU28cUD6dR004SAxDLOOSUaB1JDRqLtaOV/vi0IC5lEAGFgrjGv/g==
+
+whatwg-url-without-unicode@8.0.0-3:
+  version "8.0.0-3"
+  resolved "https://registry.yarnpkg.com/whatwg-url-without-unicode/-/whatwg-url-without-unicode-8.0.0-3.tgz#ab6df4bf6caaa6c85a59f6e82c026151d4bb376b"
+  integrity sha512-HoKuzZrUlgpz35YO27XgD28uh/WJH4B0+3ttFqRo//lmq+9T/mIOJ6kqmINI9HpUpz1imRC/nR/lxKpJiv0uig==
+  dependencies:
+    buffer "^5.4.3"
+    punycode "^2.1.1"
+    webidl-conversions "^5.0.0"
 
 whatwg-url@^5.0.0:
   version "5.0.0"
@@ -6696,3 +6799,18 @@ yargs@^15.1.0, yargs@^15.3.1, yargs@^15.4.1:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
+
+zalgo-promise@^1, zalgo-promise@^1.0.11, zalgo-promise@^1.0.3, zalgo-promise@^1.0.45:
+  version "1.0.48"
+  resolved "https://registry.yarnpkg.com/zalgo-promise/-/zalgo-promise-1.0.48.tgz#9e33eef502d5ed9f5a09fc5728c833c3e87afa2e"
+  integrity sha512-LLHANmdm53+MucY9aOFIggzYtUdkSBFxUsy4glTTQYNyK6B3uCPWTbfiGvSrEvLojw0mSzyFJ1/RRLv+QMNdzQ==
+
+zoid@9.0.63:
+  version "9.0.63"
+  resolved "https://registry.yarnpkg.com/zoid/-/zoid-9.0.63.tgz#87ca9585c11788a33db4de6a515cef8a02faf63c"
+  integrity sha512-c9OccNUlOV9KuTKJJRhCU3B5SRHObTTiPAUayKkBQ0/qZugfh59MDW+zkFDR8IZN+c7NB/R90FCIpAfBp8+U/g==
+  dependencies:
+    belter "^1.0.123"
+    cross-domain-utils "^2.0.33"
+    post-robot "^10"
+    zalgo-promise "^1.0.45"
