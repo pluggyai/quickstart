@@ -1937,6 +1937,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
+base-64@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-1.0.0.tgz#09d0f2084e32a3fd08c2475b973788eee6ae8f4a"
+  integrity sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==
+
 base64-js@^1.1.2, base64-js@^1.2.3, base64-js@^1.3.1, base64-js@^1.5.1:
   version "1.5.1"
   resolved "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz"
@@ -4787,15 +4792,15 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-pluggy-connect@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-pluggy-connect/-/react-native-pluggy-connect-0.1.2.tgz#0de636270a3de3428096632e4c7e6c8e634d956d"
-  integrity sha512-D6gS+k1H6oSI+outQQJ3ePwqf+jqb+Qp2O5H5GDROL65SUpjbrtUULlyjCAc6mLlWmSKxV0SiEso12svReDtNg==
+react-native-pluggy-connect@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-pluggy-connect/-/react-native-pluggy-connect-0.1.4.tgz#dd24bea7cd68f681a9c3f176c19732abd000d623"
+  integrity sha512-Hw3xSiHcIjBQtZ3dXPrYRw8xuI70ys21FQZ4EGmS6MSGOnS3LSUXTs7V+ywZjQCR/FwIT9WAdoUC1CkaphRE8Q==
   dependencies:
+    base-64 "^1.0.0"
     lodash.isequal "^4.5.0"
     pluggy-connect-sdk "^1.0.1"
     react-native-url-polyfill "^1.3.0"
-    react-native-webview "^11.6.2"
 
 react-native-safe-area-context@3.2.0:
   version "3.2.0"
@@ -4824,10 +4829,10 @@ react-native-web@~0.13.12:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
 
-react-native-webview@^11.6.2:
-  version "11.13.0"
-  resolved "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.13.0.tgz"
-  integrity sha512-jjQAKWv8JzRmcn76fMe4lXD84AAeR7kn43kAmUe1GX312BMLaP+RbKlgpYAlNuOBXL0YirItGKDrpaD0bNROOA==
+react-native-webview@11.6.0:
+  version "11.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.6.0.tgz#be98ac6d2b054ec568b6f37a17c3d642569ca640"
+  integrity sha512-S4kJWHaKRB05d4XfnJ37Vb1f9RM1d7ZPI3kmWvs3tLV2rqP7oD+9ilYgj7B+4ef3bdLHopBHfZLvF7w9VbFGBw==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
