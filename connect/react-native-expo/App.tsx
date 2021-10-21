@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
+import { StatusBar } from 'expo-status-bar';
 import { PluggyConnect } from 'react-native-pluggy-connect';
 
 /**
@@ -8,7 +10,7 @@ import { PluggyConnect } from 'react-native-pluggy-connect';
  */
 const MY_CONNECT_TOKEN_API_URL = 'https://pluggy-connect.vercel.app/api/token';
 
-const App = () => {
+export default function App() {
   const [token, setToken] = useState<string>();
   const [error, setError] = useState<Record<string, unknown>>();
 
@@ -48,11 +50,11 @@ const App = () => {
     console.log('open');
   }, []);
 
-  const handleOnSuccess = useCallback(itemData => {
+  const handleOnSuccess = useCallback((itemData) => {
     console.log('success', itemData);
   }, []);
 
-  const handleOnError = useCallback(error => {
+  const handleOnError = useCallback((error) => {
     console.log('error', error);
   }, []);
 
@@ -66,7 +68,7 @@ const App = () => {
       <View style={styles.container}>
         <Text>There was an error</Text>
         <Text>{JSON.stringify(error, null, 2)}</Text>
-        <StatusBar />
+        <StatusBar style="auto" />
       </View>
     );
   }
@@ -76,7 +78,7 @@ const App = () => {
     return (
       <View style={styles.container}>
         <Text>Loading...</Text>
-        <StatusBar />
+        <StatusBar style="auto" />
       </View>
     );
   }
@@ -92,7 +94,7 @@ const App = () => {
       onError={handleOnError}
     />
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -103,5 +105,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default App;
