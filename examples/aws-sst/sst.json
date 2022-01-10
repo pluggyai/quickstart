@@ -1,0 +1,5 @@
+{
+  "name": "aws-sst",
+  "region": "sa-east-1",
+  "main": "stacks/index.ts"
+}
