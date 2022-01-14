@@ -1,16 +1,12 @@
-# pluggy_flutter
+# Pluggy Connect Flutter Quickstart
 
-A new Flutter project.
+There is no Pluggy Official SDK for Flutter yet, but you can use this quickstart project to leverage the usage of Pluggy Connect using [Flutter Webviews](https://pub.dev/packages/webview_flutter)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application using Pluggy for connecting financial accounts.
 
-A few resources to get you started if this is your first Flutter project:
+Related resources:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Codelabs: Adding WebView to your Flutter app](https://codelabs.developers.google.com/codelabs/flutter-webview#5)
