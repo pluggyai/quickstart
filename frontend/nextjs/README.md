@@ -18,6 +18,11 @@ npm run dev
 
 Then, the app will open in a new browser tab on `http://localhost:3000`
 
+## Update Mode
+
+When configuring the `NEXT_PUBLIC_PLUGGY_UPDATE_ITEM_ID` environment variable, the app will automatically update the item with the given ID and intialize the UI widget in `Update Mode`.
+
+This will allow you to test the update flow of the UI widget, requesting you the necessary credentials to update the item.
 
 ---
 
