@@ -5,6 +5,8 @@ import type { PluggyConnect as PluggyConnectType } from 'react-pluggy-connect'
 
 import styles from '../styles/Home.module.css'
 
+const itemIdToUpdate = process.env.NEXT_PUBLIC_PLUGGY_UPDATE_ITEM_ID
+
 const PluggyConnect = dynamic(
   () => (import('react-pluggy-connect') as any).then((mod) => mod.PluggyConnect),
   { ssr: false }
@@ -71,6 +73,7 @@ export default function Home() {
         <div className={styles.grid}>
           {connecting ? (
             <PluggyConnect
+              updateItem={itemIdToUpdate}
               connectToken={connectToken}
               includeSandbox={withSandbox}
               onSuccess={onSuccess}
