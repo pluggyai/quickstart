@@ -5,7 +5,7 @@ import type { PluggyConnect as PluggyConnectType } from 'react-pluggy-connect'
 
 import styles from '../styles/Home.module.css'
 
-const { NEXT_PUBLIC_PLUGGY_UPDATE_ITEM_ID: itemIdToUpdate } = process.env
+const itemIdToUpdate = process.env.NEXT_PUBLIC_PLUGGY_UPDATE_ITEM_ID
 
 const PluggyConnect = dynamic(
   () => (import('react-pluggy-connect') as any).then((mod) => mod.PluggyConnect),
