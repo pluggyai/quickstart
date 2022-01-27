@@ -21,29 +21,19 @@ export default class PluggyStack extends sst.Stack {
       },
     })
 
-    const notificationLambda = new sst.Function(this, "NotificationLambda", {
-      handler: "src/notification.handler",
-      environment: {
-        TABLE_NAME: itemsTable.tableName,
-        PLUGGY_CLIENT_ID,
-        PLUGGY_CLIENT_SECRET,
-      }
-    })
-
-    const connectTokenLambda = new sst.Function(this, "ConnectTokenLambda", {
-      handler: "src/connect-token.handler",
-      environment: {
-        PLUGGY_CLIENT_ID,
-        PLUGGY_CLIENT_SECRET
-      }
-    })
-
     // Create a HTTP API
     const api = new sst.Api(this, "Api", {
       routes: {
-        "POST /connect-token": connectTokenLambda,
-        "POST /notification": notificationLambda,
+        "POST /connect-token": "src/connect-token.handler",
+        "POST /notification": "src/notification.handler",
       },
+      defaultFunctionProps: {
+        environment: {
+          TABLE_NAME: itemsTable.tableName,
+          PLUGGY_CLIENT_ID,
+          PLUGGY_CLIENT_SECRET,
+        } 
+      }
     });
 
     api.attachPermissions([itemsTable]);
