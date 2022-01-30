@@ -15,16 +15,14 @@
     ]
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.138.0",
     "@tsconfig/node14": "^1.0.1",
     "@types/aws-lambda": "^8.10.70",
     "@types/node": "<15.0.0"
   },
   "dependencies": {
-    "@aws-cdk/aws-dynamodb": "^1.138.0",
-    "@aws-cdk/core": "1.138.0",
-    "@serverless-stack/cli": "0.57.2",
-    "@serverless-stack/resources": "0.57.2",
+    "@serverless-stack/cli": "0.60.6",
+    "@serverless-stack/resources": "0.60.6",
+    "aws-cdk-lib": "2.7.0",
     "pluggy-sdk": "^0.12.3"
   }
 }

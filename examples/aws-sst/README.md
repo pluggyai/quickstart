@@ -1,10 +1,17 @@
 # Implementation of all resources in AWS
 
-This project was bootstrapped with [Create Serverless Stack](https://docs.serverless-stack.com/packages/create-serverless-stack).
+The project is built on top of [Serverless Framework](https://serverless.com/framework/) and [Pluggy](https://pluggy.ai).
 
 This project is a 2 minute setup to quickly start using Pluggy on your AWS environment.
 
 ## Quick start
+
+### Prerequisites
+
+Before you can deploy this project's infrastructure you will need to setup an AWS account on your environment.
+For more information on how to configure you IAM Credentials visit [SST IAM Setup](https://docs.serverless-stack.com/advanced/iam-credentials).
+
+### Running the example
 
 ```bash
 npm install
