@@ -1961,9 +1961,9 @@ base@^0.11.1:
     pascalcase "^0.1.1"
 
 belter@^1.0.123, belter@^1.0.41:
-  version "1.0.175"
-  resolved "https://registry.yarnpkg.com/belter/-/belter-1.0.175.tgz#7e7f9a5c7d910a2965bdf81e35031d79b18e6e28"
-  integrity sha512-Iaj2ME+ZlH75nfK4Qa6eWTx7C3Y7GJlx5v0uRpsbYs0qhCGzyca5rW9jjVrOucFFSoq2PazXSN8kVxmPv+Pv5w==
+  version "1.0.190"
+  resolved "https://registry.yarnpkg.com/belter/-/belter-1.0.190.tgz#491857550ef240d9c66b56fc637991f5c3089966"
+  integrity sha512-jz05FHrO+bwitdI6JxV5ESyRdVhTcwMWQ7L4o+q/R4LNJFQrG58sp9EiwsSjhbihhiyYFcmmCMRRagxte6igtw==
   dependencies:
     cross-domain-safe-weakmap "^1"
     cross-domain-utils "^2"
@@ -2079,7 +2079,7 @@ buffer-from@^1.0.0:
 
 buffer@^5.4.3:
   version "5.7.1"
-  resolved "https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.7.1.tgz#ba62e7c13133053582197160851a8f648e99eed0"
   integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
   dependencies:
     base64-js "^1.3.1"
@@ -2436,9 +2436,9 @@ cross-domain-safe-weakmap@^1, cross-domain-safe-weakmap@^1.0.1:
     cross-domain-utils "^2.0.0"
 
 cross-domain-utils@^2, cross-domain-utils@^2.0.0, cross-domain-utils@^2.0.33:
-  version "2.0.36"
-  resolved "https://registry.yarnpkg.com/cross-domain-utils/-/cross-domain-utils-2.0.36.tgz#51b0b4f73ee00a3b42c2fef4523197f382778ac1"
-  integrity sha512-7i7dSDQnzKJ9a7MrUNLzYlrXXJt+R3J0PWRDQbUhSbhuPv7y2fbn0IDV4nm9Zq7ehRIxUq65etQ5xxOkQAyYcA==
+  version "2.0.38"
+  resolved "https://registry.yarnpkg.com/cross-domain-utils/-/cross-domain-utils-2.0.38.tgz#2eaf321c4dfdb61596805ca4233fde4400cb6377"
+  integrity sha512-zZfi3+2EIR9l4chrEiXI2xFleyacsJf8YMLR1eJ0Veb5FTMXeJ3DpxDjZkto2FhL/g717WSELqbptNSo85UJDw==
   dependencies:
     zalgo-promise "^1.0.11"
 
@@ -3285,7 +3285,7 @@ iconv-lite@^0.6.2:
 
 ieee754@^1.1.13:
   version "1.2.1"
-  resolved "https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
 
 image-size@^0.6.0:
@@ -4639,10 +4639,10 @@ plist@^3.0.1:
     base64-js "^1.5.1"
     xmlbuilder "^9.0.7"
 
-pluggy-connect-sdk@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/pluggy-connect-sdk/-/pluggy-connect-sdk-1.0.1.tgz#10f170c5a3297a6c4817a861090b260712292f3b"
-  integrity sha512-b45OCQmmP3qhHCuRurNnljnjDJqC43Kxq7ehaAN8XPVly1V2CBf4BCYXO1rrxbrPa26pzrygvGLCGmIJ3FTv2Q==
+pluggy-connect-sdk@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/pluggy-connect-sdk/-/pluggy-connect-sdk-1.0.2.tgz#a96132ed791741165d40576f7b9f0db8f1648ace"
+  integrity sha512-zK8dglbc2pH1dcLSWJ+oHDws1SG6hcS2tHfjjNyJkPE6f7jLTnPZsi5qBWLDIj5F120LN14gg7rsn90XybLdMg==
   dependencies:
     zoid "9.0.63"
 
@@ -4663,9 +4663,9 @@ posix-character-classes@^0.1.0:
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
 
 post-robot@^10:
-  version "10.0.44"
-  resolved "https://registry.yarnpkg.com/post-robot/-/post-robot-10.0.44.tgz#98cf63be8a3cf39e73001c69f78f8b74a7f97d8f"
-  integrity sha512-LbA2E7gw/MkntjFtT2EPUrapIPCN/M9orKT3OTQC9A87raT5nmsL0nsHAr1AMZS0UoZxB6Z4K6OlnTxAgxXidw==
+  version "10.0.46"
+  resolved "https://registry.yarnpkg.com/post-robot/-/post-robot-10.0.46.tgz#39cea5b51033729390fc7c90be3285cd285f0377"
+  integrity sha512-EgVJiuvI4iRWDZvzObWes0X/n8olWBEJWxlSw79zmhpgkigX8UsVL4VOBhVtoJKwf0Y9qP9g2zOONw1rv80QbA==
   dependencies:
     belter "^1.0.41"
     cross-domain-safe-weakmap "^1.0.1"
@@ -4746,7 +4746,7 @@ pump@^3.0.0:
 
 punycode@^2.1.1:
   version "2.1.1"
-  resolved "https://registry.npmjs.org/punycode/-/punycode-2.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
 querystringify@^2.1.1:
@@ -4792,14 +4792,14 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-pluggy-connect@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/react-native-pluggy-connect/-/react-native-pluggy-connect-0.1.4.tgz#dd24bea7cd68f681a9c3f176c19732abd000d623"
-  integrity sha512-Hw3xSiHcIjBQtZ3dXPrYRw8xuI70ys21FQZ4EGmS6MSGOnS3LSUXTs7V+ywZjQCR/FwIT9WAdoUC1CkaphRE8Q==
+react-native-pluggy-connect@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-pluggy-connect/-/react-native-pluggy-connect-0.1.5.tgz#a7ae8e0724861dfba2222f399bf16b79c598d3f6"
+  integrity sha512-OnmrDT7G2mXoh2KPZgDyf6aXQ//BZVj7PIF6BgwFuDmHG4AtuzUXPkaeoqaYNdNIsSQPhx5qSZycgibESf4Gfw==
   dependencies:
     base-64 "^1.0.0"
     lodash.isequal "^4.5.0"
-    pluggy-connect-sdk "^1.0.1"
+    pluggy-connect-sdk "^1.0.2"
     react-native-url-polyfill "^1.3.0"
 
 react-native-safe-area-context@3.2.0:
@@ -4809,7 +4809,7 @@ react-native-safe-area-context@3.2.0:
 
 react-native-url-polyfill@^1.3.0:
   version "1.3.0"
-  resolved "https://registry.npmjs.org/react-native-url-polyfill/-/react-native-url-polyfill-1.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-native-url-polyfill/-/react-native-url-polyfill-1.3.0.tgz#c1763de0f2a8c22cc3e959b654c8790622b6ef6a"
   integrity sha512-w9JfSkvpqqlix9UjDvJjm1EjSt652zVQ6iwCIj1cVVkwXf4jQhQgTNXY6EVTwuAmUjg6BC6k9RHCBynoLFo3IQ==
   dependencies:
     whatwg-url-without-unicode "8.0.0-3"
@@ -5772,7 +5772,7 @@ wcwidth@^1.0.1:
 
 webidl-conversions@^5.0.0:
   version "5.0.0"
-  resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-5.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-5.0.0.tgz#ae59c8a00b121543a2acc65c0434f57b0fc11aff"
   integrity sha512-VlZwKPCkYKxQgeSbH5EyngOmRp7Ww7I9rQLERETtf5ofd9pGeswWiOtogpEO850jziPRarreGxn5QIiTqpb2wA==
 
 whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
@@ -5782,7 +5782,7 @@ whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
 
 whatwg-url-without-unicode@8.0.0-3:
   version "8.0.0-3"
-  resolved "https://registry.npmjs.org/whatwg-url-without-unicode/-/whatwg-url-without-unicode-8.0.0-3.tgz"
+  resolved "https://registry.yarnpkg.com/whatwg-url-without-unicode/-/whatwg-url-without-unicode-8.0.0-3.tgz#ab6df4bf6caaa6c85a59f6e82c026151d4bb376b"
   integrity sha512-HoKuzZrUlgpz35YO27XgD28uh/WJH4B0+3ttFqRo//lmq+9T/mIOJ6kqmINI9HpUpz1imRC/nR/lxKpJiv0uig==
   dependencies:
     buffer "^5.4.3"
@@ -5983,9 +5983,9 @@ yocto-queue@^0.1.0:
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
 zalgo-promise@^1, zalgo-promise@^1.0.11, zalgo-promise@^1.0.3, zalgo-promise@^1.0.45:
-  version "1.0.47"
-  resolved "https://registry.yarnpkg.com/zalgo-promise/-/zalgo-promise-1.0.47.tgz#cda98035cc97f053a1ab799277102ccb54897013"
-  integrity sha512-n6d/Gdv3Fl8l7h062WpWjpNYdDh5OFAg/e3UUqxdjbdUi4qdFcfYLJvaPIMrofmrgU7vEJ8ApLdg+yUeYCA9WQ==
+  version "1.0.48"
+  resolved "https://registry.yarnpkg.com/zalgo-promise/-/zalgo-promise-1.0.48.tgz#9e33eef502d5ed9f5a09fc5728c833c3e87afa2e"
+  integrity sha512-LLHANmdm53+MucY9aOFIggzYtUdkSBFxUsy4glTTQYNyK6B3uCPWTbfiGvSrEvLojw0mSzyFJ1/RRLv+QMNdzQ==
 
 zoid@9.0.63:
   version "9.0.63"
