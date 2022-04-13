@@ -1860,9 +1860,9 @@ base@^0.11.1:
     pascalcase "^0.1.1"
 
 belter@^1.0.123, belter@^1.0.41:
-  version "1.0.177"
-  resolved "https://registry.yarnpkg.com/belter/-/belter-1.0.177.tgz#4d49b6a7797c19a12eed233f408934964b808e49"
-  integrity sha512-oJCyvKkO6Cz+ocjEVdyYe6itIgcgS+AgONrEVexErIfFx6y4Q8Uv5699mvMkTWLY5wR72BXoCYZFkb17xJ/7dA==
+  version "1.0.190"
+  resolved "https://registry.yarnpkg.com/belter/-/belter-1.0.190.tgz#491857550ef240d9c66b56fc637991f5c3089966"
+  integrity sha512-jz05FHrO+bwitdI6JxV5ESyRdVhTcwMWQ7L4o+q/R4LNJFQrG58sp9EiwsSjhbihhiyYFcmmCMRRagxte6igtw==
   dependencies:
     cross-domain-safe-weakmap "^1"
     cross-domain-utils "^2"
@@ -2275,9 +2275,9 @@ cross-domain-safe-weakmap@^1, cross-domain-safe-weakmap@^1.0.1:
     cross-domain-utils "^2.0.0"
 
 cross-domain-utils@^2, cross-domain-utils@^2.0.0, cross-domain-utils@^2.0.33:
-  version "2.0.36"
-  resolved "https://registry.yarnpkg.com/cross-domain-utils/-/cross-domain-utils-2.0.36.tgz#51b0b4f73ee00a3b42c2fef4523197f382778ac1"
-  integrity sha512-7i7dSDQnzKJ9a7MrUNLzYlrXXJt+R3J0PWRDQbUhSbhuPv7y2fbn0IDV4nm9Zq7ehRIxUq65etQ5xxOkQAyYcA==
+  version "2.0.38"
+  resolved "https://registry.yarnpkg.com/cross-domain-utils/-/cross-domain-utils-2.0.38.tgz#2eaf321c4dfdb61596805ca4233fde4400cb6377"
+  integrity sha512-zZfi3+2EIR9l4chrEiXI2xFleyacsJf8YMLR1eJ0Veb5FTMXeJ3DpxDjZkto2FhL/g717WSELqbptNSo85UJDw==
   dependencies:
     zalgo-promise "^1.0.11"
 
@@ -5239,10 +5239,10 @@ plist@^3.0.1, plist@^3.0.2:
     base64-js "^1.5.1"
     xmlbuilder "^9.0.7"
 
-pluggy-connect-sdk@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/pluggy-connect-sdk/-/pluggy-connect-sdk-1.0.1.tgz#10f170c5a3297a6c4817a861090b260712292f3b"
-  integrity sha512-b45OCQmmP3qhHCuRurNnljnjDJqC43Kxq7ehaAN8XPVly1V2CBf4BCYXO1rrxbrPa26pzrygvGLCGmIJ3FTv2Q==
+pluggy-connect-sdk@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/pluggy-connect-sdk/-/pluggy-connect-sdk-1.0.2.tgz#a96132ed791741165d40576f7b9f0db8f1648ace"
+  integrity sha512-zK8dglbc2pH1dcLSWJ+oHDws1SG6hcS2tHfjjNyJkPE6f7jLTnPZsi5qBWLDIj5F120LN14gg7rsn90XybLdMg==
   dependencies:
     zoid "9.0.63"
 
@@ -5252,9 +5252,9 @@ posix-character-classes@^0.1.0:
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
 
 post-robot@^10:
-  version "10.0.44"
-  resolved "https://registry.yarnpkg.com/post-robot/-/post-robot-10.0.44.tgz#98cf63be8a3cf39e73001c69f78f8b74a7f97d8f"
-  integrity sha512-LbA2E7gw/MkntjFtT2EPUrapIPCN/M9orKT3OTQC9A87raT5nmsL0nsHAr1AMZS0UoZxB6Z4K6OlnTxAgxXidw==
+  version "10.0.46"
+  resolved "https://registry.yarnpkg.com/post-robot/-/post-robot-10.0.46.tgz#39cea5b51033729390fc7c90be3285cd285f0377"
+  integrity sha512-EgVJiuvI4iRWDZvzObWes0X/n8olWBEJWxlSw79zmhpgkigX8UsVL4VOBhVtoJKwf0Y9qP9g2zOONw1rv80QbA==
   dependencies:
     belter "^1.0.41"
     cross-domain-safe-weakmap "^1.0.1"
@@ -5378,14 +5378,14 @@ react-native-codegen@^0.0.7:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
-react-native-pluggy-connect@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/react-native-pluggy-connect/-/react-native-pluggy-connect-0.1.4.tgz#dd24bea7cd68f681a9c3f176c19732abd000d623"
-  integrity sha512-Hw3xSiHcIjBQtZ3dXPrYRw8xuI70ys21FQZ4EGmS6MSGOnS3LSUXTs7V+ywZjQCR/FwIT9WAdoUC1CkaphRE8Q==
+react-native-pluggy-connect@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-pluggy-connect/-/react-native-pluggy-connect-0.1.5.tgz#a7ae8e0724861dfba2222f399bf16b79c598d3f6"
+  integrity sha512-OnmrDT7G2mXoh2KPZgDyf6aXQ//BZVj7PIF6BgwFuDmHG4AtuzUXPkaeoqaYNdNIsSQPhx5qSZycgibESf4Gfw==
   dependencies:
     base-64 "^1.0.0"
     lodash.isequal "^4.5.0"
-    pluggy-connect-sdk "^1.0.1"
+    pluggy-connect-sdk "^1.0.2"
     react-native-url-polyfill "^1.3.0"
 
 react-native-url-polyfill@^1.3.0:
