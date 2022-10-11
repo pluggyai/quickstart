@@ -4639,10 +4639,10 @@ plist@^3.0.1:
     base64-js "^1.5.1"
     xmlbuilder "^9.0.7"
 
-pluggy-connect-sdk@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/pluggy-connect-sdk/-/pluggy-connect-sdk-1.0.2.tgz#a96132ed791741165d40576f7b9f0db8f1648ace"
-  integrity sha512-zK8dglbc2pH1dcLSWJ+oHDws1SG6hcS2tHfjjNyJkPE6f7jLTnPZsi5qBWLDIj5F120LN14gg7rsn90XybLdMg==
+pluggy-connect-sdk@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/pluggy-connect-sdk/-/pluggy-connect-sdk-1.3.1.tgz#1a46eb05e2b32e801be2d91450d6f8efd0fda33c"
+  integrity sha512-IcBxUytH/9OavoNIt8abmS1c9Dc10XNd92upCQOSK24lAy37sVhEW19p56NGkAhlSgUFuVxSsfehhNDFHv3M8Q==
   dependencies:
     zoid "9.0.63"
 
@@ -4792,14 +4792,14 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-pluggy-connect@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/react-native-pluggy-connect/-/react-native-pluggy-connect-0.1.5.tgz#a7ae8e0724861dfba2222f399bf16b79c598d3f6"
-  integrity sha512-OnmrDT7G2mXoh2KPZgDyf6aXQ//BZVj7PIF6BgwFuDmHG4AtuzUXPkaeoqaYNdNIsSQPhx5qSZycgibESf4Gfw==
+react-native-pluggy-connect@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-pluggy-connect/-/react-native-pluggy-connect-0.4.1.tgz#b4fdfecf3e2d5ab6348186970b711fad5930eb5f"
+  integrity sha512-l11t/OAMOWoaNacqySolySdGQIeJ+H2AFJh4B3JKhxQDtF9DGsd0zFBawTcSIphL23pYJXBHjYwe05Xk8XNzHw==
   dependencies:
     base-64 "^1.0.0"
     lodash.isequal "^4.5.0"
-    pluggy-connect-sdk "^1.0.2"
+    pluggy-connect-sdk "^1.3.1"
     react-native-url-polyfill "^1.3.0"
 
 react-native-safe-area-context@3.2.0:
