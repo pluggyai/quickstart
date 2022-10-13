@@ -33,7 +33,7 @@ with [Vercel](https://vercel.com) and get you're own endpoint for the connect to
 You can directly import `pluggy-connect.js` from our CDN to a `<script>` tag, specifying the library version:
 
 ```html
-<script src="https://cdn.pluggy.ai/pluggy-connect/v0.1.1/pluggy-connect.js"></script>
+<script src="https://cdn.pluggy.ai/pluggy-connect/v1.3.1/pluggy-connect.js"></script>
 ```
 
 After that, the `PluggyConnect` class is globally available. You can instantiate it like so:
