@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		514C9FFD1D5F90D5005D70E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514C9FFC1D5F90D5005D70E0 /* AppDelegate.swift */; };
-		514C9FFF1D5F90D5005D70E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514C9FFE1D5F90D5005D70E0 /* ViewController.swift */; };
+		514C9FFD1D5F90D5005D70E0 /* PluggyConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514C9FFC1D5F90D5005D70E0 /* PluggyConnect.swift */; };
+		514C9FFF1D5F90D5005D70E0 /* PluggyConnectWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514C9FFE1D5F90D5005D70E0 /* PluggyConnectWebView.swift */; };
 		514CA0021D5F90D5005D70E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 514CA0001D5F90D5005D70E0 /* Main.storyboard */; };
 		514CA0041D5F90D5005D70E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 514CA0031D5F90D5005D70E0 /* Assets.xcassets */; };
 		514CA0071D5F90D5005D70E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 514CA0051D5F90D5005D70E0 /* LaunchScreen.storyboard */; };
@@ -16,8 +16,8 @@
 
 /* Begin PBXFileReference section */
 		514C9FF91D5F90D5005D70E0 /* PluggyConnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PluggyConnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		514C9FFC1D5F90D5005D70E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		514C9FFE1D5F90D5005D70E0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		514C9FFC1D5F90D5005D70E0 /* PluggyConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluggyConnect.swift; sourceTree = "<group>"; };
+		514C9FFE1D5F90D5005D70E0 /* PluggyConnectWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluggyConnectWebView.swift; sourceTree = "<group>"; };
 		514CA0011D5F90D5005D70E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		514CA0031D5F90D5005D70E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		514CA0061D5F90D5005D70E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,8 +54,8 @@
 		514C9FFB1D5F90D5005D70E0 /* PluggyConnect */ = {
 			isa = PBXGroup;
 			children = (
-				514C9FFC1D5F90D5005D70E0 /* AppDelegate.swift */,
-				514C9FFE1D5F90D5005D70E0 /* ViewController.swift */,
+				514C9FFC1D5F90D5005D70E0 /* PluggyConnect.swift */,
+				514C9FFE1D5F90D5005D70E0 /* PluggyConnectWebView.swift */,
 				514CA0001D5F90D5005D70E0 /* Main.storyboard */,
 				514CA0031D5F90D5005D70E0 /* Assets.xcassets */,
 				514CA0051D5F90D5005D70E0 /* LaunchScreen.storyboard */,
@@ -139,8 +139,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				514C9FFF1D5F90D5005D70E0 /* ViewController.swift in Sources */,
-				514C9FFD1D5F90D5005D70E0 /* AppDelegate.swift in Sources */,
+				514C9FFF1D5F90D5005D70E0 /* PluggyConnectWebView.swift in Sources */,
+				514C9FFD1D5F90D5005D70E0 /* PluggyConnect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

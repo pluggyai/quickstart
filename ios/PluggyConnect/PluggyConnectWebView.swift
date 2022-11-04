@@ -5,7 +5,7 @@ struct ConnectTokenResponse: Decodable {
     let accessToken: String
 }
 
-class ViewController: UIViewController, WKNavigationDelegate {
+class PluggyConnectWebView: UIViewController, WKNavigationDelegate {
     var webView: WKWebView!
     var progressView: UIProgressView!
         
@@ -40,12 +40,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // note: you should generate your connectToken in your backend, see https://docs.pluggy.ai/docs/authentication#create-a-connect-token
         let urlToken = URL(string: "https://pluggy-connect.vercel.app/api/token")!
         let withSandbox = true // Use ENV variable to change this.
         let task = URLSession.shared.dataTask(with: urlToken) {(data, response, error) in
             guard let data = data else { return }
             let response = try! JSONDecoder().decode(ConnectTokenResponse.self, from: data)
             print(response.accessToken)
+            // build WebView URL with connect_token and extra config (ie. with_sandbox)
             let url = URL(string: "https://connect.pluggy.ai?connect_token=" + response.accessToken + "&with_sandbox=" + String(withSandbox))!
             self.webView.load(URLRequest(url: url))
         }
