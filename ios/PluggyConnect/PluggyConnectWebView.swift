@@ -1,5 +1,6 @@
 import UIKit
 import WebKit
+import Foundation
 
 struct ConnectTokenResponse: Decodable {
     let accessToken: String
@@ -21,7 +22,7 @@ class PluggyConnectWebView: UIViewController, WKNavigationDelegate {
         view = webView
     }
     
-    // Observe value
+    // see current Connect state via URL param
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if let key = change?[NSKeyValueChangeKey.newKey] {
             let url = (key as! URL).absoluteString
@@ -34,6 +35,10 @@ class PluggyConnectWebView: UIViewController, WKNavigationDelegate {
                     print("There was an error: ", error!)
                 }
             }
+            // get events from URL params to see user interaction with webapp
+            let events = getQueryStringParameter(url: url, param: "events")
+            let lastEvent = events?.components(separatedBy: [","]).last
+            print("[Event]: ", lastEvent)
         }
     }
 
