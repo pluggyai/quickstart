@@ -1,0 +1,8 @@
+## Code changes in submitted PRs will include the following
+## team/users as default reviewers.
+## For this to be valid, these users have to have Write access to the repo.
+##
+## docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+##
+
+* @pluggyai/ramen @pluggyai/tech-leaders
