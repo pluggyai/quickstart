@@ -10,8 +10,8 @@
     <script src="https://cdn.pluggy.ai/pluggy-connect/v2.2.1/pluggy-connect.js"></script>
     <script>
       // Use your own connect token API endpoint, this one only list sandbox connectors
-      // Reference: https://github.com/pluggyai/pluggy-connect-vercel
-      fetch('https://pluggy-connect.vercel.app/api/token', {
+      // Example Reference: https://github.com/pluggyai/quickstart/tree/master/examples/vercel-node-connect-token
+      fetch('https://my-own-api.vercel.app/api/token', {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -29,7 +29,7 @@
             connectToken: accessToken,
             includeSandbox: true,
             onSuccess: (itemData) => {
-              // TODO: Implement logic for succesfull connection
+              // TODO: Implement logic for succesful connection
               // The following line is an example, it should be removed when implemented.
               console.log('Yay! Pluggy connect success!', itemData);
             },
