@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next"
-import { PluggyClient } from "pluggy-sdk"
+import { NextApiRequest, NextApiResponse } from 'next'
+import { PluggyClient } from 'pluggy-sdk'
 
 // Avoid destructing based on nextjs:
 // https://nextjs.org/docs/basic-features/environment-variables
@@ -12,8 +12,8 @@ const pluggyClient = new PluggyClient({
 })
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== "POST") {
-    res.status(405).json({ message: "Method not allowed" })
+  if (req.method !== 'POST') {
+    res.status(405).json({ message: 'Method not allowed' })
     return
   }
 
@@ -26,6 +26,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.error(error)
     res
       .status(500)
-      .json({ message: "There was an error during connect token creation." })
+      .json({ message: 'There was an error during connect token creation.' })
   }
 }

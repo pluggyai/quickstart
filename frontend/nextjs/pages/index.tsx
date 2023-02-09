@@ -1,18 +1,18 @@
-import Head from "next/head"
-import dynamic from "next/dynamic"
+import Head from 'next/head'
+import dynamic from 'next/dynamic'
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from 'react'
 import type {
   ConnectEventPayload,
   PluggyConnect as PluggyConnectType,
-} from "react-pluggy-connect"
-import type { Item } from "pluggy-sdk"
+} from 'react-pluggy-connect'
+import type { Item } from 'pluggy-sdk'
 
-import styles from "../styles/Home.module.css"
+import styles from '../styles/Home.module.css'
 
 const PluggyConnect = dynamic(
   () =>
-    (import("react-pluggy-connect") as any).then((mod) => mod.PluggyConnect),
+    (import('react-pluggy-connect') as any).then((mod) => mod.PluggyConnect),
   { ssr: false }
 ) as typeof PluggyConnectType
 
@@ -23,10 +23,10 @@ export default function Home() {
   const [item, setItem] = useState<Item | null>(null)
 
   const generateToken = useCallback(async (itemId?: string) => {
-    const response = await fetch("/api/token", {
-      method: "POST",
+    const response = await fetch('/api/token', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       // you can pass an itemId to generate a token to update that specific item or use
       // the same connect token that creates the item you want to update see https://docs.pluggy.ai/docs/updating-an-item
@@ -52,18 +52,18 @@ export default function Home() {
   }, [generateToken])
 
   const onSuccess = useCallback((itemData: { item: Item }) => {
-    console.log("Yaaay, we got an item: ", itemData.item)
+    console.log('Yaaay, we got an item: ', itemData.item)
     setItem(itemData.item)
   }, [])
 
   const onError = useCallback((error) => {
-    console.log("Oops, there was an error: ", error)
+    console.log('Oops, there was an error: ', error)
   }, [])
 
   const handleEvent = useCallback((payload: ConnectEventPayload) => {
     const { event } = payload
 
-    console.log("[event]", event)
+    console.log('[event]', event)
   }, [])
 
   const handleCheckboxChange = useCallback((event) => {
@@ -97,7 +97,7 @@ export default function Home() {
         <h1 className={styles.title}>Pluggy Connect</h1>
 
         <p className={styles.description}>
-          Quickstart application to run Pluggy Connect with{" "}
+          Quickstart application to run Pluggy Connect with{' '}
           <a
             href="https://github.com/vercel/next.js"
             target="_blank"
@@ -131,7 +131,7 @@ export default function Home() {
             Connect an account
           </button>
           <button
-            className={`secondary ${!item ? "disabled" : ""}`}
+            className={`secondary ${!item ? 'disabled' : ''}`}
             onClick={item ? handleOpenConnectInUpdateMode : undefined}
           >
             Update last connection
@@ -156,7 +156,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
+          Powered by{' '}
           <img src="/logo.png" alt="Pluggy Logo" className={styles.logo} />
         </a>
       </footer>
