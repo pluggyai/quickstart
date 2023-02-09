@@ -20,7 +20,7 @@ Then, the app will open in a new browser tab on `http://localhost:3000`
 
 ## Update Mode
 
-To run the Pluggy Connect widget in Update Mode, you should use a connectToken generated with the itemId you want to update, or use the same connectToken used to create the item.
+To run Pluggy Connect widget in Update Mode, you should use a connectToken generated with the itemId you want to update, or use the same connectToken used to create the item.
 
 In this example, we generate a new token each time you want to update the last connection.
 
