@@ -20,9 +20,11 @@ Then, the app will open in a new browser tab on `http://localhost:3000`
 
 ## Update Mode
 
-When configuring the `NEXT_PUBLIC_PLUGGY_UPDATE_ITEM_ID` environment variable, the app will automatically update the item with the given ID and intialize the UI widget in `Update Mode`.
+To run Pluggy Connect widget in Update Mode, you should use a connectToken generated with the itemId you want to update, or use the same connectToken used to create the item.
 
-This will allow you to test the update flow of the UI widget, requesting you the necessary credentials to update the item.
+In this example, we generate a new token each time you want to update the last connection.
+
+See more about updating an item [here](https://docs.pluggy.ai/docs/updating-an-item) and check out our [recipies](https://docs.pluggy.ai/recipes/generate-a-connect-token-with-permissions-to-update-an-existing-item)!
 
 ---
 

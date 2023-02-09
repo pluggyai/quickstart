@@ -1,3 +1,12 @@
+* {
+  box-sizing: border-box;
+  --primary: #e25468;
+  --primary-hover: #c71b39;
+  --secondary-hover: #ffeff2;
+  --secondary-background-button-disabled: #f8f8f8;
+  --secondary-text-button-disabled: #b1b1b1;
+}
+
 html,
 body {
   padding: 0;
@@ -11,6 +20,45 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+input[type="checkbox"] {
+  accent-color: var(--primary);
+}
+
+button {
+  max-width: fit-content;
+  cursor: pointer;
+  border: none;
+  background-color: var(--primary);
+  color: #fff;
+
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 18px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+  text-shadow: none;
+  box-sizing: none;
+}
+
+button.secondary {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+button.secondary:hover {
+  background-color: var(--secondary-hover);
+}
+
+button.secondary.disabled {
+  background-color: var(--secondary-background-button-disabled);
+  color: var(--secondary-text-button-disabled);
+  border: 1px solid var(--secondary-text-button-disabled);
+  cursor: not-allowed;
 }
