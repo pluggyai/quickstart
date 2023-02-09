@@ -76,6 +76,8 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  flex-direction: column;
+  gap: 12px;
   max-width: 800px;
   margin-top: 3rem;
 }
@@ -112,6 +114,31 @@
 
 .logo {
   height: 2em;
+}
+
+.sandboxCheckbox .input {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.sandboxCheckbox a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+.sandboxCheckbox a:hover {
+  text-decoration: underline;
+}
+
+.connectTokenSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.connectTokenSection > button {
+  margin-top: 12px;
 }
 
 @media (max-width: 600px) {
