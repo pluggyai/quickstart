@@ -1,6 +1,5 @@
 {
-  "name": "pluggyconnectquickstart",
-  "version": "0.0.1",
+  "name": "react-native-pluggy-connect-example",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -12,7 +11,7 @@
   "dependencies": {
     "react": "17.0.2",
     "react-native": "0.66.0",
-    "react-native-pluggy-connect": "^0.4.1",
+    "react-native-pluggy-connect": "^1.1.0",
     "react-native-webview": "^11.14.0"
   },
   "devDependencies": {
