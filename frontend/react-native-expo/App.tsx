@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
-import { StatusBar } from 'expo-status-bar';
-import { PluggyConnect } from 'react-native-pluggy-connect';
+import React, { useCallback, useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { PluggyConnect } from "react-native-pluggy-connect";
+import type { Item } from "pluggy-js";
 
 /**
  * TODO: replace this URL with your own API, that would return an { accessToken } object
  *  with your Pluggy connect token
  */
-const MY_CONNECT_TOKEN_API_URL = 'https://pluggy-connect.vercel.app/api/token';
+const MY_CONNECT_TOKEN_API_URL = "https://pluggy-connect.vercel.app/api/token";
 
 export default function App() {
   const [token, setToken] = useState<string>();
@@ -18,14 +18,14 @@ export default function App() {
     async function fetchToken() {
       try {
         const response = await fetch(MY_CONNECT_TOKEN_API_URL, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             options: {
-              clientUserId: 'user@example.com',
+              clientUserId: "user@example.com",
             },
           }),
         });
@@ -38,8 +38,8 @@ export default function App() {
         } else {
           setError(responseJson);
         }
-      } catch (error) {
-        setError({ message: error.message });
+      } catch (error: unknown) {
+        setError({ message: (error as Error).message });
       }
     }
 
@@ -47,19 +47,27 @@ export default function App() {
   }, []);
 
   const handleOnOpen = useCallback(() => {
-    console.log('open');
+    console.log("open");
   }, []);
 
-  const handleOnSuccess = useCallback((itemData) => {
-    console.log('success', itemData);
+  const handleOnSuccess = useCallback((itemData: { item: Item }) => {
+    console.log("success", itemData);
   }, []);
 
-  const handleOnError = useCallback((error) => {
-    console.log('error', error);
-  }, []);
+  const handleOnError = useCallback(
+    (error: {
+      message: string;
+      data?: {
+        item: Item;
+      };
+    }) => {
+      console.log("error", error);
+    },
+    []
+  );
 
   const handleOnClose = useCallback(() => {
-    setToken('');
+    setToken("");
   }, []);
 
   if (error) {
@@ -100,8 +108,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
