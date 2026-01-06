@@ -1,0 +1,40 @@
+{
+  "name": "pluggy-quickstart",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^3.30.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@supabase/supabase-js": "^2.86.0",
+    "axios": "^1.13.2",
+    "framer-motion": "^12.23.24",
+    "jsonwebtoken": "^9.0.2",
+    "next": "^16.0.7",
+    "pluggy-sdk": "^0.79.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "react-pluggy-connect": "^2.11.0",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^20.19.25",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "^16.0.7",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.7.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
