@@ -55,13 +55,15 @@ export async function handleTransactionsCreated({ accountId, itemId, transaction
       createdAtFrom: transactionsCreatedAtFrom
     });
 
-    if (transactions.length > 0) {
-      const transactionsToUpsert: TransactionRecord[] = transactions.map((tx: Transaction) => 
-        mapTransactionFromPluggyToDb(tx, accountId) as TransactionRecord
-      );
-
-      await transactionsService.upsertTransactions(transactionsToUpsert);
+    if (transactions.length === 0) {
+      return;
     }
+    
+    const transactionsToUpsert: TransactionRecord[] = transactions.map((tx: Transaction) => 
+      mapTransactionFromPluggyToDb(tx, accountId) as TransactionRecord
+    );
+
+    await transactionsService.upsertTransactions(transactionsToUpsert);
   } catch (error) {
     console.error(`Error handling transactions created for account ${accountId}:`, {
       error: error instanceof Error ? error.message : String(error),
