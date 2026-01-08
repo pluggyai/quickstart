@@ -12,7 +12,7 @@ import styles from '../styles/Home.module.css'
 
 const PluggyConnect = dynamic(
   () =>
-    (import('react-pluggy-connect') as any).then((mod) => mod.PluggyConnect),
+    import('react-pluggy-connect').then((mod: any) => mod.PluggyConnect),
   { ssr: false }
 ) as typeof PluggyConnectType
 
@@ -44,7 +44,7 @@ export default function Home() {
     }
     await generateToken(item.id)
     setConnecting(true)
-  }, [item])
+  }, [item, generateToken])
 
   useEffect(() => {
     // generate a token to be used in the Pluggy Connect when component is mounted
@@ -56,7 +56,7 @@ export default function Home() {
     setItem(itemData.item)
   }, [])
 
-  const onError = useCallback((error) => {
+  const onError = useCallback((error: any) => {
     console.log('Oops, there was an error: ', error)
   }, [])
 
@@ -66,7 +66,7 @@ export default function Home() {
     console.log('[event]', event)
   }, [])
 
-  const handleCheckboxChange = useCallback((event) => {
+  const handleCheckboxChange = useCallback(() => {
     setSandbox((previous) => !previous)
   }, [])
 
@@ -78,7 +78,7 @@ export default function Home() {
     // if there is an item, we remove it from the state
     // to be able to open the Pluggy Connect widget in create mode
     if (item) {
-      setItem(undefined)
+      setItem(null)
     }
 
     setConnecting(true)
@@ -136,7 +136,7 @@ export default function Home() {
           >
             Update last connection
           </button>
-          {connecting && (
+          {connecting && connectToken && (
             <PluggyConnect
               updateItem={item?.id}
               connectToken={connectToken}

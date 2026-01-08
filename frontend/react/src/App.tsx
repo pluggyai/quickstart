@@ -3,10 +3,6 @@ import { PluggyConnect } from 'react-pluggy-connect';
 
 import './App.css';
 
-/**
- * TODO: replace this URL with your own API returning an { accessToken } object
- * with your Pluggy connect token
- */
 const {
   REACT_APP_CONNECT_TOKEN_API_URL: connectTokenApiUrl = '',
 } = process.env;
@@ -17,7 +13,7 @@ if (!connectTokenApiUrl) {
 
 const App = () => {
   const [token, setToken] = useState<string>();
-  const [error, setError] = useState();
+  const [error, setError] = useState<string>();
   const [isConnectVisible, setIsConnectVisible] = useState(false);
   const [includeSandbox, setIncludeSandbox] = useState(false);
 
@@ -39,16 +35,20 @@ const App = () => {
         const { accessToken } = await response.json();
         setToken(accessToken);
       } catch (error) {
-        setError(error.message);
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred');
+        }
       }
     }
 
     fetchToken();
   }, []);
 
-  const openConnectPopup = () => {
+  const openConnectPopup = useCallback(() => {
     setIsConnectVisible(true);
-  };
+  }, []);
 
   const onClosePopup = useCallback(() => {
     setIsConnectVisible(false);
@@ -65,9 +65,7 @@ const App = () => {
 
   if (!token) {
     return (
-      <>
-        <div className="App">Loading...</div>
-      </>
+      <div className="App">Loading...</div>
     );
   }
 
