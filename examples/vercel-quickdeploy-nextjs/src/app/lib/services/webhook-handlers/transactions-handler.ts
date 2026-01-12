@@ -16,33 +16,6 @@ import type {
 
 const pluggyClient = getPluggyClient();
 
-// Helper function to fetch all transactions with pagination
-async function fetchAllTransactionsWithFilter(
-  accountId: string, 
-  filters: { createdAtFrom?: string; ids?: string[] }
-): Promise<Transaction[]> {
-  const allTransactions: Transaction[] = [];
-  let page = 1;
-  let hasMore = true;
-
-  while (hasMore) {
-    const response = await pluggyClient.fetchTransactions(accountId, {
-      ...filters,
-      page,
-      pageSize: 500
-    });
-
-    if (response.results && response.results.length > 0) {
-      allTransactions.push(...response.results);
-    }
-
-    hasMore = response.results.length === 500;
-    page++;
-  }
-
-  return allTransactions;
-}
-
 export async function handleTransactionsCreated({ accountId, itemId, transactionsCreatedAtFrom }: Extract<WebhookEventPayload, { event: 'transactions/created' }>): Promise<void> {
   try {
     const accountExists = await accountsService.getAccountById(accountId);
@@ -51,7 +24,7 @@ export async function handleTransactionsCreated({ accountId, itemId, transaction
       await syncAccountData(itemId);
     }
 
-    const transactions = await fetchAllTransactionsWithFilter(accountId, {
+    const transactions = await pluggyClient.fetchAllTransactions(accountId, {
       createdAtFrom: transactionsCreatedAtFrom
     });
 
@@ -77,7 +50,7 @@ export async function handleTransactionsUpdated({transactionIds = [], accountId 
   try {
     if (transactionIds.length === 0) return;
 
-    const transactions = await fetchAllTransactionsWithFilter(accountId, {
+    const transactions = await pluggyClient.fetchAllTransactions(accountId, {
       ids: transactionIds
     });
 
