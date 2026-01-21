@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
-import { PluggyConnect } from 'react-native-pluggy-connect';
+import React, {useCallback, useEffect, useState} from 'react';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {PluggyConnect} from 'react-native-pluggy-connect';
 
 /**
  * TODO: replace this URL with your own API, that would return an { accessToken } object
@@ -31,13 +31,13 @@ const App = () => {
         const responseJson = await response.json();
 
         if (response.ok) {
-          const { accessToken } = responseJson;
+          const {accessToken} = responseJson;
           setToken(accessToken);
         } else {
           setError(responseJson);
         }
-      } catch (error) {
-        setError({ message: error.message });
+      } catch (error: any) {
+        setError({message: error.message});
       }
     }
 
@@ -48,11 +48,11 @@ const App = () => {
     console.log('open');
   }, []);
 
-  const handleOnSuccess = useCallback(itemData => {
+  const handleOnSuccess = useCallback((itemData: any) => {
     console.log('success', itemData);
   }, []);
 
-  const handleOnError = useCallback(error => {
+  const handleOnError = useCallback((error: any) => {
     console.log('error', error);
   }, []);
 
