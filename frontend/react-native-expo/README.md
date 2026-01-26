@@ -1,50 +1,55 @@
-# Welcome to your Expo app 👋
+# Pluggy Connect Quickstart - React Native
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A minimal React Native example application demonstrating the integration of Pluggy's Connect widget for financial institution connections. Built with Expo for cross-platform mobile development.
 
-## Get started
+## Overview
 
-1. Install dependencies
+This repository contains a reference implementation of the Pluggy Connect SDK in a React Native environment. The app demonstrates how to securely fetch connect tokens from a backend API and present the Pluggy Connect widget to users for linking their financial accounts.
 
-   ```bash
-   npm install
-   ```
+## Features
 
-2. Start the app
+- Native Pluggy Connect widget integration using `react-native-pluggy-connect`
+- Expo-based setup for iOS and Android development
+- TypeScript support
+- Sandbox mode enabled for testing
+- Backend token generation pattern (security best practice)
 
-   ```bash
-   npx expo start
-   ```
+## Tech Stack
 
-In the output, you'll find options to open the app in a
+- **React Native**: 0.81.5
+- **Expo SDK**: ~54.0.31
+- **Expo Router**: ~6.0.22
+- **pluggy-js**: ^0.19.3
+- **react-native-pluggy-connect**: ^1.4.1
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Getting Started
 
 ```bash
-npm run reset-project
+# Install dependencies
+npm install
+
+# Run on iOS (requires macOS)
+npm run ios
+
+# Run on Android
+npm run android
+
+# Run on web
+npm run web
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Architecture
 
-## Learn more
+The app fetches a Pluggy connect token from a backend API endpoint, then renders the Pluggy Connect widget. When users successfully connect their accounts, the app receives callback events with the connection details.
 
-To learn more about developing your project with Expo, look at the following resources:
+**Important**: For production use, you must implement your own backend API to generate connect tokens securely. The demo API endpoint included in the code is for demonstration purposes only.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Resources
 
-## Join the community
+- [Pluggy Documentation](https://docs.pluggy.ai/)
+- [Pluggy Dashboard](https://dashboard.pluggy.ai)
+- [Expo Documentation](https://docs.expo.dev/)
 
-Join our community of developers creating universal apps.
+## License
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+MIT
