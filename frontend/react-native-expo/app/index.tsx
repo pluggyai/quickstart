@@ -8,9 +8,9 @@ import type { Item } from "pluggy-js";
  * TODO: replace this URL with your own API, that would return an { accessToken } object
  *  with your Pluggy connect token
  */
-const MY_CONNECT_TOKEN_API_URL = "https://pluggy-connect.vercel.app/api/token";
+const MY_CONNECT_TOKEN_API_URL = "https://connect-token-example.vercel.app/api/token";
 
-export default function App() {
+export default function Index() {
   const [token, setToken] = useState<string>();
   const [error, setError] = useState<Record<string, unknown>>();
 
