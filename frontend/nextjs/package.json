@@ -9,15 +9,15 @@
   },
   "dependencies": {
     "next": "15.1.6",
-    "pluggy-sdk": "^0.31.0",
+    "pluggy-sdk": "0.31.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-pluggy-connect": "^2.8.1"
+    "react-pluggy-connect": "2.12.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.5",
-    "@types/react": "^19.0.6",
-    "@types/react-dom": "^19.0.2",
-    "typescript": "^5.7.2"
+    "@types/node": "22.19.3",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3"
   }
 }
