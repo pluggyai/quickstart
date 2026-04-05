@@ -1,32 +1,57 @@
-# Vercel Node.js MongoDB Example
+# Pluggy - Vercel + MongoDB Example
 
-This is an example [Vercel](https://vercel.com) application using [Pluggy Node.js SDK](https://github.com/pluggyai/pluggy-node) to save all created items in a MongoDB collection to make them available for querying.
+Vercel serverless functions with MongoDB persistence. Receives Pluggy webhook notifications and stores items for querying.
 
-## Installation
+## Prerequisites
 
-Clone the repo, fill the `.env` file and run the following:
+- [Vercel CLI](https://vercel.com/docs/cli) (`npm i -g vercel`)
+- MongoDB instance (e.g., [MongoDB Atlas](https://www.mongodb.com/atlas))
+- Pluggy API credentials from [dashboard.pluggy.ai](https://dashboard.pluggy.ai)
 
+## Setup
+
+1. Clone and configure:
+
+```bash
+npm install
+cp .env.example .env
+# Fill in your MongoDB URI and Pluggy credentials
 ```
-npm i
+
+2. Run locally:
+
+```bash
 vercel dev
 ```
 
-## Usage
+## API Endpoints
 
-- Setup a [Pluggy Webhook](https://docs.pluggy.ai/#webhooks) to hit `/api/notifications`
+### `POST /api/notifications`
 
-- Use `/api/items` to query, with query parameters `from` (timestamp), `skip` (integer) and `size` (integer >= 20)
+Webhook handler for Pluggy events. Configure in your [Pluggy Dashboard](https://dashboard.pluggy.ai) webhook settings.
 
-Example requests:
+### `GET /api/items`
+
+Query stored items. Requires `Authorization: Bearer <token>` header.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `from` | timestamp | Filter items created after this date |
+| `skip` | integer | Pagination offset |
+| `size` | integer (>= 20) | Page size |
+
+Example:
 
 ```bash
-curl -H "Authorization: Bearer my-secured-token" 'http://localhost:3000/api/items?from=2020-03-17T15:58:13.070Z&size=5'
-curl -H "Authorization: Bearer my-secured-token" 'http://localhost:3000/api/items?from=2020-01-01T00:01:00.000Z&skip=100'
-curl -H "Authorization: Bearer my-secured-token" 'http://localhost:3000/api/items?from=2020-01-01T00:01:00.000Z&size=10&skip=5'
+curl -H "Authorization: Bearer my-token" \
+  'http://localhost:3000/api/items?from=2024-01-01T00:00:00.000Z&size=10'
 ```
 
 ## Deploy
 
-Deploy your own Docusaurus project with Vercel in a matter of minutes by just setting environment variables.
-
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/pluggyai/quickstart/tree/master/examples/vercel-node-mongo)
+
+## Resources
+
+- [Pluggy Webhooks Docs](https://docs.pluggy.ai/#webhooks)
+- [MongoDB Atlas](https://www.mongodb.com/atlas)

@@ -1,31 +1,49 @@
-# React Pluggy Connect Example
+# Pluggy Connect - Next.js Example
 
-This an example app that showcases the usage of the Pluggy Connect with [Next.js](https://github.com/vercel/next.js). It uses the package `react-pluggy-connect` on the client-side to instantiate the UI widget and `pluggy-sdk` on the server-side to create connect tokens.
+Full-stack Next.js application with server-side connect token generation and the Pluggy Connect widget.
+
+## Prerequisites
+
+- Node.js 18+
+- Pluggy API credentials (Client ID and Client Secret from [dashboard.pluggy.ai](https://dashboard.pluggy.ai))
 
 ## Setup
 
-Create an `.env` file using `.env.example` as template and fill with Pluggy **CLIENT_ID** and **CLIENT_SECRET** credentials.
+1. Copy the environment file and fill in your credentials:
 
+```bash
+cp .env.example .env
 ```
+
+Required variables:
+- `PLUGGY_CLIENT_ID` - Your Pluggy Client ID
+- `PLUGGY_CLIENT_SECRET` - Your Pluggy Client Secret
+
+2. Install dependencies:
+
+```bash
 npm install
 ```
 
-## Run it
+## Run
 
-```
+```bash
 npm run dev
 ```
 
-Then, the app will open in a new browser tab on `http://localhost:3000`
+Opens at `http://localhost:3000`.
 
-## Update Mode
+## How It Works
 
-To run Pluggy Connect widget in Update Mode, you should use a connectToken generated with the itemId you want to update, or use the same connectToken used to create the item.
+- **Server-side** (`pages/api/`): Uses `pluggy-sdk` to generate connect tokens securely
+- **Client-side**: Uses `react-pluggy-connect` to render the Connect widget
+- Supports **Update Mode** for reconnecting existing items ([docs](https://docs.pluggy.ai/docs/updating-an-item))
 
-In this example, we generate a new token each time you want to update the last connection.
+## Resources
 
-See more about updating an item [here](https://docs.pluggy.ai/docs/updating-an-item) and check out our [recipies](https://docs.pluggy.ai/recipes/generate-a-connect-token-with-permissions-to-update-an-existing-item)!
+- [Pluggy Connect Widget Docs](https://docs.pluggy.ai/#pluggy-connect-widget)
+- [Next.js Documentation](https://nextjs.org/docs)
 
 ---
 
-_This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)._
+_Built with [Next.js](https://nextjs.org/) (Pages Router)._
