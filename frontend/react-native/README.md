@@ -1,54 +1,51 @@
-# React Native Pluggy Connect Example
+# Pluggy Connect - React Native Example
 
-This an example app that showcases the usage of the Pluggy Connect widget with React Native.
+React Native application using [react-native-pluggy-connect](https://www.npmjs.com/package/react-native-pluggy-connect) for mobile financial account connections.
+
+> **Note**: This example uses React Native 0.66 and React 17. For a modern setup, see the [Expo example](../react-native-expo).
+
+## Prerequisites
+
+- Node.js 18+
+- React Native development environment ([setup guide](https://reactnative.dev/docs/environment-setup))
+- macOS + Xcode (for iOS) or Android Studio (for Android)
 
 ## Setup
 
-Install dependencies:
-
-```
-yarn
+```bash
+npm install
 ```
 
-## Run it
+For iOS, install CocoaPods:
 
-### Start Metro
-
-First, run:
-
-```shell
-yarn start
+```bash
+cd ios && pod install && cd ..
 ```
 
-This will start Metro, the JavaScript bundler that ships with React Native. Metro "takes in an entry
-file and various options, and returns a single JavaScript file that includes all your code and its
-dependencies."—Metro Docs
+## Run
 
-### Start the application
+Start Metro bundler:
 
-On a new terminal, run one of the following commands to launch the application, based on your device
-OS.
-
-#### Android
-
-```shell
-yarn android
+```bash
+npx react-native start
 ```
 
-If everything is set up correctly, you should see your new app running in your Android emulator (
-installed with Android Studio) shortly.
+In a new terminal, launch the app:
 
-#### iOS
+```bash
+# iOS
+npx react-native run-ios
 
-Note: this requires an iOS device, and/or macOS for access to an iOS emulator.
-
-```shell
-yarn ios
+# Android
+npx react-native run-android
 ```
 
-If everything is set up correctly, you should see your new app running in the iOS emulator shortly.
+## Configuration
 
-## More
+Edit `App.tsx` and replace the `MY_CONNECT_TOKEN_API_URL` with your own backend token endpoint. See the [backend examples](../../examples) for options.
 
-See [React Native documentation](https://reactnative.dev/docs/signed-apk-android) for more
-information, such as publishing to the App Store, etc.
+## Resources
+
+- [react-native-pluggy-connect on npm](https://www.npmjs.com/package/react-native-pluggy-connect)
+- [Pluggy Connect Widget Docs](https://docs.pluggy.ai/#pluggy-connect-widget)
+- [React Native Documentation](https://reactnative.dev/)

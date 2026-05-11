@@ -1,68 +1,52 @@
-# Implementation of all resources in AWS
+# Pluggy - AWS Serverless (SST) Example
 
-The project is built on top of [Serverless Framework](https://serverless.com/framework/) and [Pluggy](https://pluggy.ai).
+AWS serverless infrastructure for Pluggy integration using Lambda, DynamoDB, and the [Serverless Stack (SST)](https://sst.dev/) framework.
 
-This project is a 2 minute setup to quickly start using Pluggy on your AWS environment.
+> **Note**: This example uses SST v1 (`@serverless-stack/*`), which is deprecated. For new projects, consider using [SST v3](https://sst.dev/) or the [Vercel quickdeploy](../vercel-quickdeploy-nextjs) example.
 
-## Quick start
+## Prerequisites
 
-### Prerequisites
+- Node.js 18+
+- AWS account with configured credentials ([IAM setup guide](https://docs.sst.dev/advanced/iam-credentials))
+- Pluggy API credentials from [dashboard.pluggy.ai](https://dashboard.pluggy.ai)
 
-Before you can deploy this project's infrastructure you will need to setup an AWS account on your environment.
-For more information on how to configure you IAM Credentials visit [SST IAM Setup](https://docs.serverless-stack.com/advanced/iam-credentials).
+## Setup
 
-### Running the example
+1. Create a `.env` file with:
+
+- AWS credentials
+- `PLUGGY_CLIENT_ID`
+- `PLUGGY_CLIENT_SECRET`
+
+2. Install and run:
 
 ```bash
 npm install
 npm start
 ```
 
-### Configuration
-
-Setup your `.env` with your AWS credentials & your Pluggy Client ID and Secret, before running `npm start` or `npm deploy`.
-
-With the created resources you can already start using Pluggy's widget on your website.
-
 ## Architecture
-
-In the following image the high-level architecture of the project is shown.
 
 ![Architecture](docs/diagram.png)
 
-
-The following resources are implemented:
-- DynamoDB: [DynamoDB](https://docs.serverless-stack.com/packages/dynamodb)
-Stores the items created on Pluggy to recover by it's id.
-- Labda: [Lambda](https://docs.serverless-stack.com/packages/lambda)
-  - Notification: Process webhooks from Pluggy [Pluggy](https://docs.pluggy.ai/webhooks)
-  - Connect Token: Recovers a connect token to inializate a Widget instance.
+| Resource | Purpose |
+|----------|---------|
+| **DynamoDB** | Stores items created via Pluggy |
+| **Lambda (Notification)** | Processes Pluggy webhook events |
+| **Lambda (Connect Token)** | Generates connect tokens for the widget |
 
 ## Commands
 
-### `npm run start`
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start local Lambda dev environment |
+| `npm run build` | Build and synthesize CloudFormation stacks |
+| `npm run deploy` | Deploy to AWS |
+| `npm run remove` | Remove all stacks from AWS |
+| `npm test` | Run tests |
 
-Starts the local Lambda development environment.
+## Resources
 
-### `npm run build`
-
-Build your app and synthesize your stacks.
-
-Generates a `.build/` directory with the compiled files and a `.build/cdk.out/` directory with the synthesized CloudFormation stacks.
-
-### `npm run deploy [stack]`
-
-Deploy all your stacks to AWS. Or optionally deploy a specific stack.
-
-### `npm run remove [stack]`
-
-Remove all your stacks and all of their resources from AWS. Or optionally remove a specific stack.
-
-### `npm run test`
-
-Runs your tests using Jest. Takes all the [Jest CLI options](https://jestjs.io/docs/en/cli).
-
-## Documentation
-
-- [Pluggy Docs](https://docs.pluggy.ai)
-- [Serverless Stack Docs](https://docs.serverless-stack.com)
+- [Pluggy Documentation](https://docs.pluggy.ai)
+- [Pluggy Webhooks](https://docs.pluggy.ai/#webhooks)
+- [SST Documentation](https://docs.sst.dev)
