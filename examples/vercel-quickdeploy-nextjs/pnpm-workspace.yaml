@@ -1,0 +1,6 @@
+minimumReleaseAge: 10080
+autoInstallPeers: true
+
+allowBuilds:
+  sharp: true
+  unrs-resolver: true
