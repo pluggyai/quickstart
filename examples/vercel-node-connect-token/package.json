@@ -1,14 +1,26 @@
 {
   "name": "vercel-node-connect-token",
   "description": "A vercel serverless function example that creates a connect token to pair new accounts",
-  "engines": {
-    "node": ">=22.11.0"
-  },
   "packageManager": "pnpm@11.1.1",
-  "devDependencies": {
-    "@vercel/node": "1.10.0"
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0",
+      "onFail": "error"
+    }
+  },
+  "scripts": {
+    "preinstall": "pnpm audit && pnpm audit signatures",
+    "lint:lockfile": "pnpm install --frozen-lockfile"
   },
   "dependencies": {
     "pluggy-sdk": "0.7.1"
+  },
+  "devDependencies": {
+    "@vercel/node": "1.10.0"
   }
 }
