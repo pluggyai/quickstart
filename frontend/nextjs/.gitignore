@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# Block npm/yarn lockfiles — this project is pnpm-only
+package-lock.json
+yarn.lock
+
 # testing
 /coverage
 

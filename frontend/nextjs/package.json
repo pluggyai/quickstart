@@ -1,7 +1,21 @@
 {
   "name": "nextjs-pluggy-connect-example",
   "license": "MIT",
+  "packageManager": "pnpm@11.1.1",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0",
+      "onFail": "error"
+    }
+  },
   "scripts": {
+    "preinstall": "pnpm audit && pnpm audit signatures",
+    "lint:lockfile": "pnpm install --frozen-lockfile",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -9,7 +23,7 @@
   },
   "dependencies": {
     "next": "15.5.18",
-    "pluggy-sdk": "0.31.1",
+    "pluggy-sdk": "0.85.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-pluggy-connect": "2.12.0"
