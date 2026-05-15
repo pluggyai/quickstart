@@ -1,6 +1,134 @@
-minimumReleaseAge: 10080
-autoInstallPeers: true
+# Supply-chain hardening
+# ----------------------
 
+# Reject any package version published less than 14 days ago when
+# resolving. Existing locked versions install regardless (the filter
+# only kicks in on `pnpm install` / `pnpm update` when the lockfile
+# changes). Most supply-chain attacks are detected within hours or
+# days; the 14-day window absorbs that while keeping upgrades moving
+# at a reasonable pace. For a critical CVE that demands a sub-14d
+# upgrade, add a temporary `minimumReleaseAgeExclude` entry with a
+# CVE link and remove it once the window closes.
+# 14 days = 60 * 24 * 14 minutes
+minimumReleaseAge: 20160
+
+# When the registry metadata is missing the `time` field for a
+# version, fall back to allowing it. Some packument endpoints
+# (notably @typescript-eslint/*) omit `time` on the slim listing
+# pnpm fetches, even though the detailed endpoint has it. Setting
+# this to `false` would error on those packages even when the
+# version is genuinely mature, so keep the v11 default of `true`.
+minimumReleaseAgeIgnoreMissingTime: true
+
+# Whitelist for the 14-day wait. `@pluggyai/*` ships from our own
+# release pipeline, so the window adds friction without adding
+# safety — third-party packages still go through the full wait.
+#
+# Ad-hoc third-party entries are only for documented CVE bypasses
+# (a fix released in the last 14 days that you can't wait for).
+# Each ad-hoc entry MUST include an inline comment of the form:
+#   # Remove after YYYY-MM-DD — <CVE / fix reference>
+# where the date is when the 14-day window closes on the fixed
+# version (release date + 14 days). Without that date, temporary
+# excludes silently become permanent.
+minimumReleaseAgeExclude:
+  - '@pluggyai/*'
+  # Remove after 2026-05-21 — server actions source exposure (high) + DoS via server components (high) patched in next 16.2.6 (released 2026-05-07)
+  - 'next'
+  - '@next/*'
+  # Remove after 2026-05-17 — GHSA NO_PROXY SSRF + cloud metadata exfiltration via header injection (both high) patched in axios 1.16.0 (released 2026-05-03)
+  - 'axios'
+
+# With exact pins in `package.json` there is only one version that
+# satisfies each dep, so this is effectively a no-op today. Pinned
+# explicitly to survive any future default change and to keep
+# behaviour stable if a dep is ever loosened back to a range.
+resolutionMode: highest
+
+# Refuse to install if Node / pnpm don't satisfy the `engines` field
+# in `package.json`. Combined with `packageManager` + `corepack`,
+# this keeps the team converged on a single pnpm version.
+engineStrict: true
+
+# Fail the install if a package version's trust level (signature,
+# provenance) drops compared to earlier versions of the same package.
+# Protects against a compromised maintainer pushing an unsigned
+# malicious update.
+trustPolicy: no-downgrade
+
+# Auto-skip the trust check for packages older than this. Supply-
+# chain compromises via maintainer takeover are typically detected
+# within hours or days; if a release has survived 90 days in the
+# wild without an advisory, missing provenance is almost always a
+# publishing-process change (e.g. maintainer stopped using GitHub
+# Actions for releases), not a takeover.
+#
+# Combined with `minimumReleaseAge: 20160` (14 days), the trust
+# window looks like:
+#   - 0-14 days  → blocked entirely by minimumReleaseAge
+#   - 14-90 days → trustPolicy: no-downgrade enforced
+#   - 90+ days   → trustPolicy bypassed (legacy / proven)
+#
+# 90 days = 60 * 24 * 90 minutes
+trustPolicyIgnoreAfter: 129600
+
+# Block transitive dependencies from being resolved from exotic
+# sources (git URLs, direct tarballs, etc.). Direct deps in
+# `package.json` can still use them when needed, but a malicious
+# transitive cannot smuggle code via a raw git URL. Default is
+# `true` in pnpm 11; pinned explicitly so behaviour survives any
+# future default change.
+blockExoticSubdeps: true
+
+# Version pinning
+# ---------------
+
+# When running `pnpm add <pkg>`, save the exact resolved version
+# (e.g. "1.2.3") instead of a range ("^1.2.3"). All dependencies
+# in `package.json` must stay pinned so installs are deterministic
+# across environments and every upgrade lands as an explicit, easy-
+# to-review PR diff.
+savePrefix: ""
+
+# Per-package decisions
+# ---------------------
+
+# pnpm 11 blocks postinstall / install / preinstall scripts by
+# default but requires an explicit decision per package — installs
+# fail with `ERR_PNPM_IGNORED_BUILDS` until every package that ships
+# scripts is listed here as `true` (run the script) or `false`
+# (skip it). Default new entries to `false` and only flip to `true`
+# after a conscious review that the runtime or build actually needs
+# the script — flipping to `true` means pnpm will run that package's
+# install scripts on every machine, including CI. `false` is not
+# redundant: without an entry pnpm rewrites placeholders into this
+# file on every install.
 allowBuilds:
-  sharp: true
-  unrs-resolver: true
+  # Default-deny. sharp ships precompiled binaries via prebuild-install,
+  # so the optional postinstall is only needed when a target platform
+  # has no prebuilt binary. Next.js image optimization falls back to a
+  # JS implementation at runtime when sharp is unavailable. Flip to
+  # `true` only if a deployment target genuinely needs sharp's
+  # compiled path.
+  sharp: false
+  # Default-deny. unrs-resolver (used by eslint-config-next via
+  # @rspack/resolver) ships prebuilt napi-rs binaries for common
+  # platforms; the postinstall only triggers a fallback build when no
+  # prebuilt is available. ESLint runs fine on the prebuilt path, so
+  # keeping this disabled costs nothing in CI. Flip to `true` only if
+  # a lint run reports the resolver as unavailable.
+  unrs-resolver: false
+
+# Force a specific version on transitive dependencies, regardless
+# of what the parent's `package.json` range allows. Use sparingly —
+# an override can break the parent if it relied on an older API of
+# the transitive. Always check both the package's and the parent's
+# changelog before adding one, and prefer upgrading the parent dep
+# first (it usually picks up a fixed transitive without an
+# override). Populated only when actually needed.
+overrides:
+  # next 16.2.6 still bundles postcss ^8.4.31, which is vulnerable to
+  # GHSA-qx2v-qp2m-jg93 (XSS via unescaped </style> in CSS stringify
+  # output). 8.5.10 contains the fix. API is backward-compatible
+  # within postcss 8.x; override here until next bumps its own pin.
+  postcss: '>=8.5.10'

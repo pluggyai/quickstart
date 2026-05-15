@@ -2,11 +2,21 @@
   "name": "pluggy-quickstart",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=22.11.0"
-  },
   "packageManager": "pnpm@11.1.1",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0",
+      "onFail": "error"
+    }
+  },
   "scripts": {
+    "preinstall": "pnpm audit && pnpm audit signatures",
+    "lint:lockfile": "pnpm install --frozen-lockfile",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
