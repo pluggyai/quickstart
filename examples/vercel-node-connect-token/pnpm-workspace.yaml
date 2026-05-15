@@ -1,3 +1,70 @@
-minimumReleaseAge: 10080
-autoInstallPeers: true
+# Supply-chain hardening
+# ----------------------
 
+# Reject any package version published less than 14 days ago when
+# resolving. Existing locked versions install regardless (the filter
+# only kicks in on `pnpm install` / `pnpm update` when the lockfile
+# changes). Most supply-chain attacks are detected within hours or
+# days; the 14-day window absorbs that while keeping upgrades moving
+# at a reasonable pace. For a critical CVE that demands a sub-14d
+# upgrade, add a temporary `minimumReleaseAgeExclude` entry with a
+# CVE link and remove it once the window closes.
+# 14 days = 60 * 24 * 14 minutes
+minimumReleaseAge: 20160
+
+# When the registry metadata is missing the `time` field for a
+# version, fall back to allowing it.
+minimumReleaseAgeIgnoreMissingTime: true
+
+# Whitelist for the 14-day wait. `@pluggyai/*` ships from our own
+# release pipeline, so the window adds friction without adding
+# safety — third-party packages still go through the full wait.
+#
+# Ad-hoc third-party entries are only for documented CVE bypasses
+# (a fix released in the last 14 days that you can't wait for).
+# Each ad-hoc entry MUST include an inline comment of the form:
+#   # Remove after YYYY-MM-DD — <CVE / fix reference>
+# where the date is when the 14-day window closes on the fixed
+# version (release date + 14 days).
+minimumReleaseAgeExclude:
+  - '@pluggyai/*'
+
+# With exact pins in `package.json` there is only one version that
+# satisfies each dep, so this is effectively a no-op today. Pinned
+# explicitly to survive any future default change.
+resolutionMode: highest
+
+# Refuse to install if Node / pnpm don't satisfy the `engines` field
+# in `package.json`.
+engineStrict: true
+
+# Fail the install if a package version's trust level (signature,
+# provenance) drops compared to earlier versions of the same package.
+trustPolicy: no-downgrade
+
+# Auto-skip the trust check for packages older than this (90 days).
+trustPolicyIgnoreAfter: 129600
+
+# Block transitive dependencies from being resolved from exotic
+# sources (git URLs, direct tarballs, etc.).
+blockExoticSubdeps: true
+
+
+# Version pinning
+# ---------------
+
+# Save exact resolved versions (no semver ranges) on `pnpm add`.
+savePrefix: ""
+
+
+# Per-package decisions
+# ---------------------
+
+# pnpm 11 blocks postinstall / install / preinstall scripts by
+# default; every package that ships one must be listed here.
+# Default-deny: new entries start as `false` and only flip to `true`
+# after a conscious review.
+allowBuilds: {}
+
+# Force a specific version on transitive dependencies.
+overrides: {}
