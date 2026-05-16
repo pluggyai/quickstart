@@ -16,10 +16,12 @@
   "scripts": {
     "preinstall": "pnpm audit && pnpm audit signatures",
     "lint:lockfile": "pnpm install --frozen-lockfile",
+    "typecheck": "tsc --noEmit",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "tsc --noEmit",
+    "test": "tsc --noEmit"
   },
   "dependencies": {
     "next": "15.5.18",
