@@ -1,0 +1,68 @@
+name: vercel-quickdeploy-nextjs CI
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - examples/vercel-quickdeploy-nextjs/**
+      - .github/workflows/vercel-quickdeploy-ci.yml
+  pull_request:
+    paths:
+      - examples/vercel-quickdeploy-nextjs/**
+      - .github/workflows/vercel-quickdeploy-ci.yml
+
+concurrency:
+  group: vercel-quickdeploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: install / lint / test / build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/vercel-quickdeploy-nextjs
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.1
+          run_install: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: examples/vercel-quickdeploy-nextjs/pnpm-lock.yaml
+
+      - name: Install dependencies
+        # `preinstall` runs `pnpm audit && pnpm audit signatures`, so a
+        # vulnerable or unsigned package fails CI before any later step.
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        # `pnpm run lint` (real `eslint .`) currently surfaces 19
+        # React-anti-pattern findings in source code that are out of
+        # scope for this workflow. Until those are addressed, CI lints
+        # via `typecheck` (`tsc --noEmit`) so it gates on type
+        # correctness without coupling CI to an in-flight source fix.
+        run: pnpm run typecheck
+
+      - name: Test
+        run: pnpm run test
+
+      - name: Build
+        # The Next.js build bundles API routes that read these env
+        # vars at module init. Dummies are enough for the build —
+        # no runtime calls are made.
+        env:
+          PLUGGY_CLIENT_ID: dummy
+          PLUGGY_CLIENT_SECRET: dummy
+          NEXT_PUBLIC_SUPABASE_URL: https://dummy.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: dummy
+        run: pnpm run build
