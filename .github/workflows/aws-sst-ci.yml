@@ -1,0 +1,64 @@
+name: aws-sst CI
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - examples/aws-sst/**
+      - .github/workflows/aws-sst-ci.yml
+  pull_request:
+    paths:
+      - examples/aws-sst/**
+      - .github/workflows/aws-sst-ci.yml
+
+# Cancel older runs on the same branch when a new commit is pushed.
+concurrency:
+  group: aws-sst-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: install / lint / test / build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/aws-sst
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.1
+          run_install: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: examples/aws-sst/pnpm-lock.yaml
+
+      - name: Install dependencies
+        # `preinstall` runs `pnpm audit && pnpm audit signatures`, so a
+        # vulnerable or unsigned package will fail the install before
+        # any of the later steps run.
+        run: pnpm install --frozen-lockfile
+
+      - name: Bootstrap SST platform types
+        # SST v4 generates `.sst/platform/config.d.ts` (used by
+        # sst.config.ts) the first time it runs. `sst install` only
+        # downloads the platform/provider code — it does not touch AWS
+        # — so it works without credentials and unblocks the typecheck.
+        run: pnpm exec sst install
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Test
+        run: pnpm run test
+
+      - name: Build
+        run: pnpm run build
