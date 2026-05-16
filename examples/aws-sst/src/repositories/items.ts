@@ -1,24 +1,22 @@
 import { Item } from 'pluggy-sdk'
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDBClient, PutItemCommand } from '@aws-sdk/client-dynamodb'
 
-const TABLE_NAME = process.env.TABLE_NAME
+const dynamo = new DynamoDBClient({})
 
 export async function saveItem(item: Item) {
-    const dynamo = new DynamoDB()
+  const tableName = process.env.TABLE_NAME
+  if (!tableName) {
+    throw new Error('Missing TABLE_NAME environment variable')
+  }
 
-    if (!TABLE_NAME) {
-      throw new Error('Missing TABLE_NAME')
-    }
-
-    const databaseParams = {
-      TableName: TABLE_NAME,
-      Item: {
-        id: { S: item.id },
-        createdAt: { S: item.createdAt.toString() },
-        lastUpdatedAt: { S: item.lastUpdatedAt?.toString() },
-        status: { S: item.status },
-      },
-    }
-    await dynamo.putItem(databaseParams).promise()
-    console.log('Successfully added item with ID:', item.id)
+  await dynamo.send(new PutItemCommand({
+    TableName: tableName,
+    Item: {
+      id: { S: item.id },
+      createdAt: { S: item.createdAt.toString() },
+      lastUpdatedAt: { S: item.lastUpdatedAt?.toString() ?? '' },
+      status: { S: item.status },
+    },
+  }))
+  console.log('Successfully added item with ID:', item.id)
 }

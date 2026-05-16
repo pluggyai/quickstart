@@ -1,28 +1,38 @@
 {
-  "name": "aws-sst",
-  "version": "0.1.0",
+  "name": "pluggy-aws-sst",
+  "version": "0.2.0",
   "private": true,
+  "packageManager": "pnpm@11.1.1",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0",
+      "onFail": "error"
+    }
+  },
   "scripts": {
-    "test": "sst test",
-    "start": "sst start",
-    "build": "sst build",
+    "preinstall": "pnpm audit && pnpm audit signatures",
+    "lint:lockfile": "pnpm install --frozen-lockfile",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "test": "tsc --noEmit",
+    "build": "tsc --noEmit",
+    "dev": "sst dev",
     "deploy": "sst deploy",
     "remove": "sst remove"
   },
-  "eslintConfig": {
-    "extends": [
-      "serverless-stack"
-    ]
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.873.0",
+    "pluggy-sdk": "0.85.2"
   },
   "devDependencies": {
-    "@tsconfig/node14": "1.0.1",
-    "@types/aws-lambda": "8.10.89",
-    "@types/node": "14.18.5"
-  },
-  "dependencies": {
-    "@serverless-stack/cli": "0.60.6",
-    "@serverless-stack/resources": "0.60.6",
-    "aws-cdk-lib": "2.7.0",
-    "pluggy-sdk": "0.12.3"
+    "@types/aws-lambda": "8.10.157",
+    "@types/node": "22.19.3",
+    "sst": "4.12.10",
+    "typescript": "5.9.3"
   }
 }

@@ -1,0 +1,80 @@
+# Supply-chain hardening
+# ----------------------
+
+# Reject any package version published less than 14 days ago when
+# resolving. Existing locked versions install regardless (the filter
+# only kicks in on `pnpm install` / `pnpm update` when the lockfile
+# changes). Most supply-chain attacks are detected within hours or
+# days; the 14-day window absorbs that while keeping upgrades moving
+# at a reasonable pace. For a critical CVE that demands a sub-14d
+# upgrade, add a temporary `minimumReleaseAgeExclude` entry with a
+# CVE link and remove it once the window closes.
+# 14 days = 60 * 24 * 14 minutes
+minimumReleaseAge: 20160
+
+# When the registry metadata is missing the `time` field for a
+# version, fall back to allowing it.
+minimumReleaseAgeIgnoreMissingTime: true
+
+# Whitelist for the 14-day wait. `@pluggyai/*` ships from our own
+# release pipeline.
+#
+# Ad-hoc third-party entries are only for documented CVE bypasses
+# (a fix released in the last 14 days that you can't wait for).
+# Each ad-hoc entry MUST include an inline comment of the form:
+#   # Remove after YYYY-MM-DD — <CVE / fix reference>
+minimumReleaseAgeExclude:
+  - '@pluggyai/*'
+  # Remove after 2026-05-18 — multiple high/moderate advisories in
+  # fast-xml-builder Comment Value / attribute parsing patched in
+  # 1.1.7 (released 2026-05-04). Required transitively by @aws-sdk
+  # XML signing path.
+  - 'fast-xml-builder'
+
+# Pinned explicitly to survive any future default change.
+resolutionMode: highest
+
+# Refuse to install if Node / pnpm don't satisfy the `engines` field.
+engineStrict: true
+
+# Fail the install if a package version's trust level drops
+# compared to earlier versions.
+trustPolicy: no-downgrade
+
+# Auto-skip the trust check for packages older than 90 days.
+trustPolicyIgnoreAfter: 129600
+
+# Block transitive deps from being resolved from exotic sources.
+blockExoticSubdeps: true
+
+
+# Version pinning
+# ---------------
+
+# Save exact resolved versions (no semver ranges) on `pnpm add`.
+savePrefix: ""
+
+
+# Per-package decisions
+# ---------------------
+
+# pnpm 11 blocks postinstall / install / preinstall scripts by
+# default; every package that ships one must be listed here.
+# Default-deny: new entries start as `false` and only flip to `true`
+# after a conscious review.
+allowBuilds: {}
+
+# Force a specific version on transitive dependencies.
+overrides:
+  # @aws-sdk transitives still pin older fast-xml-parser versions.
+  # 5.7.2 contains fixes for all the entity-encoding bypass, DoS,
+  # CDATA/comment injection, and stack-overflow advisories. The API
+  # is backward-compatible within the 5.x line.
+  fast-xml-parser: '>=5.7.2'
+  # Same path: aws-sdk XML signing pulls older fast-xml-builder.
+  # 1.1.7 contains the fix for the attribute-quote-bypass advisory.
+  # Cap below 1.2.0 — that release adds a brand-new transitive
+  # (xml-naming, first published 2026-05-08) which is inside the
+  # 14-day quarantine window. The 1.1.x patch line carries the
+  # security fix without dragging in the new dep.
+  fast-xml-builder: '>=1.1.7 <1.2.0'
