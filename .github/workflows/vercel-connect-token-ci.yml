@@ -1,0 +1,53 @@
+name: vercel-node-connect-token CI
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - examples/vercel-node-connect-token/**
+      - .github/workflows/vercel-connect-token-ci.yml
+  pull_request:
+    paths:
+      - examples/vercel-node-connect-token/**
+      - .github/workflows/vercel-connect-token-ci.yml
+
+concurrency:
+  group: vercel-connect-token-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: install / lint / test / build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/vercel-node-connect-token
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.1
+          run_install: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: examples/vercel-node-connect-token/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Test
+        run: pnpm run test
+
+      - name: Build
+        run: pnpm run build

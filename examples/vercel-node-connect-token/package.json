@@ -15,12 +15,17 @@
   },
   "scripts": {
     "preinstall": "pnpm audit && pnpm audit signatures",
-    "lint:lockfile": "pnpm install --frozen-lockfile"
+    "lint:lockfile": "pnpm install --frozen-lockfile",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "test": "tsc --noEmit",
+    "build": "tsc --noEmit"
   },
   "dependencies": {
     "pluggy-sdk": "0.7.1"
   },
   "devDependencies": {
-    "@vercel/node": "1.10.0"
+    "@vercel/node": "1.10.0",
+    "typescript": "5.9.3"
   }
 }
