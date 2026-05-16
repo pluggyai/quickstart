@@ -15,6 +15,9 @@ importers:
       '@vercel/node':
         specifier: 1.10.0
         version: 1.10.0
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
 
 packages:
 
@@ -69,6 +72,11 @@ packages:
   typescript@3.9.3:
     resolution: {integrity: sha512-D/wqnB2xzNFIcoBG9FG8cXRDjiqSTbG2wd8DMZeQyJlP1vfTkIxH4GKveWaEBYySKIg+USu+E+EDIR47SqnaMQ==}
     engines: {node: '>=4.2.0'}
+    hasBin: true
+
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
     hasBin: true
 
   undici-types@7.19.2:
@@ -133,6 +141,8 @@ snapshots:
       yn: 3.1.1
 
   typescript@3.9.3: {}
+
+  typescript@5.9.3: {}
 
   undici-types@7.19.2: {}
 
