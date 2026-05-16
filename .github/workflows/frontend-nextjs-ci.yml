@@ -1,0 +1,62 @@
+name: frontend/nextjs CI
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - frontend/nextjs/**
+      - .github/workflows/frontend-nextjs-ci.yml
+  pull_request:
+    paths:
+      - frontend/nextjs/**
+      - .github/workflows/frontend-nextjs-ci.yml
+
+concurrency:
+  group: frontend-nextjs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: install / lint / test / build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend/nextjs
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.1
+          run_install: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/nextjs/pnpm-lock.yaml
+
+      - name: Install dependencies
+        # `preinstall` runs `pnpm audit && pnpm audit signatures`, so a
+        # vulnerable or unsigned package fails the install before any
+        # of the later steps run.
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Test
+        run: pnpm run test
+
+      - name: Build
+        # PLUGGY_* are read at module init in pages/api/token.ts.
+        # Dummy values are enough for `next build` to bundle the
+        # route — runtime calls are not made during build.
+        env:
+          PLUGGY_CLIENT_ID: dummy
+          PLUGGY_CLIENT_SECRET: dummy
+        run: pnpm run build
