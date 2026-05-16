@@ -17,11 +17,13 @@
   "scripts": {
     "preinstall": "pnpm audit && pnpm audit signatures",
     "lint:lockfile": "pnpm install --frozen-lockfile",
+    "typecheck": "tsc --noEmit",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test": "tsc --noEmit"
   },
   "dependencies": {
     "@chakra-ui/react": "3.30.0",
