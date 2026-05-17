@@ -1,16 +1,33 @@
 {
   "name": "pluggy-vercel-node-mongo-example",
-  "engines": {
-    "node": ">=22.11.0"
-  },
   "packageManager": "pnpm@11.1.1",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0",
+      "onFail": "error"
+    }
+  },
+  "scripts": {
+    "preinstall": "pnpm audit && pnpm audit signatures",
+    "lint:lockfile": "pnpm install --frozen-lockfile",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "test": "tsc --noEmit",
+    "build": "tsc --noEmit"
+  },
   "dependencies": {
-    "mongodb": "3.6.6",
+    "mongodb": "3.6.10",
     "pg": "8.6.0",
     "pluggy-sdk": "0.7.1"
   },
   "devDependencies": {
     "@types/mongodb": "3.6.12",
-    "@vercel/node": "1.10.0"
+    "@vercel/node": "1.10.0",
+    "typescript": "5.9.3"
   }
 }

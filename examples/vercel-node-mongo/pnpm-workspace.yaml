@@ -1,3 +1,56 @@
-minimumReleaseAge: 10080
-autoInstallPeers: true
+# Supply-chain hardening
+# ----------------------
 
+# Reject any package version published less than 14 days ago when
+# resolving. Most supply-chain attacks are detected within hours or
+# days; the 14-day window absorbs that while keeping upgrades moving
+# at a reasonable pace. For a critical CVE that demands a sub-14d
+# upgrade, add a temporary `minimumReleaseAgeExclude` entry with a
+# CVE link and remove it once the window closes.
+# 14 days = 60 * 24 * 14 minutes
+minimumReleaseAge: 20160
+
+# When the registry metadata is missing the `time` field for a
+# version, fall back to allowing it.
+minimumReleaseAgeIgnoreMissingTime: true
+
+# Whitelist for the 14-day wait. `@pluggyai/*` ships from our own
+# release pipeline.
+minimumReleaseAgeExclude:
+  - '@pluggyai/*'
+
+# Pinned explicitly to survive any future default change.
+resolutionMode: highest
+
+# Refuse to install if Node / pnpm don't satisfy the `engines` field.
+engineStrict: true
+
+# Fail the install if a package version's trust level drops
+# compared to earlier versions.
+trustPolicy: no-downgrade
+
+# Auto-skip the trust check for packages older than 90 days.
+trustPolicyIgnoreAfter: 129600
+
+# Block transitive deps from being resolved from exotic sources.
+blockExoticSubdeps: true
+
+
+# Version pinning
+# ---------------
+
+# Save exact resolved versions (no semver ranges) on `pnpm add`.
+savePrefix: ""
+
+
+# Per-package decisions
+# ---------------------
+
+# pnpm 11 blocks postinstall / install / preinstall scripts by
+# default; every package that ships one must be listed here.
+# Default-deny: new entries start as `false` and only flip to `true`
+# after a conscious review.
+allowBuilds: {}
+
+# Force a specific version on transitive dependencies.
+overrides: {}
