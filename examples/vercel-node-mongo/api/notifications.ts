@@ -4,9 +4,14 @@ import { saveItem } from '../lib/items'
 
 const { PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET } = process.env
 
-const pluggyClient = new PluggyClient({ clientId: PLUGGY_CLIENT_ID, clientSecret: PLUGGY_CLIENT_SECRET })
-
 export default async (req: VercelRequest, res: VercelResponse) => {
+  if (!PLUGGY_CLIENT_ID || !PLUGGY_CLIENT_SECRET) {
+    res.status(500).json({ message: 'Missing PLUGGY_CLIENT_ID or PLUGGY_CLIENT_SECRET' })
+    return
+  }
+
+  const pluggyClient = new PluggyClient({ clientId: PLUGGY_CLIENT_ID, clientSecret: PLUGGY_CLIENT_SECRET })
+
   const { id, event } = req.body
   if (!id) {
     res.status(400).json({ message: 'id parameter missing in body request.' })
