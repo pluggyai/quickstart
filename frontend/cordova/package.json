@@ -4,8 +4,24 @@
   "version": "1.0.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
+  "packageManager": "pnpm@11.1.1",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0",
+      "onFail": "error"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "preinstall": "pnpm audit && pnpm audit signatures",
+    "lint:lockfile": "pnpm install --frozen-lockfile",
+    "lint": "echo 'No JS lint configured (Cordova project — www/ is plain HTML/CSS/JS).'",
+    "test": "echo 'No automated tests configured for this Cordova example.'",
+    "build": "echo 'cordova build ios requires Xcode (macOS); not run in CI. Use `npx cordova build ios` locally.'"
   },
   "keywords": [
     "ecosystem:cordova"
