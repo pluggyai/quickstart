@@ -136,9 +136,9 @@ overrides:
   # versions <5.0.6 are vulnerable to GHSA-jxxr-4gwj-5jf2 (large numeric
   # range DoS defeating the documented `max` cap). Dev-only path (ESLint),
   # but audit blocks CI regardless of scope. Patch is backward-compatible.
-  brace-expansion: '>=5.0.6'
+  brace-expansion: '5.0.6'
   # @supabase/supabase-js -> @supabase/realtime-js depends on ws;
   # versions <8.20.1 are vulnerable to GHSA-58qx-3vcg-4xpx (uninitialized
   # memory disclosure on crafted HTTP upgrade headers). Runtime path —
   # affects live WebSocket connections. Patch is backward-compatible within ws 8.x.
-  ws: '>=8.20.1'
+  ws: '8.20.1'
