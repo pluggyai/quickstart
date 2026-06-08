@@ -23,9 +23,9 @@ export class TransactionService {
       itemId: payload.itemId,
     });
 
-    const { results: transactions } = await this.pluggyClient
+    const transactions = await this.pluggyClient
       .instance()
-      .fetchTransactions(payload.accountId, {
+      .fetchAllTransactions(payload.accountId, {
         createdAtFrom: payload.transactionsCreatedAtFrom,
       });
 
@@ -42,12 +42,11 @@ export class TransactionService {
       itemId: payload.itemId,
     });
 
-    const { results: transactions } = await this.pluggyClient
+    const transactions = await this.pluggyClient
       .instance()
-      .fetchTransactions(payload.accountId, {
-        // @ts-expect-error ids not exists
+      .fetchAllTransactions(payload.accountId, {
         ids: payload.transactionIds,
-      });
+      } as any);
 
     await this.saveTransactions(
       payload.itemId,

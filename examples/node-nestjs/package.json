@@ -30,7 +30,7 @@
     "nestjs-pino": "4.4.0",
     "pg": "8.14.1",
     "pino-http": "10.4.0",
-    "pluggy-sdk": "0.70.0",
+    "pluggy-sdk": "0.85.3",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
     "sequelize": "6.37.8",
