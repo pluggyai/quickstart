@@ -98,6 +98,9 @@ public class QuickstartApplication {
           account.getBalance(), account.getNumber()));
 
       try {
+        // TODO: migrate to cursor-based GET /v2/transactions once pluggy-java SDK adds support.
+        // pluggy-java 0.6.3 only exposes getTransactions() which calls the deprecated GET /transactions.
+        // Track: https://github.com/pluggyai/pluggy-java
         List<Transaction> transactions = pluggyClient.service().getTransactions(accountId).execute().body()
             .getResults();
 
