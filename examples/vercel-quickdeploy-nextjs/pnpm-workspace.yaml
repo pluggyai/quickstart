@@ -38,6 +38,8 @@ minimumReleaseAgeExclude:
   - '@next/*'
   # Remove after 2026-05-17 — GHSA NO_PROXY SSRF + cloud metadata exfiltration via header injection (both high) patched in axios 1.16.0 (released 2026-05-03)
   - 'axios'
+  # Remove after 2026-06-26 — GHSA-hmw2-7cc7-3qxx CRLF injection via unescaped multipart field names patched in form-data 4.0.6 (released 2026-06-12)
+  - 'form-data'
 
 # With exact pins in `package.json` there is only one version that
 # satisfies each dep, so this is effectively a no-op today. Pinned
@@ -138,7 +140,24 @@ overrides:
   # but audit blocks CI regardless of scope. Patch is backward-compatible.
   brace-expansion: '5.0.6'
   # @supabase/supabase-js -> @supabase/realtime-js depends on ws;
-  # versions <8.20.1 are vulnerable to GHSA-58qx-3vcg-4xpx (uninitialized
-  # memory disclosure on crafted HTTP upgrade headers). Runtime path —
-  # affects live WebSocket connections. Patch is backward-compatible within ws 8.x.
-  ws: '8.20.1'
+  # versions <8.21.0 are vulnerable to GHSA-96hv-2xvq-fx4p (memory exhaustion
+  # DoS from tiny fragments) and GHSA-58qx-3vcg-4xpx (uninitialized memory
+  # disclosure). Runtime path — affects live WebSocket connections. Patch is
+  # backward-compatible within ws 8.x.
+  ws: '8.21.0'
+  # axios depends on form-data; versions <4.0.6 are vulnerable to
+  # GHSA-hmw2-7cc7-3qxx (CRLF injection via unescaped multipart field names
+  # and filenames). Runtime path — affects any axios multipart/form-data
+  # request. Patch is backward-compatible within form-data 4.x.
+  form-data: '4.0.6'
+  # eslint (and eslint-config-next) depend on js-yaml via @eslint/eslintrc;
+  # versions <=4.1.1 are vulnerable to GHSA-h67p-54hq-rp68 (quadratic-
+  # complexity DoS via repeated merge-key aliases). Dev-only path (ESLint),
+  # but audit blocks CI regardless of scope. Patch is backward-compatible.
+  js-yaml: '4.2.0'
+  # next -> styled-jsx depends on @babel/core; versions <=7.29.0 are
+  # vulnerable to GHSA-4x5r-pxfx-6jf8 (arbitrary file read via crafted
+  # sourceMappingURL comment). Build-time path — triggered only during
+  # compilation, not at runtime. Patch is backward-compatible within
+  # @babel/core 7.x.
+  '@babel/core': '7.29.7'
