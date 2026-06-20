@@ -60,7 +60,20 @@ Client-side integrations that drop the Pluggy Connect Widget into a page. See [`
 | Flutter | [`frontend/flutter`](frontend/flutter) | Flutter + WebView |
 | Vanilla HTML | [`frontend/html`](frontend/html) | Drop-in CDN script |
 | Flask | [`frontend/flask`](frontend/flask) | Python Flask + server-rendered templates |
-| Cordova | [`frontend/cordova`](frontend/cordova) | Apache Cordova iOS |
+
+#### Integration patterns shipped as agent skills
+
+Some platforms make more sense as agent skills than as wrapper projects — the integration is small, but the surrounding framework rots fast. The skill lives in [`pluggyai/agent-skills`](https://github.com/pluggyai/agent-skills) and is version-agnostic: bring your own up-to-date project.
+
+| Platform | Skill | Replaces |
+|----------|-------|----------|
+| Apache Cordova (iOS / Android) | [`pluggy-cordova`](https://github.com/pluggyai/agent-skills/tree/main/skills/pluggy-cordova) | [`frontend/cordova`](frontend/cordova) (now a stub) |
+
+Install in any Agent-Skills-format agent (Claude Code, Cursor, GitHub Copilot, …):
+
+```bash
+npx skills add pluggyai/agent-skills
+```
 
 ### Backend — token, webhooks, persistence
 
