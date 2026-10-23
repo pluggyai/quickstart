@@ -36,7 +36,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 24.22.1
           cache: pnpm
           cache-dependency-path: examples/vercel-node-mongo/pnpm-lock.yaml
 

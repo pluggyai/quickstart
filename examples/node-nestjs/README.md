@@ -4,7 +4,7 @@ Backend service for Pluggy integration using [NestJS](https://nestjs.com/) with 
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 22.23.4+ or 24.22.1+
 - Docker and Docker Compose (for PostgreSQL)
 - [ngrok](https://ngrok.com/) (for receiving webhooks in development)
 - Pluggy API credentials from [dashboard.pluggy.ai](https://dashboard.pluggy.ai)

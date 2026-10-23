@@ -6,7 +6,7 @@ React Native application using [react-native-pluggy-connect](https://www.npmjs.c
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 22.23.4+ or 24.22.1+
 - React Native development environment ([setup guide](https://reactnative.dev/docs/environment-setup))
 - macOS + Xcode (for iOS) or Android Studio (for Android)
 

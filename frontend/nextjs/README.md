@@ -4,7 +4,7 @@ Full-stack Next.js application with server-side connect token generation and the
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 24.22.1+
 - Pluggy API credentials (Client ID and Client Secret from [dashboard.pluggy.ai](https://dashboard.pluggy.ai))
 
 ## Setup

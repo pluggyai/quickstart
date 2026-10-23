@@ -4,7 +4,7 @@ React application showcasing the [react-pluggy-connect](https://www.npmjs.com/pa
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 22.23.4+ or 24.22.1+
 - A Pluggy connect token endpoint (see [backend examples](../../examples))
 
 ## Setup
