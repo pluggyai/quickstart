@@ -25,14 +25,14 @@ minimumReleaseAgeIgnoreMissingTime: true
 #   # Remove after YYYY-MM-DD — <CVE / fix reference>
 minimumReleaseAgeExclude:
   - '@pluggyai/*'
-  # Remove after 2026-05-18 — multiple high/moderate advisories in
-  # fast-xml-builder Comment Value / attribute parsing patched in
-  # 1.1.7 (released 2026-05-04). Required transitively by @aws-sdk
-  # XML signing path.
-  - 'fast-xml-builder'
   # Remove after 2026-11-19 — pluggy-sdk 0.94.2 (released 2026-11-05)
   # validates the request endpoints it builds from caller-provided ids.
   - 'pluggy-sdk@0.94.2'
+  # Remove after 2026-11-13 — @smithy/core 3.38.1 (released 2026-10-30)
+  # is the first release that is not deprecated for the custom logger
+  # data redaction bug (aws/aws-sdk-js-v3#8393). Required transitively
+  # by @aws-sdk/client-dynamodb.
+  - '@smithy/core@3.38.1'
 
 # Pinned explicitly to survive any future default change.
 resolutionMode: highest
@@ -67,17 +67,6 @@ savePrefix: ""
 # after a conscious review.
 allowBuilds: {}
 
-# Force a specific version on transitive dependencies.
-overrides:
-  # @aws-sdk transitives still pin older fast-xml-parser versions.
-  # 5.7.2 contains fixes for all the entity-encoding bypass, DoS,
-  # CDATA/comment injection, and stack-overflow advisories. The API
-  # is backward-compatible within the 5.x line.
-  fast-xml-parser: '>=5.7.2'
-  # Same path: aws-sdk XML signing pulls older fast-xml-builder.
-  # 1.1.7 contains the fix for the attribute-quote-bypass advisory.
-  # Cap below 1.2.0 — that release adds a brand-new transitive
-  # (xml-naming, first published 2026-05-08) which is inside the
-  # 14-day quarantine window. The 1.1.x patch line carries the
-  # security fix without dragging in the new dep.
-  fast-xml-builder: '>=1.1.7 <1.2.0'
+# Force a specific version on transitive dependencies. Populated
+# only when actually needed.
+overrides: {}
