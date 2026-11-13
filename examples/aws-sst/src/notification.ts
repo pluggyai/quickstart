@@ -1,6 +1,7 @@
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import { PluggyClient, WebhookEvent } from 'pluggy-sdk'
 import { saveItem } from "./repositories/items";
+import { isUuid } from "./validation";
 
 const { PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET } = process.env
 
@@ -36,6 +37,18 @@ export const handler: APIGatewayProxyHandlerV2 = async (awsEvent) => {
   }
 
   if (event === 'item/created' || event === 'item/updated') {
+    if (!isUuid(id)) {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: 'Invalid id'
+        })
+      }
+    }
+
     console.log('Adding new item to database.')
     const item = await pluggyClient.fetchItem(id)
     await saveItem(item)

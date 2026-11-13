@@ -17,6 +17,7 @@ export function withErrorHandling(handler: RouteHandler): RouteHandler {
           data?: unknown; 
           status?: number;
         };
+        status?: number;
       };
       
       console.error('Route handler error:', {
@@ -35,7 +36,7 @@ export function withErrorHandling(handler: RouteHandler): RouteHandler {
           error: errorMessage || 'Internal server error',
           details: httpError.response?.data || errorMessage,
         },
-        { status: httpError.response?.status || 500 }
+        { status: httpError.response?.status || httpError.status || 500 }
       );
     }
   };

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { investmentTransactionsService } from '@/app/lib/services/investment-transactions';
 import { withErrorHandling } from '@/app/lib/utils/error-handler';
+import { isUuid } from '@/app/lib/utils/validation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
@@ -14,6 +15,13 @@ async function handleGetInvestmentTransactions(request: NextRequest) {
   if (!investmentId) {
     return NextResponse.json(
       { success: false, error: 'investmentId is required' },
+      { status: 400 }
+    );
+  }
+
+  if (!isUuid(investmentId)) {
+    return NextResponse.json(
+      { success: false, error: 'investmentId must be a valid UUID' },
       { status: 400 }
     );
   }

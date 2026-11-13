@@ -30,6 +30,9 @@ minimumReleaseAgeExclude:
   # 1.1.7 (released 2026-05-04). Required transitively by @aws-sdk
   # XML signing path.
   - 'fast-xml-builder'
+  # Remove after 2026-11-19 — pluggy-sdk 0.94.2 (released 2026-11-05)
+  # validates the request endpoints it builds from caller-provided ids.
+  - 'pluggy-sdk@0.94.2'
 
 # Pinned explicitly to survive any future default change.
 resolutionMode: highest

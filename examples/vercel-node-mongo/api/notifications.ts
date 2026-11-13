@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
 import { PluggyClient } from 'pluggy-sdk'
 import { saveItem } from '../lib/items'
+import { isUuid } from '../lib/validation'
 
 const { PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET } = process.env
 
@@ -23,7 +24,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     return
   }
 
-  if (id.length !== 36) {
+  if (!isUuid(id)) {
     res.status(400).json({ message: 'Invalid id.' })
     return
   }

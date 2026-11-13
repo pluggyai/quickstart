@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { processWebhookEvent } from '@/app/lib/services/webhook-handlers';
 import { withErrorHandling } from '@/app/lib/utils/error-handler';
+import { hasValidWebhookIds } from '@/app/lib/utils/validation';
 import type { WebhookPayload } from '@/app/types/pluggy';
 
 export const runtime = 'nodejs';
@@ -14,6 +15,14 @@ async function handleWebhook(request: NextRequest) {
       console.error('❌ Missing required fields in webhook payload:', payload);
       return NextResponse.json(
         { error: 'Missing required fields: event and eventId are required' },
+        { status: 400 }
+      );
+    }
+
+    if (!hasValidWebhookIds(payload)) {
+      console.error(`❌ Invalid id in webhook payload for event ${payload.event}`);
+      return NextResponse.json(
+        { error: 'Invalid id in webhook payload' },
         { status: 400 }
       );
     }
