@@ -30,15 +30,15 @@
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@supabase/supabase-js": "2.86.0",
-    "axios": "1.16.0",
+    "axios": "1.21.0",
     "framer-motion": "12.23.24",
     "jsonwebtoken": "9.0.2",
-    "next": "16.2.6",
+    "next": "16.4.3",
     "pluggy-sdk": "0.94.2",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-pluggy-connect": "2.11.0",
-    "zod": "4.1.13"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.1.17",

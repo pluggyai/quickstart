@@ -33,9 +33,6 @@ minimumReleaseAgeIgnoreMissingTime: true
 # excludes silently become permanent.
 minimumReleaseAgeExclude:
   - '@pluggyai/*'
-  # Remove after 2026-05-21 — GHSA-7m27-7ghc-44w9 (critical: dev-server origin verification) patched in next 15.5.18 (released 2026-05-07)
-  - 'next'
-  - '@next/*'
   # Remove after 2026-11-19 — pluggy-sdk 0.94.2 (released 2026-11-05)
   # validates the request endpoints it builds from caller-provided ids.
   - 'pluggy-sdk@0.94.2'
@@ -121,8 +118,9 @@ allowBuilds:
 # first (it usually picks up a fixed transitive without an
 # override). Populated only when actually needed.
 overrides:
-  # next 15.5.18 still bundles postcss ^8.4.31, which is vulnerable to
+  # next 15.5.28 still pins postcss 8.4.31, which is vulnerable to
   # GHSA-qx2v-qp2m-jg93 (XSS via unescaped </style> in CSS stringify
-  # output). 8.5.10 contains the fix. API is backward-compatible
-  # within postcss 8.x; override here until next bumps its own pin.
-  postcss: '>=8.5.10'
+  # output), GHSA-r28c-9q8g-f849 and GHSA-fxqj-rqcc-2cmp. 8.5.23
+  # contains the fixes. API is backward-compatible within postcss 8.x;
+  # override here until next bumps its own pin.
+  postcss: '>=8.5.23'

@@ -24,7 +24,7 @@
     "test": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "15.5.18",
+    "next": "15.5.28",
     "pluggy-sdk": "0.94.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
