@@ -33,13 +33,6 @@ minimumReleaseAgeIgnoreMissingTime: true
 # excludes silently become permanent.
 minimumReleaseAgeExclude:
   - '@pluggyai/*'
-  # Remove after 2026-05-21 — server actions source exposure (high) + DoS via server components (high) patched in next 16.2.6 (released 2026-05-07)
-  - 'next'
-  - '@next/*'
-  # Remove after 2026-05-17 — GHSA NO_PROXY SSRF + cloud metadata exfiltration via header injection (both high) patched in axios 1.16.0 (released 2026-05-03)
-  - 'axios'
-  # Remove after 2026-06-26 — GHSA-hmw2-7cc7-3qxx CRLF injection via unescaped multipart field names patched in form-data 4.0.6 (released 2026-06-12)
-  - 'form-data'
   # Remove after 2026-11-19 — pluggy-sdk 0.94.2 (released 2026-11-05) validates the request endpoints it builds from caller-provided ids
   - 'pluggy-sdk@0.94.2'
 
@@ -131,16 +124,21 @@ allowBuilds:
 # first (it usually picks up a fixed transitive without an
 # override). Populated only when actually needed.
 overrides:
-  # next 16.2.6 still bundles postcss ^8.4.31, which is vulnerable to
-  # GHSA-qx2v-qp2m-jg93 (XSS via unescaped </style> in CSS stringify
-  # output). 8.5.10 contains the fix. API is backward-compatible
-  # within postcss 8.x; override here until next bumps its own pin.
-  postcss: '>=8.5.10'
-  # eslint-config-next pulls in minimatch which depends on brace-expansion;
-  # versions <5.0.6 are vulnerable to GHSA-jxxr-4gwj-5jf2 (large numeric
-  # range DoS defeating the documented `max` cap). Dev-only path (ESLint),
-  # but audit blocks CI regardless of scope. Patch is backward-compatible.
-  brace-expansion: '5.0.6'
+  # @tailwindcss/postcss allows postcss ^8.4.41; versions <=8.5.22 are
+  # vulnerable to GHSA-qx2v-qp2m-jg93 (XSS via unescaped </style> in CSS
+  # stringify output), GHSA-r28c-9q8g-f849 and GHSA-fxqj-rqcc-2cmp.
+  # 8.5.23 contains the fixes. API is backward-compatible within
+  # postcss 8.x; override here until every dependent requires >=8.5.23.
+  postcss: '>=8.5.23'
+  # eslint-config-next -> typescript-eslint -> @typescript-eslint/
+  # typescript-estree depends on minimatch ^10; versions >=7.0.0 <11.0.1
+  # are vulnerable to GHSA-g3hv-75wg-m249 (DoS via globparts
+  # amplification) and the 10.x line has no patched release. Dev-only
+  # path (ESLint), but audit blocks CI regardless of scope. The parent
+  # only calls `minimatch(path, pattern)`, which 11.x keeps. Scoped to
+  # that parent because ESLint itself needs minimatch 3.x. Remove once
+  # typescript-estree depends on minimatch >=11.0.1.
+  '@typescript-eslint/typescript-estree>minimatch': '11.0.3'
   # @supabase/supabase-js -> @supabase/realtime-js depends on ws;
   # versions <8.21.0 are vulnerable to GHSA-96hv-2xvq-fx4p (memory exhaustion
   # DoS from tiny fragments) and GHSA-58qx-3vcg-4xpx (uninitialized memory
@@ -153,10 +151,11 @@ overrides:
   # request. Patch is backward-compatible within form-data 4.x.
   form-data: '4.0.6'
   # eslint (and eslint-config-next) depend on js-yaml via @eslint/eslintrc;
-  # versions <=4.1.1 are vulnerable to GHSA-h67p-54hq-rp68 (quadratic-
-  # complexity DoS via repeated merge-key aliases). Dev-only path (ESLint),
+  # versions <4.3.2 are vulnerable to GHSA-h67p-54hq-rp68,
+  # GHSA-52cp-r559-cp3m, GHSA-5p4m-2wfm-xmqj and GHSA-2883-xcg3-v3hh
+  # (quadratic CPU consumption on crafted YAML). Dev-only path (ESLint),
   # but audit blocks CI regardless of scope. Patch is backward-compatible.
-  js-yaml: '4.2.0'
+  js-yaml: '4.3.2'
   # next -> styled-jsx depends on @babel/core; versions <=7.29.0 are
   # vulnerable to GHSA-4x5r-pxfx-6jf8 (arbitrary file read via crafted
   # sourceMappingURL comment). Build-time path — triggered only during
