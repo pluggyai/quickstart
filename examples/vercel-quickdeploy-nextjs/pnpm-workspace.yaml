@@ -40,6 +40,8 @@ minimumReleaseAgeExclude:
   - 'axios'
   # Remove after 2026-06-26 — GHSA-hmw2-7cc7-3qxx CRLF injection via unescaped multipart field names patched in form-data 4.0.6 (released 2026-06-12)
   - 'form-data'
+  # Remove after 2026-11-19 — pluggy-sdk 0.94.2 (released 2026-11-05) validates the request endpoints it builds from caller-provided ids
+  - 'pluggy-sdk@0.94.2'
 
 # With exact pins in `package.json` there is only one version that
 # satisfies each dep, so this is effectively a no-op today. Pinned

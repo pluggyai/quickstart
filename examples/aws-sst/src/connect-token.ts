@@ -1,5 +1,6 @@
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import { ConnectTokenOptions, PluggyClient } from 'pluggy-sdk'
+import { isUuid } from './validation'
 
 const { PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET } = process.env
 
@@ -18,6 +19,14 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
   })
 
   const { itemId, options }: ConnectTokenPayload = event.body ? JSON.parse(event.body) : {}
+
+  if (itemId != null && !isUuid(itemId)) {
+    return {
+      statusCode: 400,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: 'Invalid itemId' })
+    };
+  }
 
   const connectToken = await pluggyClient.createConnectToken(itemId, options)
 

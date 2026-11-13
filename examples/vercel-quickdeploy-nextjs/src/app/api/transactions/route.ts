@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { transactionsService } from '@/app/lib/services/transactions';
 import { withErrorHandling } from '@/app/lib/utils/error-handler';
+import { isUuid } from '@/app/lib/utils/validation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
@@ -14,6 +15,13 @@ async function handleGetTransactions(request: NextRequest) {
   if (!accountId) {
     return NextResponse.json(
       { success: false, error: 'accountId is required' },
+      { status: 400 }
+    );
+  }
+
+  if (!isUuid(accountId)) {
+    return NextResponse.json(
+      { success: false, error: 'accountId must be a valid UUID' },
       { status: 400 }
     );
   }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getPluggyClient } from "@/app/lib/pluggy/client";
 import { itemsService } from "@/app/lib/services/items";
 import { withErrorHandling } from "@/app/lib/utils/error-handler";
+import { isUuid } from "@/app/lib/utils/validation";
 
 
 export const runtime = "nodejs";
@@ -13,6 +14,13 @@ async function handleGetItems(request: NextRequest) {
   const itemId = searchParams.get("itemId");
 
   if (itemId) {
+    if (!isUuid(itemId)) {
+      return NextResponse.json(
+        { success: false, error: "Item ID must be a valid UUID" },
+        { status: 400 }
+      );
+    }
+
     const pluggyClient = getPluggyClient();
     const item = await pluggyClient.fetchItem(itemId);
     return NextResponse.json({ success: true, data: item });
@@ -39,6 +47,13 @@ async function handleDeleteItem(request: NextRequest) {
   if (!itemId) {
     return NextResponse.json(
       { success: false, error: "Item ID is required" },
+      { status: 400 }
+    );
+  }
+
+  if (!isUuid(itemId)) {
+    return NextResponse.json(
+      { success: false, error: "Item ID must be a valid UUID" },
       { status: 400 }
     );
   }

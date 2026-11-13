@@ -9,7 +9,7 @@ This example rewrites the previous SST v1 quickstart on the modern Ion engine. T
 
 ## Prerequisites
 
-- Node.js 24+
+- Node.js 24.22.1+
 - pnpm 11+ (the repo pins it via `packageManager`; corepack will activate the right version automatically)
 - AWS account with configured credentials ([SST IAM guide](https://sst.dev/docs/iam-credentials))
 - Pluggy API credentials from [dashboard.pluggy.ai](https://dashboard.pluggy.ai)

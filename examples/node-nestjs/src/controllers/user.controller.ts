@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { TokenService } from '../services/token.service';
 
@@ -15,7 +23,10 @@ export class UserController {
   }
 
   @Post('/:id/token')
-  async createToken(@Param('id') id: string, @Query('itemId') itemId?: string) {
+  async createToken(
+    @Param('id') id: string,
+    @Query('itemId', new ParseUUIDPipe({ optional: true })) itemId?: string,
+  ) {
     return this.tokenService.getTokenWithSdk(id, itemId);
   }
 

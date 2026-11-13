@@ -3,13 +3,13 @@
   "license": "MIT",
   "packageManager": "pnpm@11.1.1",
   "engines": {
-    "node": ">=24.0.0",
+    "node": ">=24.22.1",
     "pnpm": ">=11.0.0"
   },
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": ">=24.0.0",
+      "version": ">=24.22.1",
       "onFail": "error"
     }
   },
@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "next": "15.5.18",
-    "pluggy-sdk": "0.85.2",
+    "pluggy-sdk": "0.94.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-pluggy-connect": "2.12.0"
