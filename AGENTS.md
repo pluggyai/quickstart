@@ -4,16 +4,18 @@ Guidance for coding agents working **in this repository** (to integrate Pluggy i
 
 ## What this repository is
 
-Public Pluggy quickstart: one maintained reference app, a set of agent prompts, and a few small snippets kept while their future is decided. It complements the [Pluggy docs](https://docs.pluggy.ai) (Markdown index: [`llms.txt`](https://docs.pluggy.ai/llms.txt); docs MCP server: `https://mcp.pluggy.ai/mcp`).
+Public Pluggy quickstart: one maintained reference app, a set of agent prompts, a one-file Connect Token endpoint and a few Connect widget snippets. It complements the [Pluggy docs](https://docs.pluggy.ai) (Markdown index: [`llms.txt`](https://docs.pluggy.ai/llms.txt); docs MCP server: `https://mcp.pluggy.ai/mcp`).
 
 ```
 quickstart/
 ├── examples/
 │   ├── vercel-quickdeploy-nextjs/   # Maintained reference app: Next.js 16 + Supabase, sign-in,
 │   │                                # per-user items, signed webhooks. CI: build + auth checks
-│   └── vercel-node-connect-token/   # Minimal Connect Token function (linked from the docs)
-├── frontend/                        # Connect Widget snippets: html, nextjs, react,
-│                                    # react-native-expo, cordova + README with widget options
+│   └── vercel-node-connect-token/   # One-file Connect Token function for signed-in users
+│                                    # (linked from the docs). CI: typecheck + rejection tests
+├── frontend/                        # Connect Widget snippets: html, react-native-expo, cordova,
+│                                    # README with widget options; nextjs/ and react/ are README
+│                                    # stubs kept for external links
 ├── prompts/                         # One prompt per integration scenario, for coding agents
 └── .github/workflows/               # One CI workflow per project that has one
 ```
@@ -26,8 +28,6 @@ Each project directory is independent (own `package.json`, lockfile, README). `c
 |---------|---------|-------|-------|
 | `examples/vercel-quickdeploy-nextjs` | `pnpm install --frozen-lockfile` | `pnpm typecheck`, `pnpm test:auth` (after build) | `pnpm build` |
 | `examples/vercel-node-connect-token` | `pnpm install --frozen-lockfile` | `pnpm lint`, `pnpm test` | `pnpm build` |
-| `frontend/nextjs` | `pnpm install --frozen-lockfile` | `pnpm typecheck` | `pnpm build` |
-| `frontend/react` | `npm install` | — | `npm run build` |
 | `frontend/react-native-expo` | `npm ci` | `npm run lint` | — |
 
 pnpm projects run `pnpm audit` in `preinstall`: an advisory fails the install. Fix it in the same change (bump the direct dependency or its parent; `overrides` as a last resort) and keep the 14-day `minimumReleaseAge` in `pnpm-workspace.yaml`.

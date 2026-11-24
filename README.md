@@ -12,7 +12,7 @@
 - [One-click deploy](#one-click-deploy)
 - [Examples in this repo](#examples-in-this-repo)
   - [Prompts](#prompts)
-  - [Other examples (kept for now)](#other-examples-kept-for-now)
+  - [Other examples](#other-examples)
   - [Where the previous examples went](#where-the-previous-examples-went)
 - [Official SDKs and widgets](#official-sdks-and-widgets)
 - [AI agent tools](#ai-agent-tools)
@@ -51,7 +51,7 @@ This repository has three parts:
 
 1. **One maintained reference project** — [`examples/vercel-quickdeploy-nextjs`](examples/vercel-quickdeploy-nextjs): the full flow (sign-in, Connect Token, Connect Widget, signed webhooks, per-user data in Supabase) in one deployable app. It has CI and is kept current.
 2. **Prompts for coding agents** — [`prompts/`](prompts): one self-contained task per integration scenario. Hand one to your coding agent inside your own codebase and it implements the scenario in your stack, following Pluggy's security rules and docs. See [`prompts/README.md`](prompts/README.md).
-3. **Small snippets kept while their future is decided** — listed below.
+3. **A few small examples** — a one-file token endpoint and Connect widget snippets, listed below.
 
 ### Prompts
 
@@ -63,16 +63,14 @@ This repository has three parts:
 | Receiving and verifying webhooks | [`prompts/webhook-receiver.md`](prompts/webhook-receiver.md) |
 | Fetching and storing accounts, transactions and other products; disconnecting | [`prompts/sync-financial-data.md`](prompts/sync-financial-data.md) |
 
-### Other examples (kept for now)
+### Other examples
 
 | Stack | Path | Notes |
 |-------|------|-------|
-| Vanilla HTML | [`frontend/html`](frontend/html) | Drop-in CDN script. Linked from the Pluggy docs |
-| Next.js (Pages Router) | [`frontend/nextjs`](frontend/nextjs) | Server-side token via `/api/token`. Linked from the Pluggy docs; has CI |
-| React | [`frontend/react`](frontend/react) | `react-pluggy-connect`. Linked from the package README |
-| React Native (Expo) | [`frontend/react-native-expo`](frontend/react-native-expo) | Expo SDK 54 |
-| Cordova | [`frontend/cordova`](frontend/cordova) | Apache Cordova iOS |
-| Vercel serverless (token only) | [`examples/vercel-node-connect-token`](examples/vercel-node-connect-token) | Minimal Connect Token endpoint. Linked from the Pluggy docs; has CI |
+| Vercel serverless (token only) | [`examples/vercel-node-connect-token`](examples/vercel-node-connect-token) | One-file Connect Token endpoint for signed-in users: verifies the caller's JWT (replace with your auth), binds the token to `clientUserId`, fails closed. Has CI with rejection tests |
+| Vanilla HTML | [`frontend/html`](frontend/html) | Drop-in CDN script that asks your authenticated token endpoint for a token |
+| React Native (Expo) | [`frontend/react-native-expo`](frontend/react-native-expo) | Expo SDK 54. Being reworked in an open pull request |
+| Cordova | [`frontend/cordova`](frontend/cordova) | Apache Cordova iOS. Retirement proposed in an open pull request |
 
 See [`frontend/README.md`](frontend/README.md) for the connect-token flow and the widget options.
 
@@ -85,11 +83,13 @@ See [`frontend/README.md`](frontend/README.md) for the connect-token flow and th
 | `examples/aws-sst` (Lambda + DynamoDB) | [`backend-connect-token.md`](prompts/backend-connect-token.md), [`webhook-receiver.md`](prompts/webhook-receiver.md) |
 | `java` (Spring Boot + pluggy-java) | [`backend-connect-token.md`](prompts/backend-connect-token.md), [`sync-financial-data.md`](prompts/sync-financial-data.md); SDK at [pluggyai/pluggy-java](https://github.com/pluggyai/pluggy-java) |
 | `frontend/flask` | [`backend-connect-token.md`](prompts/backend-connect-token.md), [`connect-widget-web.md`](prompts/connect-widget-web.md) |
+| `frontend/nextjs` (Pages Router, unauthenticated `/api/token`) | [`examples/vercel-quickdeploy-nextjs`](examples/vercel-quickdeploy-nextjs), [`backend-connect-token.md`](prompts/backend-connect-token.md), [`connect-widget-web.md`](prompts/connect-widget-web.md) |
+| `frontend/react` (Create React App) | [`connect-widget-web.md`](prompts/connect-widget-web.md) |
 | `frontend/react-native` (RN 0.66 bare) | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
 | `frontend/flutter` | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
 | `ios` (Swift WebView) | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
 
-The code of every removed example stays available in this repository's git history.
+The code of every removed example stays available in this repository's git history. `frontend/nextjs` and `frontend/react` keep a README at their old path that points to the replacement.
 
 ---
 

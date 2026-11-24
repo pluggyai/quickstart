@@ -4,13 +4,13 @@ Each file in this folder is a self-contained task for a coding agent (Claude Cod
 
 | Prompt | Scenario | Replaces the example(s) |
 |--------|----------|-------------------------|
-| [`backend-connect-token.md`](backend-connect-token.md) | Server-side credentials and a Connect Token endpoint for the signed-in user | `examples/aws-sst` (token function), `examples/node-nestjs` (user endpoint), `java` (client setup), `frontend/flask` (server) |
-| [`connect-widget-web.md`](connect-widget-web.md) | Opening Pluggy Connect in a web app and handling its result | `frontend/flask` (template) |
+| [`backend-connect-token.md`](backend-connect-token.md) | Server-side credentials and a Connect Token endpoint for the signed-in user | `examples/aws-sst` (token function), `examples/node-nestjs` (user endpoint), `java` (client setup), `frontend/flask` (server), `frontend/nextjs` (token route) |
+| [`connect-widget-web.md`](connect-widget-web.md) | Opening Pluggy Connect in a web app and handling its result | `frontend/flask` (template), `frontend/nextjs` (page), `frontend/react` |
 | [`connect-widget-mobile.md`](connect-widget-mobile.md) | Pluggy Connect in React Native, Flutter or a native iOS / Android WebView | `frontend/react-native`, `frontend/flutter`, `ios` |
 | [`webhook-receiver.md`](webhook-receiver.md) | Receiving and verifying Pluggy webhooks, then syncing from the API | `examples/aws-sst`, `examples/node-nestjs`, `examples/vercel-node-mongo` |
 | [`sync-financial-data.md`](sync-financial-data.md) | Fetching and storing accounts, transactions, investments, loans and identity per user, and deleting a connection | `examples/node-nestjs`, `examples/vercel-node-mongo`, `java` |
 
-For a complete, runnable reference of all of them working together, see [`examples/vercel-quickdeploy-nextjs`](../examples/vercel-quickdeploy-nextjs).
+For a complete, runnable reference of all of them working together, see [`examples/vercel-quickdeploy-nextjs`](../examples/vercel-quickdeploy-nextjs). For just the token endpoint, see [`examples/vercel-node-connect-token`](../examples/vercel-node-connect-token).
 
 Payments (PIX, scheduled and automatic PIX, Smart Transfers) have no prompt here yet; the `pluggy-payments` skill in [pluggyai/agent-skills](https://github.com/pluggyai/agent-skills) and the [Payments docs](https://docs.pluggy.ai/en/docs/payments/overview) cover them.
 
@@ -29,9 +29,9 @@ Prompts that build on each other say so under *Prerequisites* (for example, the 
 ## Rules every prompt shares
 
 - `PLUGGY_CLIENT_ID` and `PLUGGY_CLIENT_SECRET` live in your server's secret store / environment, never in source code, the front end, a mobile binary, or logs.
-- The front end only ever receives a Connect Token, created by your backend for **the user who is signed in**, with `clientUserId` set to that user's opaque id.
+- The front end only ever receives a Connect Token, created by an endpoint that **authenticates the caller** and sets `clientUserId` to that user's opaque id from the session (never from the request). The endpoint fails closed (`503`) when its configuration is missing and allows CORS only for your own origin.
 - Every read or delete of an Item checks that the Item belongs to the caller.
-- Webhooks are verified (signature, or a secret header) before anything is processed, and the data is re-fetched from the API instead of trusted from the payload.
+- Webhooks are verified with the `X-Pluggy-Signature` HMAC (5-minute tolerance) before anything is processed, the receiver fails closed (`503`) without a signing secret, and the data is re-fetched from the API instead of trusted from the payload.
 - No API keys, Connect Tokens, credentials or full financial payloads in logs.
 
 These come from Pluggy's [Security overview](https://docs.pluggy.ai/en/docs/security/overview); the prompts link the specific page for each rule.

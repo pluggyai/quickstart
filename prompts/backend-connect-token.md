@@ -37,11 +37,13 @@ Base URL `https://api.pluggy.ai`. Reference: [Authentication](https://docs.plugg
 
 ## What to build
 
-1. A small Pluggy client module (or SDK instance) created once, reading the two credentials from configuration and failing at startup with a clear message naming the missing variable.
+1. A small Pluggy client module (or SDK instance) created once, reading the two credentials from configuration and failing at startup with a clear message naming the missing variable. On serverless platforms where there is no startup step, the endpoint answers `503` while a required variable is missing, before doing anything else (fail closed, never unauthenticated).
 2. An endpoint, e.g. `POST /pluggy/connect-token`, that:
+   - accepts only `POST` (`405` otherwise, plus the CORS preflight if the front end is on another origin);
    - requires the project's existing authentication and answers `401` without it;
+   - if the front end is on another origin, sends CORS headers only for that configured origin, never `*`;
    - for a state-changing `POST` from a browser, is protected the way the project protects its other POSTs (CSRF token, `SameSite` cookies, or an `Origin` check);
-   - sets `clientUserId` to the signed-in user's **opaque, stable id** from this system (not an e-mail, CPF or name);
+   - sets `clientUserId` to the signed-in user's **opaque, stable id** from this system (not an e-mail, CPF or name), taken from the authenticated session, **never from the request body or query**;
    - adds `webhookUrl` / `oauthRedirectUri` only when configured;
    - accepts an optional `itemId` for updates and rejects it (`404`) unless the stored Item belongs to the user;
    - returns only `{ "accessToken": "..." }` to the client.
@@ -56,7 +58,9 @@ Base URL `https://api.pluggy.ai`. Reference: [Authentication](https://docs.plugg
 
 ## Acceptance checks (run them and report the results)
 
-- [ ] The endpoint without authentication returns `401`, and does not call Pluggy.
+- [ ] The endpoint without authentication, or with an invalid or expired credential, returns `401`, and does not call Pluggy.
+- [ ] A `clientUserId` sent by the client in the body is ignored: the token is still created for the signed-in user.
+- [ ] A method other than `POST` returns `405`; if CORS is enabled, a request from another origin gets no `Access-Control-Allow-Origin`.
 - [ ] With an authenticated user it returns `200` and a body with only `accessToken` (run against a real Pluggy application if credentials are available in the environment; otherwise with the Pluggy client mocked, and say so).
 - [ ] The request sent to `/connect_token` contains `options.clientUserId` equal to the signed-in user's id (assert in a test with the HTTP client or SDK mocked).
 - [ ] An `itemId` that belongs to another user returns `404`; a non-UUID returns `400`.
@@ -67,4 +71,4 @@ Base URL `https://api.pluggy.ai`. Reference: [Authentication](https://docs.plugg
 
 ## Adapt to the user's stack
 
-Follow the project's conventions for routing, dependency injection, configuration and tests. Serverless platforms are fine: keep the API-key cache in module scope and accept that a cold start fetches a new key. Do not add a framework or a new auth system to satisfy this prompt.
+Follow the project's conventions for routing, dependency injection, configuration and tests. A one-file version of this endpoint, with an `authenticateRequest()` placeholder to replace with the project's authentication and tests for the rejections above, is [`examples/vercel-node-connect-token`](../examples/vercel-node-connect-token). Serverless platforms are fine: keep the API-key cache in module scope and accept that a cold start fetches a new key. Do not add a framework or a new auth system to satisfy this prompt.
