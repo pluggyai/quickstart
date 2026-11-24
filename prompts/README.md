@@ -12,6 +12,8 @@ Each file in this folder is a self-contained task for a coding agent (Claude Cod
 
 For a complete, runnable reference of all of them working together, see [`examples/vercel-quickdeploy-nextjs`](../examples/vercel-quickdeploy-nextjs).
 
+Payments (PIX, scheduled and automatic PIX, Smart Transfers) have no prompt here yet; the `pluggy-payments` skill in [pluggyai/agent-skills](https://github.com/pluggyai/agent-skills) and the [Payments docs](https://docs.pluggy.ai/en/docs/payments/overview) cover them.
+
 ## How to use a prompt
 
 1. **Give your agent Pluggy's context first** (once per machine or project):
