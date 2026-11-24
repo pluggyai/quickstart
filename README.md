@@ -1,6 +1,6 @@
 # Pluggy Quickstart
 
-[Pluggy](https://pluggy.ai) is the fastest way to add Open Finance Brasil and account aggregation to your application. This repository is a hands-on tour of every officially supported integration shape — pick the one that matches your stack, copy it, and you're integrated in minutes.
+[Pluggy](https://pluggy.ai) is the fastest way to add Open Finance Brasil and account aggregation to your application. This repository has one maintained reference app you can deploy in one click, and a set of prompts that let your coding agent build the same integration in your own stack.
 
 > Looking for the API reference instead? Head to [docs.pluggy.ai](https://docs.pluggy.ai).
 
@@ -11,9 +11,9 @@
 - [Get started](#get-started)
 - [One-click deploy](#one-click-deploy)
 - [Examples in this repo](#examples-in-this-repo)
-  - [Frontend — Connect Widget integrations](#frontend--connect-widget-integrations)
-  - [Backend — token, webhooks, persistence](#backend--token-webhooks-persistence)
-  - [Native mobile](#native-mobile)
+  - [Prompts](#prompts)
+  - [Other examples (kept for now)](#other-examples-kept-for-now)
+  - [Where the previous examples went](#where-the-previous-examples-went)
 - [Official SDKs and widgets](#official-sdks-and-widgets)
 - [AI agent tools](#ai-agent-tools)
 - [Reference and community projects](#reference-and-community-projects)
@@ -26,9 +26,9 @@
 
 1. Create an account at [dashboard.pluggy.ai](https://dashboard.pluggy.ai)
 2. Create an application to get your **Client ID** and **Client Secret**
-3. Pick a quickstart below that matches your stack and follow its `README.md`
+3. Deploy the [reference app](#one-click-deploy), or give your coding agent one of the [prompts](prompts) for your stack
 
-Every server-side example here implements the same two-token pattern:
+Every integration follows the same two-token pattern:
 
 - **API key** (server-side only) — created from `CLIENT_ID` + `CLIENT_SECRET`
 - **Connect token** (client-side safe) — scoped to a single widget session, exchanged from the API key
@@ -47,39 +47,49 @@ The flagship `vercel-quickdeploy-nextjs` example — Next.js 16 + Supabase + Con
 
 ## Examples in this repo
 
-### Frontend — Connect Widget integrations
+This repository has three parts:
 
-Client-side integrations that drop the Pluggy Connect Widget into a page. See [`frontend/README.md`](frontend/README.md) for the connect-token flow and widget configuration.
+1. **One maintained reference project** — [`examples/vercel-quickdeploy-nextjs`](examples/vercel-quickdeploy-nextjs): the full flow (sign-in, Connect Token, Connect Widget, signed webhooks, per-user data in Supabase) in one deployable app. It has CI and is kept current.
+2. **Prompts for coding agents** — [`prompts/`](prompts): one self-contained task per integration scenario. Hand one to your coding agent inside your own codebase and it implements the scenario in your stack, following Pluggy's security rules and docs. See [`prompts/README.md`](prompts/README.md).
+3. **Small snippets kept while their future is decided** — listed below.
+
+### Prompts
+
+| Scenario | Prompt |
+|----------|--------|
+| Server-side credentials + Connect Token endpoint for the signed-in user | [`prompts/backend-connect-token.md`](prompts/backend-connect-token.md) |
+| Pluggy Connect in a web app | [`prompts/connect-widget-web.md`](prompts/connect-widget-web.md) |
+| Pluggy Connect in React Native, Flutter, iOS or Android | [`prompts/connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
+| Receiving and verifying webhooks | [`prompts/webhook-receiver.md`](prompts/webhook-receiver.md) |
+| Fetching and storing accounts, transactions and other products; disconnecting | [`prompts/sync-financial-data.md`](prompts/sync-financial-data.md) |
+
+### Other examples (kept for now)
 
 | Stack | Path | Notes |
 |-------|------|-------|
-| Next.js (Pages Router) | [`frontend/nextjs`](frontend/nextjs) | Next.js 15 + server-side token via `/api/token` |
-| React | [`frontend/react`](frontend/react) | React 19 + CRA |
-| React Native (Expo) | [`frontend/react-native-expo`](frontend/react-native-expo) | Expo SDK 54 + Expo Router |
-| React Native (bare) | [`frontend/react-native`](frontend/react-native) | RN 0.66 bare workflow (legacy reference) |
-| Flutter | [`frontend/flutter`](frontend/flutter) | Flutter + WebView |
-| Vanilla HTML | [`frontend/html`](frontend/html) | Drop-in CDN script |
-| Flask | [`frontend/flask`](frontend/flask) | Python Flask + server-rendered templates |
+| Vanilla HTML | [`frontend/html`](frontend/html) | Drop-in CDN script. Linked from the Pluggy docs |
+| Next.js (Pages Router) | [`frontend/nextjs`](frontend/nextjs) | Server-side token via `/api/token`. Linked from the Pluggy docs; has CI |
+| React | [`frontend/react`](frontend/react) | `react-pluggy-connect`. Linked from the package README |
+| React Native (Expo) | [`frontend/react-native-expo`](frontend/react-native-expo) | Expo SDK 54 |
 | Cordova | [`frontend/cordova`](frontend/cordova) | Apache Cordova iOS |
+| Vercel serverless (token only) | [`examples/vercel-node-connect-token`](examples/vercel-node-connect-token) | Minimal Connect Token endpoint. Linked from the Pluggy docs; has CI |
 
-### Backend — token, webhooks, persistence
+See [`frontend/README.md`](frontend/README.md) for the connect-token flow and the widget options.
 
-Server-side examples that issue connect tokens, receive Pluggy webhooks, and persist items / transactions.
+### Where the previous examples went
 
-| Stack | Path | Notes |
-|-------|------|-------|
-| Vercel + Next.js + Supabase | [`examples/vercel-quickdeploy-nextjs`](examples/vercel-quickdeploy-nextjs) | Flagship full-stack example. App Router, RLS-backed Supabase, webhook-driven sync. |
-| NestJS + Postgres | [`examples/node-nestjs`](examples/node-nestjs) | NestJS 11 + Sequelize + PostgreSQL via docker-compose |
-| Vercel serverless (token only) | [`examples/vercel-node-connect-token`](examples/vercel-node-connect-token) | Connect-token endpoint for signed-in users (JWT), bound to `clientUserId` |
-| Vercel + MongoDB | [`examples/vercel-node-mongo`](examples/vercel-node-mongo) | Token endpoint + webhook persistence in MongoDB |
-| AWS (SST v4) | [`examples/aws-sst`](examples/aws-sst) | Lambda + DynamoDB on SST Ion |
-| Java + Spring Boot | [`java`](java) | Spring Boot 2.6 |
+| Previous example | Now |
+|------------------|-----|
+| `examples/node-nestjs` (NestJS + Postgres) | [`backend-connect-token.md`](prompts/backend-connect-token.md), [`webhook-receiver.md`](prompts/webhook-receiver.md), [`sync-financial-data.md`](prompts/sync-financial-data.md) |
+| `examples/vercel-node-mongo` (Vercel + MongoDB) | [`webhook-receiver.md`](prompts/webhook-receiver.md), [`sync-financial-data.md`](prompts/sync-financial-data.md) |
+| `examples/aws-sst` (Lambda + DynamoDB) | [`backend-connect-token.md`](prompts/backend-connect-token.md), [`webhook-receiver.md`](prompts/webhook-receiver.md) |
+| `java` (Spring Boot + pluggy-java) | [`backend-connect-token.md`](prompts/backend-connect-token.md), [`sync-financial-data.md`](prompts/sync-financial-data.md); SDK at [pluggyai/pluggy-java](https://github.com/pluggyai/pluggy-java) |
+| `frontend/flask` | [`backend-connect-token.md`](prompts/backend-connect-token.md), [`connect-widget-web.md`](prompts/connect-widget-web.md) |
+| `frontend/react-native` (RN 0.66 bare) | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
+| `frontend/flutter` | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
+| `ios` (Swift WebView) | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
 
-### Native mobile
-
-| Platform | Path |
-|----------|------|
-| iOS (Swift) | [`ios`](ios) |
+The code of every removed example stays available in this repository's git history.
 
 ---
 
@@ -89,7 +99,7 @@ Server-side examples that issue connect tokens, receive Pluggy webhooks, and per
 |-------------------|--------|---------|
 | Node.js / TypeScript (server) | [pluggyai/pluggy-node](https://github.com/pluggyai/pluggy-node) | [`pluggy-sdk`](https://www.npmjs.com/package/pluggy-sdk) |
 | Browser JavaScript | [pluggyai/pluggy-js](https://github.com/pluggyai/pluggy-js) | [`pluggy-js`](https://www.npmjs.com/package/pluggy-js) |
-| Java | [pluggyai/pluggy-java](https://github.com/pluggyai/pluggy-java) | Maven Central |
+| Java | [pluggyai/pluggy-java](https://github.com/pluggyai/pluggy-java) | GitHub Packages |
 | .NET / C# | [pluggyai/pluggy-net](https://github.com/pluggyai/pluggy-net) | NuGet |
 
 Connect Widget components:
@@ -109,7 +119,8 @@ For coding agents (Claude Code, Cursor, GitHub Copilot, …) building on top of 
 | Tool | What it is | Install |
 |------|------------|---------|
 | [pluggyai/agent-skills](https://github.com/pluggyai/agent-skills) | Agent Skills that teach agents how to integrate Pluggy — SDK setup, Connect Widget, Item lifecycle, webhooks, Open Finance data retrieval. Format: [agentskills.io](https://agentskills.io). | `npx skills add pluggyai/agent-skills` |
-| [pluggyai/pluggy-mcp](https://github.com/pluggyai/pluggy-mcp) | MCP server exposing the Pluggy API as tools to any MCP-compatible client (Cursor, Claude Desktop, …). | See repo [README](https://github.com/pluggyai/pluggy-mcp#readme) |
+| [Pluggy docs MCP server](https://docs.pluggy.ai/en/docs/developer-tools/mcp) | Hosted MCP server (`https://mcp.pluggy.ai/mcp`, no API key) that gives any MCP client the live docs, API reference, changelog and recipes. | `claude mcp add --transport http pluggy-docs https://mcp.pluggy.ai/mcp` — [other clients](https://docs.pluggy.ai/en/docs/developer-tools/mcp) |
+| [`prompts/`](prompts) | Task prompts in this repo for each integration scenario, written to be run by a coding agent in your own codebase. | Copy or reference a file from [`prompts/`](prompts) |
 
 ---
 
@@ -119,7 +130,6 @@ Larger real-world projects that build on top of Pluggy:
 
 | Project | What it is |
 |---------|-----------|
-| [pluggyai/my-expenses](https://github.com/pluggyai/my-expenses) — [live](https://pluggy-my-expenses.vercel.app) | Full-stack personal-finance example app. The most complete open Pluggy integration. |
 | [pluggyai/meu-pluggy](https://github.com/pluggyai/meu-pluggy) — [live](https://meu.pluggy.ai) | Free consumer wallet for Open Finance Brasil. Consent & data management. |
 | [pluggyai/use-pluggy-connect](https://github.com/pluggyai/use-pluggy-connect) | React hook wrapper around the Connect Widget. |
 | [pluggyai/raycast-pluggy](https://github.com/pluggyai/raycast-pluggy) | Raycast extension that surfaces Pluggy data on the desktop. |
@@ -139,6 +149,6 @@ Larger real-world projects that build on top of Pluggy:
 
 ## Contributing
 
-This repository is open for contributions. Each subdirectory is an independent project with its own `README.md`, dependencies, and instructions. See [`CLAUDE.md`](CLAUDE.md) for an architectural overview of how the projects are laid out.
+This repository is open for contributions. Each project directory is independent, with its own `README.md`, dependencies and instructions; prompts follow the guidelines in [`prompts/README.md`](prompts/README.md). See [`AGENTS.md`](AGENTS.md) for how the repository is laid out.
 
 All PRs require review from `@pluggyai/ramen` and `@pluggyai/tech-leaders` (see [`.github/CODEOWNERS`](.github/CODEOWNERS)).

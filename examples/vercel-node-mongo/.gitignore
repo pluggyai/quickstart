@@ -1,8 +1,0 @@
-.vercel
-.env
-
-node_modules
-
-# Block npm/yarn lockfiles — this project is pnpm-only
-package-lock.json
-yarn.lock
