@@ -17,12 +17,11 @@ import retrofit2.Response;
 public class QuickstartApplication {
 
   public static void main(String[] args) throws IOException, InterruptedException {
-    System.out.println("Hello World");
-
-    // Client configurations
-    final String clientId = "5d4f614a-0809-4341-a986-1b7bbdaf0668";
-    final String clientSecret = "a7aa3281-0b89-42e7-8b22-efdac71d5cbd";
-    final String webhookUrl = "https://pluggy-java.requestcatcher.com";
+    // Client configurations, read from the environment. Never commit credentials.
+    final String clientId = requireEnv("PLUGGY_CLIENT_ID");
+    final String clientSecret = requireEnv("PLUGGY_CLIENT_SECRET");
+    // Optional: a public HTTPS URL that receives this item's webhooks.
+    final String webhookUrl = optionalEnv("PLUGGY_WEBHOOK_URL");
 
     // Pluggy bank connector
     final int pluggyBankConnectorId = 2;
@@ -120,6 +119,23 @@ public class QuickstartApplication {
 
     System.out.println(MessageFormat.format("Deleting item {0}", id));
     pluggyClient.service().deleteItem(id).execute();
+  }
+
+  private static String requireEnv(String name) {
+    String value = System.getenv(name);
+    if (value == null || value.isBlank()) {
+      System.err.println(MessageFormat.format(
+          "Missing environment variable {0}. Get your credentials at https://dashboard.pluggy.ai and run, e.g.:\n"
+              + "  PLUGGY_CLIENT_ID=... PLUGGY_CLIENT_SECRET=... ./mvnw spring-boot:run",
+          name));
+      System.exit(1);
+    }
+    return value;
+  }
+
+  private static String optionalEnv(String name) {
+    String value = System.getenv(name);
+    return value == null || value.isBlank() ? null : value;
   }
 
 }

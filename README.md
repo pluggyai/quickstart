@@ -39,9 +39,9 @@ The Connect Widget never sees your `CLIENT_SECRET`.
 
 ## One-click deploy
 
-The flagship `vercel-quickdeploy-nextjs` example — Next.js 16 + Supabase + Connect Widget + webhook-driven sync — deploys in under two minutes. You only need to supply your Pluggy and Supabase credentials.
+The flagship `vercel-quickdeploy-nextjs` example — Next.js 16 + Supabase + Connect Widget + webhook-driven sync — deploys in under two minutes. You supply your Pluggy and Supabase credentials plus an access code and a session secret; the deployed app asks for the access code before showing any data.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/pluggyai/quickstart/tree/master/examples/vercel-quickdeploy-nextjs&env=PLUGGY_CLIENT_ID,PLUGGY_CLIENT_SECRET,NEXT_PUBLIC_SUPABASE_URL,SUPABASE_SERVICE_ROLE_KEY&envDescription=Get%20your%20Pluggy%20credentials%20from%20dashboard.pluggy.ai%20and%20Supabase%20credentials%20from%20your%20Supabase%20project%20settings&envLink=https://dashboard.pluggy.ai)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/pluggyai/quickstart/tree/master/examples/vercel-quickdeploy-nextjs&env=PLUGGY_CLIENT_ID,PLUGGY_CLIENT_SECRET,PLUGGY_WEBHOOK_SECRET,NEXT_PUBLIC_SUPABASE_URL,SUPABASE_SERVICE_ROLE_KEY,APP_ACCESS_CODE,SESSION_SECRET&envDescription=Pluggy%20credentials%20and%20webhook%20signing%20secret%20from%20dashboard.pluggy.ai%2C%20Supabase%20credentials%20from%20your%20project%20settings%2C%20and%20two%20random%20values%20you%20choose%3A%20APP_ACCESS_CODE%20(login%20code)%20and%20SESSION_SECRET%20(32%2B%20characters)&envLink=https://github.com/pluggyai/quickstart/tree/master/examples/vercel-quickdeploy-nextjs%23environment-variables)
 
 ---
 

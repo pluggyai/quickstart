@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { HttpError } from './http-error';
 
 type RouteHandler = (request: NextRequest) => Promise<NextResponse>;
 
@@ -7,6 +8,11 @@ export function withErrorHandling(handler: RouteHandler): RouteHandler {
     try {
       return await handler(request);
     } catch (error: unknown) {
+      // Expected rejections (401, 403, 404, ...) are answered without a stack trace.
+      if (error instanceof HttpError && error.status < 500) {
+        return NextResponse.json({ success: false, error: error.message }, { status: error.status });
+      }
+
       const isError = error instanceof Error;
       const errorMessage = isError ? error.message : String(error);
       const errorStack = isError ? error.stack : undefined;

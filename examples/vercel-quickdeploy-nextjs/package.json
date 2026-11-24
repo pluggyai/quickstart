@@ -23,7 +23,8 @@
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "tsc --noEmit"
+    "test": "tsc --noEmit",
+    "test:auth": "node scripts/check-auth.mjs"
   },
   "dependencies": {
     "@chakra-ui/react": "3.30.0",
@@ -33,7 +34,7 @@
     "axios": "1.21.0",
     "framer-motion": "12.23.24",
     "jsonwebtoken": "9.0.2",
-    "next": "16.4.3",
+    "next": "16.4.6",
     "pluggy-sdk": "0.94.2",
     "react": "19.2.1",
     "react-dom": "19.2.1",

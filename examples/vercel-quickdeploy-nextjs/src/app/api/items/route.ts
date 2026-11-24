@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPluggyClient } from "@/app/lib/pluggy/client";
 import { itemsService } from "@/app/lib/services/items";
-import { withErrorHandling } from "@/app/lib/utils/error-handler";
+import { withAuth, assertItemOwner } from "@/app/lib/auth/guards";
+import type { Session } from "@/app/lib/auth/session";
 import { isUuid } from "@/app/lib/utils/validation";
-
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-async function handleGetItems(request: NextRequest) {
+// Lists only the items connected by the signed-in user (their clientUserId).
+async function handleGetItems(request: NextRequest, session: Session) {
   const { searchParams } = request.nextUrl;
-  const userId = searchParams.get("userId");
   const itemId = searchParams.get("itemId");
 
   if (itemId) {
@@ -21,12 +21,13 @@ async function handleGetItems(request: NextRequest) {
       );
     }
 
+    await assertItemOwner(session, itemId);
     const pluggyClient = getPluggyClient();
     const item = await pluggyClient.fetchItem(itemId);
     return NextResponse.json({ success: true, data: item });
   }
 
-  const items = await itemsService.getItems(userId || undefined);
+  const items = await itemsService.getItems(session.userId);
 
   return NextResponse.json({
     success: true,
@@ -40,7 +41,7 @@ async function handleGetItems(request: NextRequest) {
   });
 }
 
-async function handleDeleteItem(request: NextRequest) {
+async function handleDeleteItem(request: NextRequest, session: Session) {
   const { searchParams } = request.nextUrl;
   const itemId = searchParams.get("itemId");
 
@@ -58,6 +59,8 @@ async function handleDeleteItem(request: NextRequest) {
     );
   }
 
+  await assertItemOwner(session, itemId);
+
   const pluggyClient = getPluggyClient();
 
   await pluggyClient.deleteItem(itemId);
@@ -69,5 +72,5 @@ async function handleDeleteItem(request: NextRequest) {
   });
 }
 
-export const GET = withErrorHandling(handleGetItems);
-export const DELETE = withErrorHandling(handleDeleteItem);
+export const GET = withAuth(handleGetItems);
+export const DELETE = withAuth(handleDeleteItem);

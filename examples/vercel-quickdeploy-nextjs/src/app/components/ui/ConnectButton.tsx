@@ -15,12 +15,11 @@ const PluggyConnect = dynamic(
 );
 
 interface ConnectButtonProps {
-  userId?: string;
   onSuccess: () => void;
   onError: (message: string) => void;
 }
 
-export function ConnectButton({ userId, onSuccess, onError }: ConnectButtonProps) {
+export function ConnectButton({ onSuccess, onError }: ConnectButtonProps) {
   const [connectToken, setConnectToken] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,14 +27,9 @@ export function ConnectButton({ userId, onSuccess, onError }: ConnectButtonProps
   const handleOpenConnect = async () => {
     setIsLoading(true);
     try {
-      const { data } = await api.post('/api/token', 
-        userId ? { userId } : {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      // The server creates the token for the signed-in user; the browser
+      // never chooses whose connection it is.
+      const { data } = await api.post('/api/token');
 
       setConnectToken(data.accessToken);
       setIsOpen(true);

@@ -66,3 +66,9 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: https://dummy.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: dummy
         run: pnpm run build
+
+      - name: Auth checks
+        # Starts the production build and proves every API route rejects a
+        # caller without a session, and the webhook rejects unsigned requests.
+        # The script sets its own throwaway configuration.
+        run: pnpm run test:auth

@@ -8,7 +8,8 @@ A production-ready Next.js application for integrating Pluggy's financial data A
 - **Automatic Data Sync**: Receives and processes webhook events from Pluggy to keep your database up-to-date
 - **Complete Data Models**: Stores accounts, transactions, investments, credit cards, loans, and identity data
 - **RESTful API**: Pre-built endpoints for accessing financial data
-- **Production Ready**: Configured for Vercel deployment with proper error handling and logging
+- **Access control**: Every API route requires a signed-in session and only returns the items that session connected; webhooks are accepted only with a valid Pluggy signature
+- **Vercel ready**: One-click deploy with error handling and logging. Replace the demo sign-in with your own authentication before real users rely on it (see [Authentication](#authentication))
 
 ## Prerequisites
 
@@ -19,7 +20,7 @@ Before deploying, you'll need accounts on both platforms:
 
 ## Quick Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/pluggyai/quickstart/tree/master/examples/vercel-quickdeploy-nextjs&env=PLUGGY_CLIENT_ID,PLUGGY_CLIENT_SECRET,NEXT_PUBLIC_SUPABASE_URL,SUPABASE_SERVICE_ROLE_KEY&envDescription=Get%20your%20Pluggy%20credentials%20from%20dashboard.pluggy.ai%20and%20Supabase%20credentials%20from%20your%20Supabase%20project%20settings&envLink=https://dashboard.pluggy.ai)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/pluggyai/quickstart/tree/master/examples/vercel-quickdeploy-nextjs&env=PLUGGY_CLIENT_ID,PLUGGY_CLIENT_SECRET,PLUGGY_WEBHOOK_SECRET,NEXT_PUBLIC_SUPABASE_URL,SUPABASE_SERVICE_ROLE_KEY,APP_ACCESS_CODE,SESSION_SECRET&envDescription=Pluggy%20credentials%20and%20webhook%20signing%20secret%20from%20dashboard.pluggy.ai%2C%20Supabase%20credentials%20from%20your%20project%20settings%2C%20and%20two%20random%20values%20you%20choose%3A%20APP_ACCESS_CODE%20(login%20code)%20and%20SESSION_SECRET%20(32%2B%20characters)&envLink=https://github.com/pluggyai/quickstart/tree/master/examples/vercel-quickdeploy-nextjs%23environment-variables)
 
 ## Step-by-Step Setup Guide
 
@@ -34,6 +35,8 @@ Before deploying, you'll need accounts on both platforms:
    - **Client Secret** - Copy this value (click to reveal)
 
 Keep these credentials handy - you'll need them for the Vercel deployment.
+
+6. In the same application, open **Webhooks** and choose **Generate signing secret**. Copy the value (`whsec_…`); it is shown only once. This is your `PLUGGY_WEBHOOK_SECRET`. Only the team Owner can generate it. See [Webhook security](https://docs.pluggy.ai/en/docs/developer-tools/webhook-security).
 
 ### Step 2: Set Up Supabase Database
 
@@ -322,16 +325,11 @@ CREATE INDEX idx_pluggy_items_user_id ON public.pluggy_items(user_id);
 
 ### Step 3: Deploy to Vercel
 
-Now that you have all four credentials, click the "Deploy with Vercel" button above and enter:
-
-1. **PLUGGY_CLIENT_ID** - From Step 1
-2. **PLUGGY_CLIENT_SECRET** - From Step 1
-3. **NEXT_PUBLIC_SUPABASE_URL** - From Step 2.2
-4. **SUPABASE_SERVICE_ROLE_KEY** - From Step 2.2
+Click the "Deploy with Vercel" button above and enter the values described in [Environment variables](#environment-variables).
 
 Click **Deploy** and wait for Vercel to build your application (~2-3 minutes).
 
-Once deployed, copy your Vercel application URL (e.g., `https://your-app.vercel.app`).
+Once deployed, copy your Vercel application URL (e.g., `https://your-app.vercel.app`). Optionally set `NEXT_PUBLIC_APP_URL` to it so every Connect Token also carries the webhook URL.
 
 ### Step 4: Configure Pluggy Webhooks
 
@@ -352,8 +350,8 @@ To receive real-time updates when financial data changes, you need to configure 
 
 ## Testing Your Setup
 
-1. Visit your deployed Vercel application
-2. The Connect Widget should load automatically
+1. Visit your deployed Vercel application and sign in with your `APP_ACCESS_CODE`
+2. Click **Conectar conta** to open the Connect Widget
 3. Try connecting to a financial institution (use Sandbox mode for testing)
 4. Check your Supabase database - you should see data appearing in the tables
 5. Monitor the Vercel function logs to see webhook events being processed
@@ -363,11 +361,44 @@ To receive real-time updates when financial data changes, you need to configure 
 You now have a fully functional financial data integration! You can:
 
 - **Customize the UI**: Edit the frontend to match your brand
-- **Add Authentication**: Implement user authentication to isolate data per user
+- **Replace the demo sign-in**: Plug in your own authentication (see [Authentication](#authentication))
 - **Build Features**: Create dashboards, analytics, or financial management tools
 - **Extend the API**: Add custom endpoints for your specific needs
 - **Contribute**: Share improvements back to this repository
 
+
+## Environment variables
+
+| Variable | Required | What it is |
+|----------|----------|------------|
+| `PLUGGY_CLIENT_ID` | yes | Client ID of your Pluggy application (Step 1) |
+| `PLUGGY_CLIENT_SECRET` | yes | Client secret of your Pluggy application (Step 1). Server-side only |
+| `PLUGGY_WEBHOOK_SECRET` | yes | Webhook signing secret (`whsec_…`) from Step 1. Without it every webhook is rejected |
+| `NEXT_PUBLIC_SUPABASE_URL` | yes | Supabase project URL (Step 2.2) |
+| `SUPABASE_SERVICE_ROLE_KEY` | yes | Supabase service role key (Step 2.2). Server-side only |
+| `APP_ACCESS_CODE` | yes | The code typed on `/login`. Pick a long random value and share it only with people who may use this deployment |
+| `SESSION_SECRET` | yes | Key that signs the session cookie, at least 32 random characters (e.g. `openssl rand -hex 32`) |
+| `PLUGGY_WEBHOOK_SECRET_PREVIOUS` | no | The old signing secret while you rotate it |
+| `NEXT_PUBLIC_APP_URL` | no | Public URL of the deployment; when set, Connect Tokens carry `<url>/api/webhook` as their webhook |
+
+If `APP_ACCESS_CODE`, `SESSION_SECRET` or `PLUGGY_WEBHOOK_SECRET` is missing, the app refuses the corresponding requests (sign-in, API, webhooks) with `503` instead of running unprotected.
+
+## Authentication
+
+This app reads and deletes financial data with **your** Pluggy credentials, so the API must know who is calling. What it does today:
+
+- **Sign-in**: `/login` exchanges `APP_ACCESS_CODE` for a signed, `httpOnly`, `SameSite=Lax` session cookie (7 days). The cookie carries an opaque user id; it is created at the first sign-in in a browser and kept on later sign-ins while the cookie is valid.
+- **Per-user items**: `/api/token` creates the Connect Token on the server with `clientUserId` set to that user id. Pluggy stores it on the Item, the webhook handler saves it as `pluggy_items.user_id`, and every API route checks that the requested item (or the item behind an account or investment) belongs to the caller. Anything else answers `404`.
+- **Writes**: `POST` and `DELETE` routes also require an `Origin` header that matches the app's own host.
+- **Webhooks**: `/api/webhook` verifies the `X-Pluggy-Signature` HMAC over the raw body, with a 5-minute tolerance, and answers `401` to anything else. It then re-fetches every resource from the Pluggy API instead of trusting the payload.
+
+What you must replace before real users rely on it:
+
+- The access code is one shared password and the user id lives only in the browser's cookie: a new browser is a new user. Replace `src/app/lib/auth/session.ts` and `src/app/api/session/route.ts` with your own authentication (NextAuth/Auth.js, Clerk, Supabase Auth, your SSO…) and use **your** user id as `clientUserId`. The ownership checks in `src/app/lib/auth/guards.ts` keep working unchanged.
+- There is no rate limiting on `/login`. Use a long random access code, or add rate limiting / your provider's protections.
+- Items created before this version (without `clientUserId`) are not shown to anyone. Reconnect them, or set `pluggy_items.user_id` by hand.
+
+To check the protection locally after `pnpm build`, run `pnpm test:auth`: it starts the build and asserts that every API route answers `401` without a session and that unsigned, wrongly signed or stale webhooks answer `401`.
 
 ## Project Structure
 
@@ -375,10 +406,13 @@ You now have a fully functional financial data integration! You can:
 src/
 ├── app/
 │   ├── api/              # API routes
-│   │   ├── webhook/      # Pluggy webhook handler
+│   │   ├── session/      # Demo sign-in / sign-out
+│   │   ├── webhook/      # Pluggy webhook handler (signature verified)
 │   │   ├── token/        # Connect token generation
-│   │   └── ...           # Other endpoints
+│   │   └── ...           # Other endpoints (session + ownership required)
+│   ├── login/            # Demo sign-in page
 │   ├── lib/
+│   │   ├── auth/         # Session cookie, ownership checks, webhook signature
 │   │   ├── pluggy/       # Pluggy SDK client
 │   │   ├── supabase/     # Supabase client
 │   │   └── services/     # Business logic
