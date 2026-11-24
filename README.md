@@ -70,7 +70,7 @@ Server-side examples that issue connect tokens, receive Pluggy webhooks, and per
 |-------|------|-------|
 | Vercel + Next.js + Supabase | [`examples/vercel-quickdeploy-nextjs`](examples/vercel-quickdeploy-nextjs) | Flagship full-stack example. App Router, RLS-backed Supabase, webhook-driven sync. |
 | NestJS + Postgres | [`examples/node-nestjs`](examples/node-nestjs) | NestJS 11 + Sequelize + PostgreSQL via docker-compose |
-| Vercel serverless (token only) | [`examples/vercel-node-connect-token`](examples/vercel-node-connect-token) | Minimal connect-token endpoint |
+| Vercel serverless (token only) | [`examples/vercel-node-connect-token`](examples/vercel-node-connect-token) | Connect-token endpoint for signed-in users (JWT), bound to `clientUserId` |
 | Vercel + MongoDB | [`examples/vercel-node-mongo`](examples/vercel-node-mongo) | Token endpoint + webhook persistence in MongoDB |
 | AWS (SST v4) | [`examples/aws-sst`](examples/aws-sst) | Lambda + DynamoDB on SST Ion |
 | Java + Spring Boot | [`java`](java) | Spring Boot 2.6 |
