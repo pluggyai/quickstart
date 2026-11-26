@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { creditCardBillsService } from '@/app/lib/services/credit-card-bills';
-import { withErrorHandling } from '@/app/lib/utils/error-handler';
+import { withAuth, assertAccountOwner } from '@/app/lib/auth/guards';
+import type { Session } from '@/app/lib/auth/session';
 import { isUuid } from '@/app/lib/utils/validation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
 
-async function handleGetBills(request: NextRequest) {
+async function handleGetBills(request: NextRequest, session: Session) {
   const { searchParams } = request.nextUrl;
   const accountId = searchParams.get('accountId');
 
@@ -24,6 +25,8 @@ async function handleGetBills(request: NextRequest) {
     );
   }
 
+  await assertAccountOwner(session, accountId);
+
   const bills = await creditCardBillsService.getBillsByAccountId(accountId);
   return NextResponse.json({
   success: true,
@@ -37,4 +40,4 @@ async function handleGetBills(request: NextRequest) {
 });
 }
 
-export const GET = withErrorHandling(handleGetBills);
+export const GET = withAuth(handleGetBills);

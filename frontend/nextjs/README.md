@@ -1,49 +1,8 @@
-# Pluggy Connect - Next.js Example
+# Pluggy Connect - Next.js
 
-Full-stack Next.js application with server-side connect token generation and the Pluggy Connect widget.
+The Next.js (Pages Router) project that lived here exposed `/api/token` to any caller: whoever reached the deployment could get Connect Tokens for your Pluggy application, with no user behind them. It was replaced by:
 
-## Prerequisites
+- **Runnable Next.js reference:** [`examples/vercel-quickdeploy-nextjs`](../../examples/vercel-quickdeploy-nextjs) — Next.js 16 (App Router) with sign-in, a Connect Token route bound to the signed-in user (`clientUserId`), per-user Items, signed webhooks and one-click deploy.
+- **Prompts for your own Next.js app:** [`prompts/backend-connect-token.md`](../../prompts/backend-connect-token.md) (the token route, behind your authentication) and [`prompts/connect-widget-web.md`](../../prompts/connect-widget-web.md) (the widget, with [`react-pluggy-connect`](https://www.npmjs.com/package/react-pluggy-connect) rendered client-side).
 
-- Node.js 24.22.1+
-- Pluggy API credentials (Client ID and Client Secret from [dashboard.pluggy.ai](https://dashboard.pluggy.ai))
-
-## Setup
-
-1. Copy the environment file and fill in your credentials:
-
-```bash
-cp .env.example .env
-```
-
-Required variables:
-- `PLUGGY_CLIENT_ID` - Your Pluggy Client ID
-- `PLUGGY_CLIENT_SECRET` - Your Pluggy Client Secret
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-## Run
-
-```bash
-npm run dev
-```
-
-Opens at `http://localhost:3000`.
-
-## How It Works
-
-- **Server-side** (`pages/api/`): Uses `pluggy-sdk` to generate connect tokens securely
-- **Client-side**: Uses `react-pluggy-connect` to render the Connect widget
-- Supports **Update Mode** for reconnecting existing items ([docs](https://docs.pluggy.ai/docs/updating-an-item))
-
-## Resources
-
-- [Pluggy Connect Widget Docs](https://docs.pluggy.ai/#pluggy-connect-widget)
-- [Next.js Documentation](https://nextjs.org/docs)
-
----
-
-_Built with [Next.js](https://nextjs.org/) (Pages Router)._
+The previous project is in this repository's git history.

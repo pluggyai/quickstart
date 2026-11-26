@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { investmentTransactionsService } from '@/app/lib/services/investment-transactions';
-import { withErrorHandling } from '@/app/lib/utils/error-handler';
+import { withAuth, assertInvestmentOwner } from '@/app/lib/auth/guards';
+import type { Session } from '@/app/lib/auth/session';
 import { isUuid } from '@/app/lib/utils/validation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
 
-async function handleGetInvestmentTransactions(request: NextRequest) {
+async function handleGetInvestmentTransactions(request: NextRequest, session: Session) {
   const { searchParams } = request.nextUrl;
   const investmentId = searchParams.get('investmentId');
   const limit = searchParams.get('limit');
@@ -26,6 +27,8 @@ async function handleGetInvestmentTransactions(request: NextRequest) {
     );
   }
 
+  await assertInvestmentOwner(session, investmentId);
+
   const investmentTransactions = await investmentTransactionsService.getTransactionsByInvestmentId(
     investmentId,
     limit ? parseInt(limit) : undefined,
@@ -43,4 +46,4 @@ async function handleGetInvestmentTransactions(request: NextRequest) {
   });
 }
 
-export const GET = withErrorHandling(handleGetInvestmentTransactions);
+export const GET = withAuth(handleGetInvestmentTransactions);

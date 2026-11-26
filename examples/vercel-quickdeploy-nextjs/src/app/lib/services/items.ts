@@ -5,18 +5,14 @@ const supabase = getSupabaseAdmin();
 
 export const itemsService = {
 
-  async getItems(userId?: string): Promise<PluggyItemRecord[]> {
-    
-    let query = supabase
+  // Items are always listed for one user: user_id is the clientUserId the
+  // item was created with (see /api/token).
+  async getItems(userId: string): Promise<PluggyItemRecord[]> {
+    const { data, error } = await supabase
       .from('pluggy_items')
       .select('*')
+      .eq('user_id', userId)
       .order('created_at', { ascending: false });
-
-    if (userId) {
-      query = query.eq('user_id', userId);
-    }
-
-    const { data, error } = await query;
 
     if (error) {
       console.error('Error fetching items:', error);

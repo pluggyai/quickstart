@@ -8,9 +8,11 @@ import {
   Heading,
   Text,
   Flex,
+  Button,
 } from '@chakra-ui/react';
 import { ConnectButton } from '@/app/components/ui/ConnectButton';
 import { ItemsList } from '@/app/components/ui/ItemsList';
+import { api } from '@/app/lib/utils/api';
 
 export default function HomePage() {
   const router = useRouter();
@@ -22,6 +24,11 @@ export default function HomePage() {
 
   const handleError = (message: string) => {
     console.error('Connection error:', message);
+  };
+
+  const handleLogout = async () => {
+    await api.delete('/api/session').catch(() => undefined);
+    window.location.assign('/login');
   };
 
   const handleItemSelect = (item: { item_id: string }) => {
@@ -42,10 +49,15 @@ export default function HomePage() {
               </Text>
             </Box>
             
-            <ConnectButton
-              onSuccess={handleSuccess}
-              onError={handleError}
-            />
+            <Flex gap={3} align="center">
+              <ConnectButton
+                onSuccess={handleSuccess}
+                onError={handleError}
+              />
+              <Button variant="ghost" size="sm" onClick={handleLogout}>
+                Sair
+              </Button>
+            </Flex>
           </Flex>
         </Container>
       </Box>

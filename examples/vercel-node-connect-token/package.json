@@ -18,7 +18,7 @@
     "lint:lockfile": "pnpm install --frozen-lockfile",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
-    "test": "tsc --noEmit",
+    "test": "tsc --noEmit && node --test test/token.test.mjs",
     "build": "tsc --noEmit"
   },
   "dependencies": {

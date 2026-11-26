@@ -26,19 +26,21 @@ function onDeviceReady() {
 
   console.log('Running cordova-' + cordova.platformId + '@' + cordova.version)
   document.getElementById('deviceready').classList.add('ready')
-  // Use your own connect token API endpoint, this one only list sandbox connectors
-  // Example Reference: https://github.com/pluggyai/quickstart/tree/master/examples/vercel-node-connect-token
-  fetch('https://my-own-api.vercel.app/api/token', {
+  // CONNECT_TOKEN_URL is your backend endpoint that creates a Connect Token for
+  // the signed-in user (it sets clientUserId from the session, never from the app).
+  // Reference: https://github.com/pluggyai/quickstart/tree/master/examples/vercel-node-connect-token
+  var CONNECT_TOKEN_URL = '<your connect token endpoint>'
+
+  // How your app authenticates the signed-in user to your backend,
+  // e.g. { Authorization: 'Bearer ' + yourAuthClient.getAccessToken() }.
+  // Never put your Pluggy CLIENT_ID / CLIENT_SECRET in the app.
+  var userAuthHeader = {}
+
+  fetch(CONNECT_TOKEN_URL, {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      options: {
-        clientUserId: 'user@example.com',
-      },
-    }),
+    headers: Object.assign({ Accept: 'application/json', 'Content-Type': 'application/json' }, userAuthHeader),
+    // To update an existing Item of this user, send { itemId: '<item id>' }.
+    body: JSON.stringify({}),
   })
     .then((response) => response.json())
     .then(({ accessToken }) => {
