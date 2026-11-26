@@ -19,12 +19,13 @@ client-side Pluggy library and it has only access to create new items but only r
 session. For any of the libraries listed in this folders and the browser
 lib [pluggy.js](https://github.com/pluggyai/pluggy-js) you must use this token.
 
-To create this token you can either add a new endpoint in your server that uses a `CLIENT_ID` and `CLIENT_SECRET`
-generated access token to generate the connect token, you
-can [check it in the official documentation](https://docs.pluggy.ai/#create-a-connect-token). If your application
-doesn't have server-side code or you just want to separate it in another server you
-can [just deploy this project](https://github.com/pluggyai/pluggy-connect-vercel) in minutes
-with [Vercel](https://vercel.com) and get you're own endpoint for the connect token.
+To create this token, add an endpoint to your server that uses your `CLIENT_ID` and `CLIENT_SECRET` to obtain an API key
+and then a connect token **for the user who is signed in** (see [Issue Connect Tokens from your
+backend](https://docs.pluggy.ai/en/recipes/issue-connect-tokens-from-your-backend)). A coding agent can build it in
+your stack from [`prompts/backend-connect-token.md`](../prompts/backend-connect-token.md).
+
+Mobile apps (React Native, Flutter, native iOS / Android WebViews) are covered by
+[`prompts/connect-widget-mobile.md`](../prompts/connect-widget-mobile.md).
 
 ## Usage
 

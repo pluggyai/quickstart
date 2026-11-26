@@ -9,38 +9,53 @@
     <main class="main"></main>
     <script src="https://cdn.pluggy.ai/pluggy-connect/v2.8.2/pluggy-connect.js"></script>
     <script>
-      // Use your own connect token API endpoint, this one only list sandbox connectors
-      // Example Reference: https://github.com/pluggyai/quickstart/tree/master/examples/vercel-node-connect-token
-      fetch('<your url to get the connect token here>', {
+      // This page runs inside YOUR app, for a user who is already signed in.
+      //
+      // CONNECT_TOKEN_URL is your backend endpoint that creates a Connect Token
+      // for that user (it sets clientUserId from the session, never from this page).
+      // Reference: https://github.com/pluggyai/quickstart/tree/master/examples/vercel-node-connect-token
+      //
+      // getUserAuthHeader() must return how your app authenticates the signed-in
+      // user to your backend. Leave it empty if your backend uses a session cookie
+      // on the same origin. Never put your Pluggy CLIENT_ID / CLIENT_SECRET here.
+      const CONNECT_TOKEN_URL = '<your connect token endpoint>'
+
+      function getUserAuthHeader() {
+        // e.g. return { Authorization: `Bearer ${yourAuthClient.getAccessToken()}` }
+        return {}
+      }
+
+      fetch(CONNECT_TOKEN_URL, {
         method: 'POST',
+        credentials: 'same-origin',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          ...getUserAuthHeader(),
         },
-        body: JSON.stringify({
-          options: {
-            clientUserId: 'user@example.com',
-          },
-        }),
+        // To update an existing Item of this user, send { itemId: '<item id>' }.
+        body: JSON.stringify({}),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) throw new Error(`Connect Token request failed: ${response.status}`)
+          return response.json()
+        })
         .then(({ accessToken }) => {
           const pluggyConnect = new PluggyConnect({
             connectToken: accessToken,
-            includeSandbox: true,
+            includeSandbox: true, // sandbox connectors for testing; remove in production
             onSuccess: (itemData) => {
-              // TODO: Implement logic for succesful connection
-              // The following line is an example, it should be removed when implemented.
-              console.log('Yay! Pluggy connect success!', itemData)
+              // The Item now belongs to the signed-in user. Store item.id on your
+              // backend (or rely on webhooks) and fetch its data server-side.
+              console.log('Pluggy Connect success', itemData.item.id)
             },
             onError: (error) => {
-              // TODO: Implement logic for error on connection
-              // The following line is an example, it should be removed when implemented.
-              console.error('Whoops! Pluggy Connect error... ', error)
+              console.error('Pluggy Connect error', error.message)
             },
           })
           pluggyConnect.init()
         })
+        .catch((error) => console.error(error.message))
     </script>
   </body>
 </html>
