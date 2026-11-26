@@ -1,9 +1,10 @@
-import { createHash, createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
+import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import type { NextRequest, NextResponse } from 'next/server';
 import { HttpError } from '@/app/lib/utils/http-error';
 
 // Demo session: a signed, httpOnly cookie that carries an opaque user id.
-// Replace it with your own authentication and use your real user id instead.
+// The access code is the only identity here, so everyone who signs in with it
+// is the same user. Replace it with your own authentication and your real user id.
 export const SESSION_COOKIE = 'pluggy_quickstart_session';
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
 
@@ -65,10 +66,19 @@ export function requireSession(request: NextRequest): Session {
   return session;
 }
 
-// Keeps the user id of a still-valid session so a second login does not
-// lose the items connected before; otherwise starts a new opaque id.
-export function startSession(response: NextResponse, existing: Session | null): Session {
-  const userId = existing?.userId ?? randomUUID();
+// The user id is derived from the access code instead of being random, so
+// signing out, an expired cookie or another browser all reach the same items.
+// Changing APP_ACCESS_CODE or SESSION_SECRET starts a new, empty user.
+function userIdForAccessCode(): string {
+  return createHmac('sha256', getSessionSecret())
+    .update(`user:${process.env.APP_ACCESS_CODE}`)
+    .digest('hex')
+    .slice(0, 32);
+}
+
+// Call only after isValidAccessCode() accepted the code.
+export function startSession(response: NextResponse): Session {
+  const userId = userIdForAccessCode();
   const exp = Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS;
   const payload = Buffer.from(JSON.stringify({ uid: userId, exp })).toString('base64url');
 

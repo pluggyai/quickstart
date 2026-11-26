@@ -8,7 +8,17 @@ import type { Item } from "pluggy-js";
  * TODO: replace this URL with your own API, that would return an { accessToken } object
  *  with your Pluggy connect token
  */
-const MY_CONNECT_TOKEN_API_URL = "https://connect-token-example.vercel.app/api/token";
+const MY_CONNECT_TOKEN_API_URL = "<your connect token endpoint>";
+
+/**
+ * How your app authenticates the signed-in user to your backend, e.g.
+ * { Authorization: `Bearer ${yourAuthClient.getAccessToken()}` }.
+ * The backend sets clientUserId from that user, never from the app, and the
+ * Pluggy CLIENT_ID / CLIENT_SECRET never ship in the app.
+ */
+function getUserAuthHeader(): Record<string, string> {
+  return {};
+}
 
 export default function Index() {
   const [token, setToken] = useState<string>();
@@ -22,12 +32,10 @@ export default function Index() {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            ...getUserAuthHeader(),
           },
-          body: JSON.stringify({
-            options: {
-              clientUserId: "user@example.com",
-            },
-          }),
+          // To update an existing Item of this user, send { itemId: "<item id>" }.
+          body: JSON.stringify({}),
         });
 
         const responseJson = await response.json();

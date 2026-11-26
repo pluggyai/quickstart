@@ -1,12 +1,15 @@
 // Proves that the API rejects callers without a session and webhooks without
-// a valid Pluggy signature. Runs against a production build (`pnpm build` first):
+// a valid Pluggy signature. Runs against a production build made with
+// NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:3124 (the local database stand-in below):
 //
 //   pnpm run test:auth
 //
 // It starts `next start` with throwaway configuration. No request reaches
-// Pluggy or Supabase: every check is answered before a database or API call.
+// Pluggy or Supabase: the database is a local stand-in that only answers the
+// ownership lookup, and every check stops before a Pluggy API call.
 import { spawn } from 'node:child_process';
 import { createHmac } from 'node:crypto';
+import { createServer } from 'node:http';
 
 const PORT = process.env.PORT ?? '3123';
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -14,13 +17,33 @@ const ORIGIN = `http://127.0.0.1:${PORT}`;
 const ACCESS_CODE = 'test-access-code';
 const WEBHOOK_SECRET = 'whsec_' + '0'.repeat(64);
 const UUID = '00000000-0000-4000-8000-000000000000';
+// An item that exists in the database but was connected by another user.
+const OTHER_USERS_ITEM = '11111111-1111-4111-8111-111111111111';
+// Next.js inlines NEXT_PUBLIC_SUPABASE_URL at build time, so the build must
+// already point at this address: `NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:3124 pnpm build`.
+const DB_PORT = '3124';
+
+// Stand-in for the Supabase REST API: `pluggy_items` has one row, owned by
+// someone else. Anything else is an empty table.
+let ownershipLookups = 0;
+const database = createServer((req, res) => {
+  const url = new URL(req.url, 'http://db');
+  const rows = [];
+  if (url.pathname === '/rest/v1/pluggy_items' && url.searchParams.get('item_id') === `eq.${OTHER_USERS_ITEM}`) {
+    ownershipLookups++;
+    rows.push({ user_id: 'another-user' });
+  }
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify(rows));
+});
+await new Promise((resolve) => database.listen(Number(DB_PORT), '127.0.0.1', resolve));
 
 const server = spawn('pnpm', ['exec', 'next', 'start', '-p', PORT, '-H', '127.0.0.1'], {
   env: {
     ...process.env,
     PLUGGY_CLIENT_ID: 'dummy',
     PLUGGY_CLIENT_SECRET: 'dummy',
-    NEXT_PUBLIC_SUPABASE_URL: 'https://dummy.supabase.co',
+    NEXT_PUBLIC_SUPABASE_URL: `http://127.0.0.1:${DB_PORT}`,
     SUPABASE_SERVICE_ROLE_KEY: 'dummy',
     APP_ACCESS_CODE: ACCESS_CODE,
     SESSION_SECRET: 'x'.repeat(48),
@@ -126,6 +149,28 @@ try {
     403
   );
 
+  // An item that belongs to another user answers 404, like one that does not exist.
+  for (const [method, path] of [
+    ['GET', `/api/items?itemId=${OTHER_USERS_ITEM}`],
+    ['DELETE', `/api/items?itemId=${OTHER_USERS_ITEM}`],
+    ['GET', `/api/accounts?itemId=${OTHER_USERS_ITEM}`],
+    ['GET', `/api/identity?itemId=${OTHER_USERS_ITEM}`],
+  ]) {
+    await expect(`${method} ${path} for another user's item`, fetch(BASE + path, { method, headers: authed }), 404);
+  }
+  if (ownershipLookups !== 4) {
+    failures++;
+    console.log(`FAIL the ownership lookup ran ${ownershipLookups} time(s) (expected 4)`);
+  }
+
+  // Signing in again (new browser, after sign-out, after expiry) is the same user.
+  const again = await fetch(`${BASE}/api/session`, { method: 'POST', headers: sameOrigin, body: JSON.stringify({ accessCode: ACCESS_CODE }) });
+  const userIdOf = (response) =>
+    JSON.parse(Buffer.from((response.headers.get('set-cookie') ?? '').split('=')[1].split('.')[0], 'base64url').toString()).uid;
+  const sameUser = userIdOf(login) === userIdOf(again);
+  if (!sameUser) failures++;
+  console.log(`${sameUser ? 'ok  ' : 'FAIL'} two sign-ins with the access code are the same user`);
+
   // Webhook: unsigned, badly signed, stale, and correctly signed.
   const body = JSON.stringify({ event: 'connector/status_updated', eventId: 'evt-test' });
   const post = (headers) => fetch(`${BASE}/api/webhook`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body });
@@ -139,6 +184,7 @@ try {
   console.error(error);
 } finally {
   server.kill();
+  database.close();
 }
 
 if (failures > 0) {

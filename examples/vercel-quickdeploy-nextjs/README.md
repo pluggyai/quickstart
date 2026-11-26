@@ -387,18 +387,18 @@ If `APP_ACCESS_CODE`, `SESSION_SECRET` or `PLUGGY_WEBHOOK_SECRET` is missing, th
 
 This app reads and deletes financial data with **your** Pluggy credentials, so the API must know who is calling. What it does today:
 
-- **Sign-in**: `/login` exchanges `APP_ACCESS_CODE` for a signed, `httpOnly`, `SameSite=Lax` session cookie (7 days). The cookie carries an opaque user id; it is created at the first sign-in in a browser and kept on later sign-ins while the cookie is valid.
+- **Sign-in**: `/login` exchanges `APP_ACCESS_CODE` for a signed, `httpOnly`, `SameSite=Lax` session cookie (7 days). The cookie carries an opaque user id derived from the access code (`HMAC(SESSION_SECRET, APP_ACCESS_CODE)`), so signing out, an expired cookie or another browser all reach the same items.
 - **Per-user items**: `/api/token` creates the Connect Token on the server with `clientUserId` set to that user id. Pluggy stores it on the Item, the webhook handler saves it as `pluggy_items.user_id`, and every API route checks that the requested item (or the item behind an account or investment) belongs to the caller. Anything else answers `404`.
 - **Writes**: `POST` and `DELETE` routes also require an `Origin` header that matches the app's own host.
 - **Webhooks**: `/api/webhook` verifies the `X-Pluggy-Signature` HMAC over the raw body, with a 5-minute tolerance, and answers `401` to anything else. It then re-fetches every resource from the Pluggy API instead of trusting the payload.
 
 What you must replace before real users rely on it:
 
-- The access code is one shared password and the user id lives only in the browser's cookie: a new browser is a new user. Replace `src/app/lib/auth/session.ts` and `src/app/api/session/route.ts` with your own authentication (NextAuth/Auth.js, Clerk, Supabase Auth, your SSO…) and use **your** user id as `clientUserId`. The ownership checks in `src/app/lib/auth/guards.ts` keep working unchanged.
+- The access code is one shared password and one user: everyone who has it sees the same items, and changing `APP_ACCESS_CODE` or `SESSION_SECRET` starts a new, empty user (the old items stay in the database under the previous id). Replace `src/app/lib/auth/session.ts` and `src/app/api/session/route.ts` with your own authentication (NextAuth/Auth.js, Clerk, Supabase Auth, your SSO…) and use **your** user id as `clientUserId`. The ownership checks in `src/app/lib/auth/guards.ts` keep working unchanged.
 - There is no rate limiting on `/login`. Use a long random access code, or add rate limiting / your provider's protections.
 - Items created before this version (without `clientUserId`) are not shown to anyone. Reconnect them, or set `pluggy_items.user_id` by hand.
 
-To check the protection locally after `pnpm build`, run `pnpm test:auth`: it starts the build and asserts that every API route answers `401` without a session and that unsigned, wrongly signed or stale webhooks answer `401`.
+To check the protection locally, build with `NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:3124 pnpm build` (the address of the test's local database stand-in; Next.js inlines it at build time) and run `pnpm test:auth`. It starts the build and asserts that every API route answers `401` without a session, that an item connected by another user answers `404`, and that unsigned, wrongly signed or stale webhooks answer `401`.
 
 ## Project Structure
 

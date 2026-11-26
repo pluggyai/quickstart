@@ -17,7 +17,7 @@ Apache Cordova integration of the Pluggy Connect widget for iOS.
 npm install
 ```
 
-2. Edit `www/js/index.js` and replace `'https://my-own-api.vercel.app/api/token'` with your token endpoint URL
+2. Edit `www/js/index.js` and set `CONNECT_TOKEN_URL` to your token endpoint and `userAuthHeader` to how your app authenticates the signed-in user
    - You can deploy one using the [Vercel Connect Token example](../../examples/vercel-node-connect-token)
 
 3. Build and run on iOS:

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withErrorHandling } from '@/app/lib/utils/error-handler';
 import { assertSameOrigin } from '@/app/lib/auth/guards';
-import { endSession, isValidAccessCode, readSession, startSession } from '@/app/lib/auth/session';
+import { endSession, isValidAccessCode, startSession } from '@/app/lib/auth/session';
 
 export const runtime = 'nodejs';
 
@@ -16,7 +16,7 @@ async function handleLogin(request: NextRequest) {
   }
 
   const response = NextResponse.json({ success: true });
-  startSession(response, readSession(request));
+  startSession(response);
   return response;
 }
 

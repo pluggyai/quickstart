@@ -26,7 +26,7 @@ Each project directory is independent (own `package.json`, lockfile, README). `c
 
 | Project | Install | Check | Build |
 |---------|---------|-------|-------|
-| `examples/vercel-quickdeploy-nextjs` | `pnpm install --frozen-lockfile` | `pnpm typecheck`, `pnpm test:auth` (after build) | `pnpm build` |
+| `examples/vercel-quickdeploy-nextjs` | `pnpm install --frozen-lockfile` | `pnpm typecheck`, `pnpm test:auth` (after a build with `NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:3124`) | `pnpm build` |
 | `examples/vercel-node-connect-token` | `pnpm install --frozen-lockfile` | `pnpm lint`, `pnpm test` | `pnpm build` |
 | `frontend/react-native-expo` | `npm ci` | `npm run lint` | — |
 
