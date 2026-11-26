@@ -44,13 +44,11 @@ interface PaginationInfo {
 }
 
 interface ItemsListProps {
-  userId?: string;
   onItemSelect?: (item: PluggyItemRecord) => void;
   refreshTrigger?: number;
 }
 
 export function ItemsList({
-  userId,
   onItemSelect,
   refreshTrigger,
 }: ItemsListProps) {
@@ -70,9 +68,7 @@ export function ItemsList({
     setError(null);
 
     try {
-      const { data } = await api.get("/api/items", {
-        params: { userId },
-      });
+      const { data } = await api.get("/api/items");
 
       setItems(Array.isArray(data.data?.results) ? data.data.results : []);
     } catch (err) {
@@ -82,7 +78,7 @@ export function ItemsList({
     } finally {
       setIsLoading(false);
     }
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
     fetchItems();

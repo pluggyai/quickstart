@@ -52,18 +52,9 @@ export async function handleTransactionsUpdated({transactionIds = [], accountId 
   try {
     if (transactionIds.length === 0) return;
 
-    const transactions: Transaction[] = [];
-    let page = 1;
-    while (true) {
-      const response = await pluggyClient.fetchTransactions(accountId, {
-        ids: transactionIds,
-        page,
-        pageSize: 500,
-      });
-      transactions.push(...response.results);
-      if (response.results.length < 500) break;
-      page++;
-    }
+    const transactions = await pluggyClient.fetchAllTransactions(accountId, {
+      ids: transactionIds,
+    } as any);
 
     if (transactions.length === 0) return;
 

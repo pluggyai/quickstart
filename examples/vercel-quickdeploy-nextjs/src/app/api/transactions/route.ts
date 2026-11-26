@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { transactionsService } from '@/app/lib/services/transactions';
-import { withErrorHandling } from '@/app/lib/utils/error-handler';
+import { withAuth, assertAccountOwner } from '@/app/lib/auth/guards';
+import type { Session } from '@/app/lib/auth/session';
+import { isUuid } from '@/app/lib/utils/validation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
 
-async function handleGetTransactions(request: NextRequest) {
+async function handleGetTransactions(request: NextRequest, session: Session) {
   const { searchParams } = request.nextUrl;
   const accountId = searchParams.get('accountId');
   const page = searchParams.get('page');
@@ -17,6 +19,15 @@ async function handleGetTransactions(request: NextRequest) {
       { status: 400 }
     );
   }
+
+  if (!isUuid(accountId)) {
+    return NextResponse.json(
+      { success: false, error: 'accountId must be a valid UUID' },
+      { status: 400 }
+    );
+  }
+
+  await assertAccountOwner(session, accountId);
 
   const currentPage = page ? parseInt(page) : 1;
   const currentPageSize = pageSize ? parseInt(pageSize) : 50;
@@ -41,4 +52,4 @@ async function handleGetTransactions(request: NextRequest) {
   });
 }
 
-export const GET = withErrorHandling(handleGetTransactions);
+export const GET = withAuth(handleGetTransactions);

@@ -63,6 +63,14 @@ jobs:
         env:
           PLUGGY_CLIENT_ID: dummy
           PLUGGY_CLIENT_SECRET: dummy
-          NEXT_PUBLIC_SUPABASE_URL: https://dummy.supabase.co
+          # Inlined at build time: the auth checks start a local database
+          # stand-in on this address (see scripts/check-auth.mjs).
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:3124
           SUPABASE_SERVICE_ROLE_KEY: dummy
         run: pnpm run build
+
+      - name: Auth checks
+        # Starts the production build and proves every API route rejects a
+        # caller without a session, and the webhook rejects unsigned requests.
+        # The script sets its own throwaway configuration.
+        run: pnpm run test:auth
