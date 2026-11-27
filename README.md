@@ -12,7 +12,6 @@
 - [One-click deploy](#one-click-deploy)
 - [Examples in this repo](#examples-in-this-repo)
   - [Prompts](#prompts)
-  - [Other examples](#other-examples)
   - [Where the previous examples went](#where-the-previous-examples-went)
 - [Official SDKs and widgets](#official-sdks-and-widgets)
 - [AI agent tools](#ai-agent-tools)
@@ -47,32 +46,21 @@ The flagship `vercel-quickdeploy-nextjs` example — Next.js 16 + Supabase + Con
 
 ## Examples in this repo
 
-This repository has three parts:
+This repository has two parts:
 
 1. **One maintained reference project** — [`examples/vercel-quickdeploy-nextjs`](examples/vercel-quickdeploy-nextjs): the full flow (sign-in, Connect Token, Connect Widget, signed webhooks, per-user data in Supabase) in one deployable app. It has CI and is kept current.
 2. **Prompts for coding agents** — [`prompts/`](prompts): one self-contained task per integration scenario. Hand one to your coding agent inside your own codebase and it implements the scenario in your stack, following Pluggy's security rules and docs. See [`prompts/README.md`](prompts/README.md).
-3. **A few small examples** — a one-file token endpoint and Connect widget snippets, listed below.
 
 ### Prompts
 
 | Scenario | Prompt |
 |----------|--------|
+| The whole flow of the reference app, in your stack (runs the prompts below in order) | [`prompts/full-integration.md`](prompts/full-integration.md) |
 | Server-side credentials + Connect Token endpoint for the signed-in user | [`prompts/backend-connect-token.md`](prompts/backend-connect-token.md) |
 | Pluggy Connect in a web app | [`prompts/connect-widget-web.md`](prompts/connect-widget-web.md) |
-| Pluggy Connect in React Native, Flutter, iOS or Android | [`prompts/connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
+| Pluggy Connect in React Native / Expo, Flutter, Cordova / Capacitor, iOS or Android | [`prompts/connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
 | Receiving and verifying webhooks | [`prompts/webhook-receiver.md`](prompts/webhook-receiver.md) |
 | Fetching and storing accounts, transactions and other products; disconnecting | [`prompts/sync-financial-data.md`](prompts/sync-financial-data.md) |
-
-### Other examples
-
-| Stack | Path | Notes |
-|-------|------|-------|
-| Vercel serverless (token only) | [`examples/vercel-node-connect-token`](examples/vercel-node-connect-token) | One-file Connect Token endpoint for signed-in users: verifies the caller's JWT (replace with your auth), binds the token to `clientUserId`, fails closed. Has CI with rejection tests |
-| Vanilla HTML | [`frontend/html`](frontend/html) | Drop-in CDN script that asks your authenticated token endpoint for a token |
-| React Native (Expo) | [`frontend/react-native-expo`](frontend/react-native-expo) | Expo SDK 54. Being reworked in an open pull request |
-| Cordova | [`frontend/cordova`](frontend/cordova) | Apache Cordova iOS. Retirement proposed in an open pull request |
-
-See [`frontend/README.md`](frontend/README.md) for the connect-token flow and the widget options.
 
 ### Where the previous examples went
 
@@ -88,8 +76,12 @@ See [`frontend/README.md`](frontend/README.md) for the connect-token flow and th
 | `frontend/react-native` (RN 0.66 bare) | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
 | `frontend/flutter` | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
 | `ios` (Swift WebView) | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
+| `examples/vercel-node-connect-token` (one-file token function) | [`backend-connect-token.md`](prompts/backend-connect-token.md); runnable version in the reference app, `src/app/api/token/route.ts` |
+| `frontend/html` (CDN script) | [`connect-widget-web.md`](prompts/connect-widget-web.md) |
+| `frontend/react-native-expo` | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
+| `frontend/cordova` | [`connect-widget-mobile.md`](prompts/connect-widget-mobile.md) |
 
-The code of every removed example stays available in this repository's git history. `frontend/nextjs` and `frontend/react` keep a README at their old path that points to the replacement.
+The code of every removed example stays available in this repository's git history.
 
 ---
 
@@ -149,6 +141,6 @@ Larger real-world projects that build on top of Pluggy:
 
 ## Contributing
 
-This repository is open for contributions. Each project directory is independent, with its own `README.md`, dependencies and instructions; prompts follow the guidelines in [`prompts/README.md`](prompts/README.md). See [`AGENTS.md`](AGENTS.md) for how the repository is laid out.
+This repository is open for contributions. The reference app has its own `README.md`, dependencies and instructions; prompts follow the guidelines in [`prompts/README.md`](prompts/README.md). See [`AGENTS.md`](AGENTS.md) for how the repository is laid out.
 
 All PRs require review from `@pluggyai/ramen` and `@pluggyai/tech-leaders` (see [`.github/CODEOWNERS`](.github/CODEOWNERS)).

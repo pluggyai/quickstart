@@ -4,13 +4,14 @@ Each file in this folder is a self-contained task for a coding agent (Claude Cod
 
 | Prompt | Scenario | Replaces the example(s) |
 |--------|----------|-------------------------|
-| [`backend-connect-token.md`](backend-connect-token.md) | Server-side credentials and a Connect Token endpoint for the signed-in user | `examples/aws-sst` (token function), `examples/node-nestjs` (user endpoint), `java` (client setup), `frontend/flask` (server), `frontend/nextjs` (token route) |
-| [`connect-widget-web.md`](connect-widget-web.md) | Opening Pluggy Connect in a web app and handling its result | `frontend/flask` (template), `frontend/nextjs` (page), `frontend/react` |
-| [`connect-widget-mobile.md`](connect-widget-mobile.md) | Pluggy Connect in React Native, Flutter or a native iOS / Android WebView | `frontend/react-native`, `frontend/flutter`, `ios` |
+| [`full-integration.md`](full-integration.md) | The whole flow of the reference app in your stack: runs the five prompts below in order, then the screens | — |
+| [`backend-connect-token.md`](backend-connect-token.md) | Server-side credentials and a Connect Token endpoint for the signed-in user | `examples/aws-sst` (token function), `examples/node-nestjs` (user endpoint), `java` (client setup), `frontend/flask` (server), `frontend/nextjs` (token route), `examples/vercel-node-connect-token` |
+| [`connect-widget-web.md`](connect-widget-web.md) | Opening Pluggy Connect in a web app and handling its result | `frontend/flask` (template), `frontend/nextjs` (page), `frontend/react`, `frontend/html` |
+| [`connect-widget-mobile.md`](connect-widget-mobile.md) | Pluggy Connect in React Native / Expo, Flutter, Cordova / Capacitor or a native iOS / Android WebView | `frontend/react-native`, `frontend/react-native-expo`, `frontend/flutter`, `frontend/cordova`, `ios` |
 | [`webhook-receiver.md`](webhook-receiver.md) | Receiving and verifying Pluggy webhooks, then syncing from the API | `examples/aws-sst`, `examples/node-nestjs`, `examples/vercel-node-mongo` |
 | [`sync-financial-data.md`](sync-financial-data.md) | Fetching and storing accounts, transactions, investments, loans and identity per user, and deleting a connection | `examples/node-nestjs`, `examples/vercel-node-mongo`, `java` |
 
-For a complete, runnable reference of all of them working together, see [`examples/vercel-quickdeploy-nextjs`](../examples/vercel-quickdeploy-nextjs). For just the token endpoint, see [`examples/vercel-node-connect-token`](../examples/vercel-node-connect-token).
+For a complete, runnable reference of all of them working together, see [`examples/vercel-quickdeploy-nextjs`](../examples/vercel-quickdeploy-nextjs).
 
 Payments (PIX, scheduled and automatic PIX, Smart Transfers) have no prompt here yet; the `pluggy-payments` skill in [pluggyai/agent-skills](https://github.com/pluggyai/agent-skills) and the [Payments docs](https://docs.pluggy.ai/en/docs/payments/overview) cover them.
 

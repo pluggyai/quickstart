@@ -21,13 +21,18 @@ Add a "Connect your bank" action that opens the **Pluggy Connect** widget for th
 Docs: [Pluggy Connect introduction](https://docs.pluggy.ai/en/docs/connect-widget/introduction), [Environments and configurations](https://docs.pluggy.ai/en/docs/connect-widget/environments), [Setup the widget](https://docs.pluggy.ai/en/docs/integration-checklist/setup-widget), [OAuth support](https://docs.pluggy.ai/en/docs/connect-widget/oauth-support), [Updating an Item](https://docs.pluggy.ai/en/docs/connect-widget/updating-item).
 
 - **React / Next.js**: the [`react-pluggy-connect`](https://www.npmjs.com/package/react-pluggy-connect) component. In SSR frameworks render it client-side only.
-- **Any other framework or plain HTML**: the [`pluggy-connect-sdk`](https://www.npmjs.com/package/pluggy-connect-sdk) package, or its script from Pluggy's CDN pinned to an exact version (see the package README and [`frontend/html`](../frontend/html) in this repo), then `new PluggyConnect({ connectToken, ... }).init()`.
-- Main options: `connectToken` (required), `includeSandbox` (only for development; **off in production**), `updateItem` (an Item id, for reconnecting), and callbacks `onSuccess({ item })`, `onError({ message, data })`, `onClose`, `onOpen`, `onEvent`.
+- **Any other framework or plain HTML**: the [`pluggy-connect-sdk`](https://www.npmjs.com/package/pluggy-connect-sdk) package, or, with no build step, its script from Pluggy's CDN pinned to an exact version: `<script src="https://cdn.pluggy.ai/pluggy-connect/v<version>/pluggy-connect.js"></script>` (take `<version>` from the package's current release, never `latest`). Either way: `new PluggyConnect({ connectToken, ... }).init()`.
+- Options, the same in every Pluggy Connect library ([Environments and configurations](https://docs.pluggy.ai/en/docs/connect-widget/environments) has the current list):
+  - `connectToken` (required);
+  - `includeSandbox` (only for development; **off in production**);
+  - `updateItem` (an Item id: opens straight on that connection, for reconnecting);
+  - `connectorTypes`, `countries` (restrict which connectors are listed) and `language` (defaults to the browser's);
+  - callbacks `onSuccess({ item })`, `onError({ message, data })`, `onOpen`, `onClose`, `onEvent`.
 - The token is valid for 30 minutes: request a fresh one each time the user clicks "connect", right before opening the widget.
 
 ## What to build
 
-1. A "connect" button (or the project's equivalent) that calls the backend token endpoint with the user's existing authentication, then opens the widget with the returned token.
+1. A "connect" button (or the project's equivalent) that calls the backend token endpoint with a `POST` carrying the user's existing authentication (same-origin session cookie, or the app's `Authorization` header), checks the response status before reading `accessToken`, then opens the widget with the returned token.
 2. `onSuccess`: tell the backend or simply refresh the user's connection list. Treat `item.id` from the browser as a hint only; the backend learns the Item from Pluggy (webhook or API) and checks ownership itself.
 3. `onError` / `onClose`: show a short, non-technical message; log the error code, not the token.
 4. Optional, if the app lists connections: a "reconnect" action that asks the backend for a token scoped to that `itemId` and opens the widget with `updateItem`.
